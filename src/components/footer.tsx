@@ -25,7 +25,7 @@ export default function Footer() {
                 <span className="text-sm font-bold text-white">CE</span>
               </div>
               <span className="text-lg font-bold text-white">
-                Cakrawala <span className="text-accent">EduCentre</span>
+                Cakar <span className="text-accent">EduCentre</span>
               </span>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-zinc-500">
