@@ -5,7 +5,7 @@ import { Menu, X, Phone } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "#" },
-  { label: "Program", href: "#programs" },
+  { label: "Produk", href: "#products" },
   { label: "Blog", href: "#blog" },
   { label: "Tentang", href: "#about" },
   { label: "Kontak", href: "#footer" },
@@ -45,7 +45,7 @@ export default function Header() {
           className="hidden items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-light md:inline-flex"
         >
           <Phone className="h-4 w-4" />
-          Konsultasi Agus
+          Konsultasi Gratis
         </a>
 
         <button
