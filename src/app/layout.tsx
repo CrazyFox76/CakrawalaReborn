@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={`${inter.className} scroll-smooth`} suppressHydrationWarning>
-      <body className="min-h-dvh flex flex-col bg-white text-zinc-800 antialiased dark:bg-zinc-950 dark:text-zinc-200">
+      <body className="min-h-dvh flex flex-col bg-white text-zinc-800 antialiased dark:bg-slate-950 dark:text-slate-200">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

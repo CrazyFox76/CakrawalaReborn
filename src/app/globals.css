@@ -9,5 +9,12 @@
 
   body {
     font-family: Arial, Helvetica, sans-serif;
+    @apply transition-colors duration-300;
+  }
+}
+
+@layer utilities {
+  .dark .card-hover {
+    @apply border-slate-700/50 bg-slate-800/50;
   }
 }
