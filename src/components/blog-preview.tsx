@@ -21,7 +21,7 @@ export default function BlogPreview() {
               key={post.id}
               className="group rounded-2xl border border-zinc-200 bg-white p-6 transition-all hover:border-primary/20 hover:shadow-lg"
             >
-              <div className="mb-3 inline-block rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-primary">
+              <div className="mb-3 inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary">
                 {post.category}
               </div>
               <h3 className="text-base font-semibold leading-snug text-zinc-900 group-hover:text-primary transition-colors">

@@ -45,7 +45,7 @@ export default function About() {
               key={f.title}
               className="group rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md"
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                 <f.icon className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-semibold text-zinc-900">
