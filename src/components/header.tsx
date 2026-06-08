@@ -22,7 +22,7 @@ export default function Header() {
             <span className="text-sm font-bold text-white">CE</span>
           </div>
           <span className="text-lg font-bold text-primary">
-            Cakar <span className="text-accent">EduCentre</span>
+            Cakrawala <span className="text-accent">EduCentre</span>
           </span>
         </a>
 
