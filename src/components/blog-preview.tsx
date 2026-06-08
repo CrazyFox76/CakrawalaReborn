@@ -9,7 +9,7 @@ export default function BlogPreview() {
           <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
             Artikel & Blog Edukasi
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-zinc-600">
+          <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
             Tips belajar, pembahasan soal, dan informasi pendidikan terbaru dari
             Cakrawala EduCentre.
           </p>
@@ -19,18 +19,18 @@ export default function BlogPreview() {
           {blogPosts.map((post) => (
             <article
               key={post.id}
-              className="group rounded-2xl border border-zinc-200 bg-white p-6 transition-all hover:border-primary/20 hover:shadow-lg"
+              className="group rounded-2xl border border-zinc-200 bg-white p-6 transition-all hover:border-primary/20 hover:shadow-lg dark:border-zinc-700/50 dark:bg-zinc-800/50"
             >
-              <div className="mb-3 inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary">
+              <div className="mb-3 inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary dark:bg-blue-900/30">
                 {post.category}
               </div>
-              <h3 className="text-base font-semibold leading-snug text-zinc-900 group-hover:text-primary transition-colors">
+              <h3 className="text-base font-semibold leading-snug text-zinc-900 group-hover:text-primary transition-colors dark:text-zinc-100">
                 {post.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-500 line-clamp-2">
                 {post.excerpt}
               </p>
-              <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-4">
+              <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-4 dark:border-zinc-700">
                 <div className="flex items-center gap-2 text-xs text-zinc-400">
                   <Calendar className="h-3.5 w-3.5" />
                   {post.date}
@@ -46,7 +46,7 @@ export default function BlogPreview() {
         <div className="mt-10 text-center">
           <a
             href="#"
-            className="inline-flex items-center gap-2 rounded-xl border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition-colors hover:border-primary hover:text-primary"
+            className="inline-flex items-center gap-2 rounded-xl border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition-colors hover:border-primary hover:text-primary dark:border-zinc-600 dark:text-zinc-400 dark:hover:border-primary dark:hover:text-primary"
           >
             Lihat Semua Artikel
             <ArrowRight className="h-4 w-4" />
