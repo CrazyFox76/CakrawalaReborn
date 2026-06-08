@@ -9,7 +9,7 @@ export default function Tutors() {
           <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
             Tutor Profesional Kami
           </h2>
-          <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="mt-4 text-lg text-zinc-600 dark:text-slate-400">
             Lulusan terbaik dari universitas ternama, berpengalaman, dan
             berdedikasi tinggi.
           </p>
@@ -19,12 +19,12 @@ export default function Tutors() {
           {tutors.map((tutor) => (
             <div
               key={tutor.name}
-              className="group rounded-2xl border border-zinc-200 bg-white p-6 text-center transition-all hover:border-primary/20 hover:shadow-lg dark:border-zinc-700/50 dark:bg-zinc-800/50"
+              className="group rounded-2xl border border-zinc-200 bg-white p-6 text-center transition-all hover:border-primary/20 hover:shadow-lg dark:border-slate-700/50 dark:bg-slate-800/50"
             >
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-light text-lg font-bold text-white shadow-md">
                 {tutor.initials}
               </div>
-              <h3 className="mt-4 text-base font-bold text-zinc-900 dark:text-zinc-100">
+              <h3 className="mt-4 text-base font-bold text-zinc-900 dark:text-slate-100">
                 {tutor.name}
               </h3>
               <p className="mt-0.5 text-sm font-medium text-accent">

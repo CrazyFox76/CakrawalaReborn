@@ -14,20 +14,20 @@ export default function Testimonials() {
   const t = testimonials[current];
 
   return (
-    <section className="bg-surface py-16 sm:py-24 dark:bg-zinc-900">
+    <section className="bg-surface py-16 sm:py-24 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
             Apa Kata Mereka?
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
+          <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-slate-400">
             Testimoni dari siswa dan orang tua yang telah merasakan langsung
             manfaat belajar di Cakrawala EduCentre.
           </p>
         </div>
 
         <div className="mt-12">
-          <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-sm sm:p-10 dark:bg-zinc-800/50">
+          <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-sm sm:p-10 dark:bg-slate-800/50">
             <div className="flex gap-1">
               {Array.from({ length: t.rating }).map((_, i) => (
                 <Star
@@ -36,11 +36,11 @@ export default function Testimonials() {
                 />
               ))}
             </div>
-            <p className="mt-4 text-lg leading-relaxed text-zinc-700 italic dark:text-zinc-300">
+            <p className="mt-4 text-lg leading-relaxed text-zinc-700 italic dark:text-slate-300">
               &ldquo;{t.content}&rdquo;
             </p>
-            <div className="mt-6 border-t border-zinc-100 pt-4 dark:border-zinc-700">
-              <p className="font-semibold text-zinc-900 dark:text-zinc-100">{t.name}</p>
+            <div className="mt-6 border-t border-zinc-100 pt-4 dark:border-slate-700">
+              <p className="font-semibold text-zinc-900 dark:text-slate-100">{t.name}</p>
               <p className="text-sm text-zinc-500">{t.role}</p>
             </div>
           </div>
@@ -48,7 +48,7 @@ export default function Testimonials() {
           <div className="mt-6 flex items-center justify-center gap-4">
             <button
               onClick={prev}
-              className="rounded-full p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-primary dark:hover:bg-zinc-800"
+              className="rounded-full p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-primary dark:hover:bg-slate-800"
               aria-label="Previous"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -67,7 +67,7 @@ export default function Testimonials() {
             </div>
             <button
               onClick={next}
-              className="rounded-full p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-primary dark:hover:bg-zinc-800"
+              className="rounded-full p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-primary dark:hover:bg-slate-800"
               aria-label="Next"
             >
               <ChevronRight className="h-5 w-5" />
