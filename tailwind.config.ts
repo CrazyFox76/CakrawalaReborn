@@ -13,9 +13,14 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(8px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        waPulse: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.12)" },
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.4s ease-out",
+        waPulse: "waPulse 2s ease-in-out infinite",
       },
       colors: {
         primary: "#263559",
