@@ -25,13 +25,13 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="bg-surface py-16 sm:py-24">
+    <section id="about" className="bg-surface py-16 sm:py-24 dark:bg-zinc-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
             Tentang Cakrawala EduCentre
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-zinc-600">
+          <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
             Lembaga Pendidikan dan Pelatihan yang berkomitmen mencetak generasi
             unggul dan kompeten untuk masa depan yang lebih baik. Kami percaya
             setiap anak memiliki potensi luar biasa yang perlu dibimbing dengan
@@ -43,12 +43,12 @@ export default function About() {
           {features.map((f) => (
             <div
               key={f.title}
-              className="group rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md"
+              className="group rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md dark:bg-zinc-800/50 dark:hover:shadow-zinc-900"
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white dark:bg-blue-900/30">
                 <f.icon className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-semibold text-zinc-900">
+              <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                 {f.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-500">

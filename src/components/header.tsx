@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
+import ThemeToggle from "@/components/theme-toggle";
 
 const navLinks = [
   { label: "Home", href: "#" },
@@ -15,7 +16,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/95 dark:supports-[backdrop-filter]:bg-zinc-950/80">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <a href="#" className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
@@ -31,7 +32,7 @@ export default function Header() {
             <a
               key={link.label}
               href={link.href}
-              className="text-sm font-medium text-zinc-600 transition-colors hover:text-primary"
+              className="text-sm font-medium text-zinc-600 transition-colors hover:text-primary dark:text-zinc-400 dark:hover:text-primary"
             >
               {link.label}
             </a>
@@ -48,9 +49,11 @@ export default function Header() {
           Konsultasi Gratis
         </a>
 
+        <ThemeToggle />
+
         <button
           onClick={() => setOpen(!open)}
-          className="rounded-lg p-2 text-zinc-600 hover:bg-zinc-100 md:hidden"
+          className="rounded-lg p-2 text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800 md:hidden"
           aria-label="Toggle menu"
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -58,14 +61,14 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-zinc-200 bg-white px-4 pb-4 pt-2 md:hidden">
+        <div className="border-t border-zinc-200 bg-white px-4 pb-4 pt-2 dark:border-zinc-800 dark:bg-zinc-950 md:hidden">
           <nav className="flex flex-col gap-2">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-primary"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-primary dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-primary"
               >
                 {link.label}
               </a>

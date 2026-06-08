@@ -8,13 +8,13 @@ export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-surface py-16 sm:py-24">
+    <section className="bg-surface py-16 sm:py-24 dark:bg-zinc-900">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
             Pertanyaan yang Sering Diajukan
           </h2>
-          <p className="mt-4 text-lg text-zinc-600">
+          <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
             Masih ragu? Temukan jawaban dari pertanyaan berikut atau hubungi
             kami langsung.
           </p>
@@ -26,13 +26,13 @@ export default function Faq() {
             return (
               <div
                 key={i}
-                className="overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all"
+                className="overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all dark:border-zinc-700 dark:bg-zinc-800/50"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-zinc-50"
+                  className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800"
                 >
-                  <span className="pr-4 text-sm font-semibold text-zinc-900 sm:text-base">
+                  <span className="pr-4 text-sm font-semibold text-zinc-900 sm:text-base dark:text-zinc-100">
                     {faq.q}
                   </span>
                   <ChevronDown
@@ -49,7 +49,7 @@ export default function Faq() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="border-t border-zinc-100 px-6 py-4 text-sm leading-relaxed text-zinc-500">
+                    <p className="border-t border-zinc-100 px-6 py-4 text-sm leading-relaxed text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
                       {faq.a}
                     </p>
                   </div>
@@ -59,7 +59,7 @@ export default function Faq() {
           })}
         </div>
 
-        <div className="mt-8 rounded-xl border border-zinc-200 bg-white p-6 text-center">
+        <div className="mt-8 rounded-xl border border-zinc-200 bg-white p-6 text-center dark:border-zinc-700 dark:bg-zinc-800/50">
           <p className="text-sm text-zinc-600">
             Tidak menemukan jawaban yang Anda cari?
           </p>
