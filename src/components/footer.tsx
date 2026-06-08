@@ -2,7 +2,7 @@ import { Mail, Phone, MapPin, Globe, ExternalLink, MessageCircle } from "lucide-
 
 const quickLinks = [
   { label: "Home", href: "#" },
-  { label: "Program", href: "#programs" },
+  { label: "Produk", href: "#products" },
   { label: "Blog", href: "#blog" },
   { label: "Tentang Kami", href: "#about" },
 ];
