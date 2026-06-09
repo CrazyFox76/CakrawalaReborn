@@ -11,6 +11,8 @@ import BlogPreview from "@/components/blog-preview";
 import Faq from "@/components/faq";
 import CtaConsult from "@/components/cta-consult";
 import ScreeningRaport from "@/components/screening-raport";
+import GallerySection from "@/components/gallery";
+import MapSection from "@/components/map-section";
 import Footer from "@/components/footer";
 import WaFloating from "@/components/wa-floating";
 import BackToTop from "@/components/back-to-top";
@@ -31,6 +33,8 @@ export default async function Home() {
     { Component: Faq, id: "faq" },
     { Component: CtaConsult, id: "cta" },
     { Component: ScreeningRaport, id: "screening" },
+    { Component: GallerySection, id: "gallery" },
+    { Component: MapSection, id: "map" },
   ];
 
   return (
