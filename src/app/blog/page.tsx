@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
-import { blogPosts } from "@/data/blog-posts";
+import { getBlogPosts } from "@/db/actions";
 
 export const metadata: Metadata = {
   title: "Blog Edukasi | Cakrawala EduCentre",
   description: "Tips belajar, pembahasan soal, dan informasi pendidikan terbaru dari Cakrawala EduCentre.",
 };
 
-export default function BlogIndex() {
+export default async function BlogIndex() {
+  const blogPosts = await getBlogPosts();
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
