@@ -22,55 +22,55 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
 
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
-      <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+      <article className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <Link
           href="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-500 transition-colors hover:text-primary dark:text-slate-400 dark:hover:text-primary"
+          className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-zinc-500 transition-colors sm:mb-6 sm:text-sm hover:text-primary dark:text-slate-400 dark:hover:text-primary"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           Kembali ke Blog
         </Link>
 
-        <div className="rounded-2xl border border-zinc-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900/50 sm:p-10">
-          <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-zinc-400 dark:text-slate-500">
-            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary dark:bg-blue-900/30 dark:text-blue-300">
+        <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-10 dark:border-slate-800 dark:bg-slate-900/50">
+          <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px] text-zinc-400 sm:mb-4 sm:gap-3 sm:text-xs dark:text-slate-500">
+            <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-primary sm:px-3 sm:py-1 sm:text-xs dark:bg-blue-900/30 dark:text-blue-300">
               {post.category}
             </span>
             <span className="flex items-center gap-1">
-              <Calendar className="h-3.5 w-3.5" />
+              <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               {post.date}
             </span>
             <span className="flex items-center gap-1">
-              <Clock className="h-3.5 w-3.5" />
+              <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               {post.readTime}
             </span>
           </div>
 
-          <h1 className="text-2xl font-bold text-zinc-900 dark:text-slate-100 sm:text-3xl">
+          <h1 className="text-lg font-bold text-zinc-900 sm:text-3xl dark:text-slate-100">
             {post.title}
           </h1>
 
-          <p className="mt-2 text-sm text-zinc-500 dark:text-slate-400">
+          <p className="mt-1 text-xs text-zinc-500 sm:mt-2 sm:text-sm dark:text-slate-400">
             Oleh {post.author}
           </p>
 
           <div
-            className="mt-8 prose prose-sm max-w-none prose-headings:text-zinc-900 prose-p:text-zinc-600 prose-li:text-zinc-600 dark:prose-headings:text-slate-100 dark:prose-p:text-slate-400 dark:prose-li:text-slate-400 prose-strong:text-zinc-900 dark:prose-strong:text-slate-100"
+            className="mt-5 prose prose-sm max-w-none prose-headings:text-zinc-900 prose-p:text-zinc-600 prose-li:text-zinc-600 sm:mt-8 dark:prose-headings:text-slate-100 dark:prose-p:text-slate-400 dark:prose-li:text-slate-400 prose-strong:text-zinc-900 dark:prose-strong:text-slate-100"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </div>
 
-        <div className="mt-8 rounded-2xl border border-zinc-200 bg-zinc-50 p-6 text-center dark:border-slate-800 dark:bg-slate-900/50">
-          <p className="text-sm text-zinc-600 dark:text-slate-400">
+        <div className="mt-6 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 text-center sm:mt-8 sm:p-6 dark:border-slate-800 dark:bg-slate-900/50">
+          <p className="text-xs text-zinc-600 sm:text-sm dark:text-slate-400">
             Butuh bimbingan lebih lanjut?
           </p>
           <a
             href="https://wa.me/6281324868790"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-light"
+            className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white transition-colors sm:px-5 sm:py-2.5 sm:text-sm hover:bg-primary-light"
           >
-            <MessageCircle className="h-4 w-4" />
+            <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             Konsultasi Gratis via WhatsApp
           </a>
         </div>

@@ -3,8 +3,9 @@ import { Mail, Phone, MapPin, Globe, ExternalLink, MessageCircle } from "lucide-
 const quickLinks = [
   { label: "Home", href: "#" },
   { label: "Produk", href: "#products" },
+  { label: "Tentang Kami", href: "/tentang-kami" },
+  { label: "Pendaftaran", href: "/daftar" },
   { label: "Blog", href: "#blog" },
-  { label: "Tentang Kami", href: "#about" },
 ];
 
 const socialLinks = [

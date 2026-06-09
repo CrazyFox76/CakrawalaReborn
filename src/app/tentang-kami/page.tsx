@@ -24,19 +24,19 @@ export default function TentangKami() {
 
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <Link
           href="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-500 transition-colors hover:text-primary dark:text-slate-400 dark:hover:text-primary"
+          className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-zinc-500 transition-colors sm:mb-6 sm:text-sm hover:text-primary dark:text-slate-400 dark:hover:text-primary"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           Kembali ke Beranda
         </Link>
 
-        <div className="rounded-2xl border border-zinc-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900/50 sm:p-10">
-          <h1 className="text-3xl font-bold text-primary sm:text-4xl">Tentang Cakrawala EduCentre</h1>
+        <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-10 dark:border-slate-800 dark:bg-slate-900/50">
+          <h1 className="text-xl font-bold text-primary sm:text-4xl">Tentang Cakrawala EduCentre</h1>
 
-          <div className="mt-8 space-y-6 text-base leading-relaxed text-zinc-600 dark:text-slate-400">
+          <div className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-600 sm:mt-8 sm:space-y-6 sm:text-base dark:text-slate-400">
             <p>
               <strong className="text-zinc-900 dark:text-slate-100">Cakrawala EduCentre</strong> adalah Lembaga Pendidikan dan Pelatihan yang berkomitmen mencetak generasi unggul dan kompeten untuk masa depan yang lebih baik.
             </p>

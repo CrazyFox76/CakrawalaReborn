@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown, BookOpen, GraduationCap, Globe, Users, MapPin, LogIn } from "lucide-react";
+import { Menu, X, ChevronDown, BookOpen, GraduationCap, Globe, Users, MapPin, LogIn, FileText } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 import Link from "next/link";
 
@@ -136,6 +136,19 @@ export default function Header() {
           >
             Promo
           </a>
+          <Link
+            href="/tentang-kami"
+            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+          >
+            Tentang
+          </Link>
+          <Link
+            href="/daftar"
+            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-accent to-gold-600 px-4 py-1.5 text-sm font-bold text-white shadow-sm transition-all hover:shadow-md hover:from-gold-600 hover:to-gold-700"
+          >
+            <FileText className="h-3.5 w-3.5" />
+            Daftar
+          </Link>
         </nav>
 
         {/* CTA + toggle */}
@@ -197,6 +210,7 @@ export default function Header() {
 
             <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">
               {[
+                { label: "Tentang Kami", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/tentang-kami" },
                 { label: "Branch", icon: <MapPin className="h-3.5 w-3.5" />, href: "#about" },
                 { label: "Kata Alumni", icon: <Users className="h-3.5 w-3.5" />, href: "#testimonials" },
                 { label: "Blog", icon: <BookOpen className="h-3.5 w-3.5" />, href: "#blog" },
@@ -213,9 +227,17 @@ export default function Header() {
             </div>
 
             <Link
+              href="/daftar"
+              onClick={() => setMobileOpen(false)}
+              className="mt-3 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-gold-600 px-5 py-2.5 text-xs font-bold text-white shadow-md"
+            >
+              <FileText className="h-3.5 w-3.5" />
+              Daftar Sekarang
+            </Link>
+            <Link
               href="/login"
               onClick={() => setMobileOpen(false)}
-              className="mt-3 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-2.5 text-xs font-bold text-white shadow-md"
+              className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-2.5 text-xs font-bold text-white shadow-md"
             >
               <LogIn className="h-3.5 w-3.5" />
               Login LMS
