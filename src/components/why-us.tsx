@@ -29,31 +29,31 @@ const reasons = [
 
 export default function WhyUs() {
   return (
-    <section className="bg-primary py-16 sm:py-24">
+    <section className="bg-primary py-12 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-4xl">
             Kenapa Memilih Cakrawala?
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-white/70">
+          <p className="mt-3 text-sm leading-relaxed text-white/70 sm:mt-4 sm:text-lg">
             Kami berkomitmen memberikan pengalaman belajar terbaik untuk
             kesuksesan akademik putra-putri Anda.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-3 sm:mt-12 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {reasons.map((r) => (
             <div
               key={r.title}
-              className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all hover:bg-white/10"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition-all sm:p-6 hover:bg-white/10"
             >
-              <div className="mb-3 flex items-center gap-3">
-                <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-gold-400" />
-                <h3 className="text-base font-semibold text-white">
+              <div className="mb-2 flex items-center gap-2 sm:mb-3 sm:gap-3">
+                <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-gold-400 sm:h-5 sm:w-5" />
+                <h3 className="text-sm font-semibold text-white sm:text-base">
                   {r.title}
                 </h3>
               </div>
-              <p className="text-sm leading-relaxed text-white/60">{r.desc}</p>
+              <p className="text-xs leading-relaxed text-white/60 sm:text-sm">{r.desc}</p>
             </div>
           ))}
         </div>
