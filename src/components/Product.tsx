@@ -101,23 +101,23 @@ export default function Programs() {
   };
 
   return (
-    <section id="products" className="py-16 sm:py-24 bg-zinc-50/30 scroll-mt-20 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
+    <section id="products" className="py-12 sm:py-24 bg-zinc-50/30 scroll-mt-20 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-4xl">
             Produk Unggulan Kami
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-slate-400">
+          <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:mt-4 sm:text-lg dark:text-slate-400">
             Temukan berbagai layanan bimbingan belajar, kursus bahasa asing, program keterampilan digital,
             dan kemitraan edukasi terbaik yang dirancang untuk mendukung kesuksesan akademis dan karir Anda.
           </p>
         </div>
 
         {/* Filters and Search Bar Container */}
-        <div className="mt-12 flex flex-col gap-6 items-stretch justify-between border-b border-zinc-200 pb-8 lg:flex-row lg:items-center dark:border-slate-700">
+        <div className="mt-8 flex flex-col gap-4 items-stretch justify-between border-b border-zinc-200 pb-6 sm:mt-12 sm:gap-6 sm:pb-8 lg:flex-row lg:items-center dark:border-slate-700">
           {/* Navigation/Tabs */}
-          <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none">
+          <div className="flex flex-wrap gap-1.5 overflow-x-auto pb-2 sm:gap-2 lg:pb-0 scrollbar-none">
             {TABS.map((tab) => (
               <button
                 key={tab.id}
@@ -125,11 +125,11 @@ export default function Programs() {
                   setActiveTab(tab.id);
                   setShowAll(false);
                 }}
-                className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? "bg-primary text-white shadow-md shadow-primary/10"
-                    : "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300 hover:text-zinc-900 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 dark:hover:border-slate-600 dark:hover:text-slate-200"
-                }`}
+                className={`whitespace-nowrap rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-200 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm ${
+                   activeTab === tab.id
+                     ? "bg-primary text-white shadow-md shadow-primary/10"
+                     : "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300 hover:text-zinc-900 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 dark:hover:border-slate-600 dark:hover:text-slate-200"
+                 }`}
               >
                 {tab.label}
               </button>
@@ -138,27 +138,29 @@ export default function Programs() {
 
           {/* Search Box */}
           <div className="relative w-full max-w-md self-start lg:self-auto">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-zinc-400">
-              <Search className="h-5 w-5" />
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-400 sm:pl-3.5">
+              <Search className="h-4 w-4 sm:h-5 sm:w-5" />
             </span>
             <input
               type="text"
-              placeholder="Cari produk (misal: Coding, TOEFL, Bimbel)..."
+              placeholder="Cari produk..."
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 setShowAll(false);
               }}
-              className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-11 pr-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
+              className="w-full rounded-lg border border-zinc-200 bg-white py-2 pl-9 pr-3 text-xs text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 sm:rounded-xl sm:py-2.5 sm:pl-11 sm:pr-4 sm:text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
             />
           </div>
         </div>
 
         {/* Results Metadata */}
-        <div className="mt-6 flex items-center justify-between text-sm text-zinc-500 dark:text-slate-400">
+        <div className="mt-4 flex items-center justify-between text-xs text-zinc-500 sm:mt-6 sm:text-sm dark:text-slate-400">
           <div>
-            Menampilkan <span className="font-semibold text-zinc-800 dark:text-slate-200">{filteredPrograms.length}</span> dari{" "}
-            <span className="font-semibold text-zinc-800 dark:text-slate-200">{programs.length}</span> produk unggulan
+            <span className="hidden sm:inline">Menampilkan </span>
+            <span className="font-semibold text-zinc-800 dark:text-slate-200">{filteredPrograms.length}</span>{" "}
+            <span className="hidden sm:inline">dari </span>
+            <span className="font-semibold text-zinc-800 dark:text-slate-200">{programs.length}</span> produk
           </div>
           {(activeTab !== "all" || searchQuery.trim() !== "" || showAll) && (
             <button
@@ -198,22 +200,22 @@ export default function Programs() {
         ) : (
           <>
             {/* Products Grid */}
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {displayedPrograms.map((program) => {
                 const borderClass = getCategoryBorderClass(program.category);
                 return (
                   <div
                     key={program.title}
-                    className={`group flex flex-col justify-between rounded-[32px_32px_32px_8px] border-2 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 animate-fadeIn dark:bg-slate-800/50 ${borderClass}`}
+                    className={`group flex flex-col justify-between rounded-2xl border-2 bg-white p-4 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 animate-fadeIn dark:bg-slate-800/50 ${borderClass}`}
                   >
                     <div>
                       {/* Category Badge & Icon Container */}
-                      <div className="flex items-center justify-between gap-4 mb-5">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white dark:bg-blue-900/30">
-                          <program.icon className="h-6 w-6" />
+                      <div className="flex items-center justify-between gap-3 mb-3 sm:mb-5 sm:gap-4">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-primary transition-all duration-300 sm:h-12 sm:w-12 sm:rounded-xl group-hover:bg-primary group-hover:text-white dark:bg-blue-900/30">
+                          <program.icon className="h-4 w-4 sm:h-6 sm:w-6" />
                         </div>
                         <span
-                          className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-wide ${getCategoryBadgeClass(
+                          className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide sm:px-2.5 sm:text-xs ${getCategoryBadgeClass(
                             program.category
                           )}`}
                         >
@@ -222,25 +224,25 @@ export default function Programs() {
                       </div>
 
                       {/* Title and Age Info */}
-                      <h3 className="text-lg font-bold text-zinc-900 transition-colors group-hover:text-primary dark:text-slate-100">
+                      <h3 className="text-sm font-bold text-zinc-900 transition-colors sm:text-lg group-hover:text-primary dark:text-slate-100">
                         {program.title}
                       </h3>
-                      <p className="mt-1 text-xs font-semibold text-accent uppercase tracking-wider">
+                      <p className="mt-0.5 text-[10px] font-semibold text-accent uppercase tracking-wider sm:mt-1 sm:text-xs">
                         {program.age}
                       </p>
 
                       {/* Description */}
-                      <p className="mt-3.5 text-sm leading-relaxed text-zinc-500 dark:text-slate-400">
+                      <p className="mt-2 text-xs leading-relaxed text-zinc-500 sm:mt-3.5 sm:text-sm dark:text-slate-400">
                         {program.description}
                       </p>
                     </div>
 
                     {/* Highlights / Bullet Points */}
-                    <div className="mt-6 pt-5 border-t border-zinc-100 dark:border-slate-700">
-                      <ul className="space-y-2.5">
+                    <div className="mt-4 pt-3 border-t border-zinc-100 sm:mt-6 sm:pt-5 dark:border-slate-700">
+                      <ul className="space-y-1.5 sm:space-y-2.5">
                         {program.highlights.map((h) => (
-                          <li key={h} className="flex items-start gap-2.5 text-sm text-zinc-600 dark:text-slate-400">
-                            <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
+                          <li key={h} className="flex items-start gap-2 text-xs text-zinc-600 sm:gap-2.5 sm:text-sm dark:text-slate-400">
+                            <span className="mt-1 h-1 w-1 flex-shrink-0 rounded-full bg-accent sm:mt-1.5 sm:h-1.5 sm:w-1.5" />
                             <span className="leading-tight">{h}</span>
                           </li>
                         ))}
@@ -249,10 +251,10 @@ export default function Programs() {
 
                     <Link
                       href={`/program/${program.slug}`}
-                      className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 text-sm font-semibold text-zinc-700 transition-all hover:border-primary hover:bg-primary hover:text-white dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:border-primary dark:hover:bg-primary dark:hover:text-white"
+                      className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-zinc-50 py-2 text-xs font-semibold text-zinc-700 transition-all sm:mt-5 sm:gap-2 sm:rounded-xl sm:py-2.5 sm:text-sm hover:border-primary hover:bg-primary hover:text-white dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:border-primary dark:hover:bg-primary dark:hover:text-white"
                     >
                       Lihat Detail
-                      <ArrowRight className="h-4 w-4" />
+                      <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
                     </Link>
                   </div>
                 );

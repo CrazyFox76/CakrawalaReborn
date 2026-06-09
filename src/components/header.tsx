@@ -165,9 +165,9 @@ export default function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-t border-slate-200 bg-white px-4 pb-5 pt-2 dark:border-slate-800 dark:bg-slate-950 md:hidden">
-          <div className="flex flex-col gap-1">
-            <p className="mt-3 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+        <div className="border-t border-slate-200 bg-white px-4 pb-4 pt-1 dark:border-slate-800 dark:bg-slate-950 md:hidden">
+          <div className="flex flex-col gap-0.5">
+            <p className="mt-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
               Jenjang
             </p>
             {jenjangItems.map((item) => (
@@ -175,13 +175,13 @@ export default function Header() {
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                className="flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 {item.icon} {item.label}
               </a>
             ))}
 
-            <p className="mt-3 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+            <p className="mt-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
               Program
             </p>
             {programItems.map((item) => (
@@ -189,23 +189,23 @@ export default function Header() {
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                className="flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 {item.icon} {item.label}
               </a>
             ))}
 
-            <div className="mt-4 border-t border-slate-100 pt-4 dark:border-slate-800">
+            <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">
               {[
-                { label: "Branch", icon: <MapPin className="h-4 w-4" />, href: "#about" },
-                { label: "Kata Alumni", icon: <Users className="h-4 w-4" />, href: "#testimonials" },
-                { label: "Blog", icon: <BookOpen className="h-4 w-4" />, href: "#blog" },
+                { label: "Branch", icon: <MapPin className="h-3.5 w-3.5" />, href: "#about" },
+                { label: "Kata Alumni", icon: <Users className="h-3.5 w-3.5" />, href: "#testimonials" },
+                { label: "Blog", icon: <BookOpen className="h-3.5 w-3.5" />, href: "#blog" },
               ].map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                  className="flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
                   {item.icon} {item.label}
                 </a>
@@ -215,9 +215,9 @@ export default function Header() {
             <Link
               href="/login"
               onClick={() => setMobileOpen(false)}
-              className="mt-3 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-3 text-sm font-bold text-white shadow-md"
+              className="mt-3 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-2.5 text-xs font-bold text-white shadow-md"
             >
-              <LogIn className="h-4 w-4" />
+              <LogIn className="h-3.5 w-3.5" />
               Login LMS
             </Link>
           </div>
