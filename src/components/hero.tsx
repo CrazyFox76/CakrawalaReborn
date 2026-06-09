@@ -228,29 +228,29 @@ export default function Hero() {
         </div>
 
         {/* Kolom kanan — grid siswa berprestasi */}
-        <div className="mt-14 hidden lg:block">
-          <div className="relative">
-            {/* Label judul grid */}
-            <div className="mb-4 text-right text-xs font-semibold uppercase tracking-widest text-white/40">
-              Alumni Cakrawala yang Diterima PTN Terbaik
-            </div>
+        <div className="mt-8 lg:mt-14">
+          {/* Label */}
+          <div className="mb-3 text-center text-[10px] font-semibold uppercase tracking-widest text-white/40 lg:text-right">
+            Alumni Cakrawala yang Diterima PTN Terbaik
+          </div>
 
-            {/* Grid 3 kolom */}
-            <div className="grid grid-cols-3 gap-3">
+          {/* Mobile: horizontal scroll — Desktop: grid */}
+          <div className="overflow-x-auto pb-2 scrollbar-none lg:overflow-visible">
+            <div className="flex gap-2 lg:grid lg:grid-cols-3 lg:gap-3 min-w-max lg:min-w-0">
               {students.map((s, i) => (
                 <div
                   key={i}
-                  className="animate-fadeIn"
+                  className="w-48 flex-shrink-0 animate-fadeIn lg:w-auto"
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
                   <StudentCard student={s} />
                 </div>
               ))}
             </div>
-
-            {/* Gradien fade kanan */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1565c0]/80 to-transparent" />
           </div>
+
+          {/* Gradien fade kanan (desktop only) */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1565c0]/80 to-transparent hidden lg:block" />
         </div>
       </div>
 

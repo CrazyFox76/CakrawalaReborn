@@ -42,6 +42,18 @@ export default function BlogPreview() {
             </Link>
           ))}
         </div>
+
+        {blogPosts.length > 3 && (
+          <div className="mt-8 text-center sm:mt-12">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-5 py-2.5 text-xs font-semibold text-zinc-700 transition-all hover:border-primary hover:bg-primary hover:text-white sm:px-6 sm:py-3 sm:text-sm dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:border-primary dark:hover:bg-primary dark:hover:text-white"
+            >
+              Lihat Semua Artikel
+              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
