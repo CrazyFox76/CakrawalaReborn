@@ -10,6 +10,7 @@ import Testimonials from "@/components/testimonials";
 import BlogPreview from "@/components/blog-preview";
 import Faq from "@/components/faq";
 import CtaConsult from "@/components/cta-consult";
+import ScreeningRaport from "@/components/screening-raport";
 import Footer from "@/components/footer";
 import WaFloating from "@/components/wa-floating";
 import BackToTop from "@/components/back-to-top";
@@ -26,6 +27,7 @@ const sections = [
   { Component: BlogPreview, id: "blog" },
   { Component: Faq, id: "faq" },
   { Component: CtaConsult, id: "cta" },
+  { Component: ScreeningRaport, id: "screening" },
 ];
 
 export default function Home() {
