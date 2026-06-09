@@ -14,34 +14,34 @@ export default function Testimonials() {
   const t = testimonials[current];
 
   return (
-    <section className="bg-surface py-16 sm:py-24 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
+    <section className="bg-surface py-12 sm:py-24 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-4xl">
             Apa Kata Mereka?
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-slate-400">
+          <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:mt-4 sm:text-lg dark:text-slate-400">
             Testimoni dari siswa dan orang tua yang telah merasakan langsung
             manfaat belajar di Cakrawala EduCentre.
           </p>
         </div>
 
-        <div className="mt-12">
-          <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-sm sm:p-10 dark:bg-slate-800/50">
+        <div className="mt-8 sm:mt-12">
+          <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-sm sm:p-10 dark:bg-slate-800/50">
             <div className="flex gap-1">
               {Array.from({ length: t.rating }).map((_, i) => (
                 <Star
                   key={i}
-                  className="h-5 w-5 fill-gold-400 text-gold-400"
+                  className="h-4 w-4 fill-gold-400 text-gold-400 sm:h-5 sm:w-5"
                 />
               ))}
             </div>
-            <p className="mt-4 text-lg leading-relaxed text-zinc-700 italic dark:text-slate-300">
+            <p className="mt-3 text-sm leading-relaxed text-zinc-700 italic sm:mt-4 sm:text-lg dark:text-slate-300">
               &ldquo;{t.content}&rdquo;
             </p>
-            <div className="mt-6 border-t border-zinc-100 pt-4 dark:border-slate-700">
-              <p className="font-semibold text-zinc-900 dark:text-slate-100">{t.name}</p>
-              <p className="text-sm text-zinc-500">{t.role}</p>
+            <div className="mt-4 border-t border-zinc-100 pt-3 sm:mt-6 sm:pt-4 dark:border-slate-700">
+              <p className="text-sm font-semibold text-zinc-900 sm:text-base dark:text-slate-100">{t.name}</p>
+              <p className="text-xs text-zinc-500 sm:text-sm">{t.role}</p>
             </div>
           </div>
 
