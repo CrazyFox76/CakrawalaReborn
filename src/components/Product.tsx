@@ -68,53 +68,53 @@ export default function Programs() {
   const getCategoryBadgeClass = (category: string) => {
     switch (category) {
       case "akademik":
-        return "bg-blue-50 text-blue-700 border-blue-200/60";
+        return "bg-blue-50 text-blue-700 border-blue-200/60 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800";
       case "bahasa":
-        return "bg-emerald-50 text-emerald-700 border-emerald-200/60";
+        return "bg-emerald-50 text-emerald-700 border-emerald-200/60 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800";
       case "anak":
-        return "bg-pink-50 text-pink-700 border-pink-200/60";
+        return "bg-pink-50 text-pink-700 border-pink-200/60 dark:bg-pink-900/30 dark:text-pink-300 dark:border-pink-800";
       case "skills":
-        return "bg-amber-50 text-amber-700 border-amber-200/60";
+        return "bg-amber-50 text-amber-700 border-amber-200/60 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800";
       case "layanan":
-        return "bg-purple-50 text-purple-700 border-purple-200/60";
+        return "bg-purple-50 text-purple-700 border-purple-200/60 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800";
       default:
-        return "bg-zinc-50 text-zinc-700 border-zinc-200/60";
+        return "bg-zinc-50 text-zinc-700 border-zinc-200/60 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-700";
     }
   };
 
   const getCategoryBorderClass = (category: string) => {
     switch (category) {
       case "akademik":
-        return "border-blue-100/80 hover:border-blue-400";
+        return "border-blue-100/80 hover:border-blue-400 dark:border-blue-900/50 dark:hover:border-blue-500";
       case "bahasa":
-        return "border-emerald-100/80 hover:border-emerald-400";
+        return "border-emerald-100/80 hover:border-emerald-400 dark:border-emerald-900/50 dark:hover:border-emerald-500";
       case "anak":
-        return "border-pink-100/80 hover:border-pink-400";
+        return "border-pink-100/80 hover:border-pink-400 dark:border-pink-900/50 dark:hover:border-pink-500";
       case "skills":
-        return "border-amber-100/80 hover:border-amber-400";
+        return "border-amber-100/80 hover:border-amber-400 dark:border-amber-900/50 dark:hover:border-amber-500";
       case "layanan":
-        return "border-purple-100/80 hover:border-purple-400";
+        return "border-purple-100/80 hover:border-purple-400 dark:border-purple-900/50 dark:hover:border-purple-500";
       default:
-        return "border-zinc-200/80 hover:border-zinc-400";
+        return "border-zinc-200/80 hover:border-zinc-400 dark:border-zinc-700 dark:hover:border-zinc-500";
     }
   };
 
   return (
-    <section id="products" className="py-16 sm:py-24 bg-zinc-50/30 scroll-mt-20">
+    <section id="products" className="py-16 sm:py-24 bg-zinc-50/30 scroll-mt-20 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
             Produk Unggulan Kami
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-zinc-600">
+          <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-slate-400">
             Temukan berbagai layanan bimbingan belajar, kursus bahasa asing, program keterampilan digital,
             dan kemitraan edukasi terbaik yang dirancang untuk mendukung kesuksesan akademis dan karir Anda.
           </p>
         </div>
 
         {/* Filters and Search Bar Container */}
-        <div className="mt-12 flex flex-col gap-6 items-stretch justify-between border-b border-zinc-200 pb-8 lg:flex-row lg:items-center">
+        <div className="mt-12 flex flex-col gap-6 items-stretch justify-between border-b border-zinc-200 pb-8 lg:flex-row lg:items-center dark:border-slate-700">
           {/* Navigation/Tabs */}
           <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none">
             {TABS.map((tab) => (
@@ -127,7 +127,7 @@ export default function Programs() {
                 className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 ${
                   activeTab === tab.id
                     ? "bg-primary text-white shadow-md shadow-primary/10"
-                    : "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300 hover:text-zinc-900"
+                    : "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300 hover:text-zinc-900 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 dark:hover:border-slate-600 dark:hover:text-slate-200"
                 }`}
               >
                 {tab.label}
@@ -148,16 +148,16 @@ export default function Programs() {
                 setSearchQuery(e.target.value);
                 setShowAll(false);
               }}
-              className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-11 pr-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5"
+              className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-11 pr-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
             />
           </div>
         </div>
 
         {/* Results Metadata */}
-        <div className="mt-6 flex items-center justify-between text-sm text-zinc-500">
+        <div className="mt-6 flex items-center justify-between text-sm text-zinc-500 dark:text-slate-400">
           <div>
-            Menampilkan <span className="font-semibold text-zinc-800">{filteredPrograms.length}</span> dari{" "}
-            <span className="font-semibold text-zinc-800">{programs.length}</span> produk unggulan
+            Menampilkan <span className="font-semibold text-zinc-800 dark:text-slate-200">{filteredPrograms.length}</span> dari{" "}
+            <span className="font-semibold text-zinc-800 dark:text-slate-200">{programs.length}</span> produk unggulan
           </div>
           {(activeTab !== "all" || searchQuery.trim() !== "" || showAll) && (
             <button
@@ -175,12 +175,12 @@ export default function Programs() {
 
         {/* Empty State */}
         {filteredPrograms.length === 0 ? (
-          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-zinc-200 bg-white py-16 px-4 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-50 text-zinc-400">
+          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-zinc-200 bg-white py-16 px-4 text-center dark:border-slate-700 dark:bg-slate-800/50">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-50 text-zinc-400 dark:bg-slate-800 dark:text-slate-500">
               <Inbox className="h-6 w-6" />
             </div>
-            <h3 className="mt-4 text-base font-semibold text-zinc-900">Tidak ada produk ditemukan</h3>
-            <p className="mt-2 text-sm text-zinc-500 max-w-sm">
+            <h3 className="mt-4 text-base font-semibold text-zinc-900 dark:text-slate-100">Tidak ada produk ditemukan</h3>
+            <p className="mt-2 text-sm text-zinc-500 max-w-sm dark:text-slate-400">
               Kami tidak menemukan produk yang cocok dengan kata kunci &ldquo;{searchQuery}&rdquo; di kategori ini.
             </p>
             <button
@@ -203,12 +203,12 @@ export default function Programs() {
                 return (
                   <div
                     key={program.title}
-                    className={`group flex flex-col justify-between rounded-[32px_32px_32px_8px] border-2 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 animate-fadeIn ${borderClass}`}
+                    className={`group flex flex-col justify-between rounded-[32px_32px_32px_8px] border-2 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 animate-fadeIn dark:bg-slate-800/50 ${borderClass}`}
                   >
                     <div>
                       {/* Category Badge & Icon Container */}
                       <div className="flex items-center justify-between gap-4 mb-5">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white dark:bg-blue-900/30">
                           <program.icon className="h-6 w-6" />
                         </div>
                         <span
@@ -221,7 +221,7 @@ export default function Programs() {
                       </div>
 
                       {/* Title and Age Info */}
-                      <h3 className="text-lg font-bold text-zinc-900 transition-colors group-hover:text-primary">
+                      <h3 className="text-lg font-bold text-zinc-900 transition-colors group-hover:text-primary dark:text-slate-100">
                         {program.title}
                       </h3>
                       <p className="mt-1 text-xs font-semibold text-accent uppercase tracking-wider">
@@ -229,16 +229,16 @@ export default function Programs() {
                       </p>
 
                       {/* Description */}
-                      <p className="mt-3.5 text-sm leading-relaxed text-zinc-500">
+                      <p className="mt-3.5 text-sm leading-relaxed text-zinc-500 dark:text-slate-400">
                         {program.description}
                       </p>
                     </div>
 
                     {/* Highlights / Bullet Points */}
-                    <div className="mt-6 pt-5 border-t border-zinc-100">
+                    <div className="mt-6 pt-5 border-t border-zinc-100 dark:border-slate-700">
                       <ul className="space-y-2.5">
                         {program.highlights.map((h) => (
-                          <li key={h} className="flex items-start gap-2.5 text-sm text-zinc-600">
+                          <li key={h} className="flex items-start gap-2.5 text-sm text-zinc-600 dark:text-slate-400">
                             <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
                             <span className="leading-tight">{h}</span>
                           </li>
@@ -276,7 +276,7 @@ export default function Programs() {
 
         {/* Footer Consultation CTA */}
         <div className="mt-16 text-center">
-          <p className="mb-4 text-sm text-zinc-500 font-medium">
+          <p className="mb-4 text-sm text-zinc-500 font-medium dark:text-slate-400">
             Bingung memilih program atau produk yang cocok untuk kebutuhan Anda?
           </p>
           <a
