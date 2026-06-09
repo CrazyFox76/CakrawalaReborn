@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
 import { programs } from "@/data/programs";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const p = programs.find((p) => p.slug === slug);
+  if (!p) return { title: "Program Tidak Ditemukan" };
+  return { title: `${p.title} | Cakrawala EduCentre`, description: p.description, openGraph: { title: p.title, description: p.description } };
+}
 
 export function generateStaticParams() {
   return programs.map((p) => ({ slug: p.slug }));
