@@ -1,89 +1,229 @@
 "use client";
 
-import { useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Menu, X, ChevronDown, Phone, BookOpen, GraduationCap, Globe, Users, MapPin } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 
-const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "Produk", href: "#products" },
-  { label: "Blog", href: "#blog" },
-  { label: "Tentang", href: "#about" },
-  { label: "Kontak", href: "#footer" },
+// ─── Data navigasi ────────────────────────────────────────────────────────────
+const jenjangItems = [
+  { label: "SD (Kelas 1–6)", icon: <BookOpen className="h-4 w-4 text-blue-400" />, href: "#" },
+  { label: "SMP (Kelas 7–9)", icon: <BookOpen className="h-4 w-4 text-indigo-400" />, href: "#" },
+  { label: "SMA (Kelas 10–12)", icon: <GraduationCap className="h-4 w-4 text-purple-400" />, href: "#" },
+  { label: "Gap Year / UTBK", icon: <GraduationCap className="h-4 w-4 text-orange-400" />, href: "#" },
 ];
 
-export default function Header() {
+const programItems = [
+  { label: "Les Privat Online", icon: <Globe className="h-4 w-4 text-teal-400" />, href: "#" },
+  { label: "Les Privat Tatap Muka", icon: <Users className="h-4 w-4 text-pink-400" />, href: "#" },
+  { label: "Persiapan SNBT", icon: <GraduationCap className="h-4 w-4 text-yellow-500" />, href: "#" },
+  { label: "Bahasa Asing", icon: <Globe className="h-4 w-4 text-cyan-400" />, href: "#" },
+];
+
+// ─── Dropdown wrapper ─────────────────────────────────────────────────────────
+function Dropdown({
+  label,
+  items,
+}: {
+  label: string;
+  items: { label: string; icon: React.ReactNode; href: string }[];
+}) {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-slate-800/80 dark:bg-slate-950/95 dark:supports-[backdrop-filter]:bg-slate-950/80">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <a href="#" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <span className="text-sm font-bold text-white">CE</span>
-          </div>
-          <span className="text-lg font-bold text-primary">
-            Cakrawala <span className="text-accent">EduCentre</span>
-          </span>
-        </a>
-
-        <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-zinc-600 transition-colors hover:text-primary dark:text-slate-400 dark:hover:text-primary"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        <a
-          href="https://wa.me/6281324868790"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-light md:inline-flex"
-        >
-          <Phone className="h-4 w-4" />
-          Konsultasi Gratis
-        </a>
-
-        <ThemeToggle />
-
-        <button
-          onClick={() => setOpen(!open)}
-          className="rounded-lg p-2 text-zinc-600 hover:bg-zinc-100 dark:text-slate-400 dark:hover:bg-slate-800 md:hidden"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-      </div>
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-1 text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+      >
+        {label}
+        <ChevronDown
+          className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
 
       {open && (
-        <div className="border-t border-zinc-200 bg-white px-4 pb-4 pt-2 dark:border-slate-800 dark:bg-slate-950 md:hidden">
-          <nav className="flex flex-col gap-2">
-            {navLinks.map((link) => (
+        <div className="absolute left-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900">
+          <div className="p-2">
+            {items.map((item) => (
               <a
-                key={link.label}
-                href={link.href}
+                key={item.label}
+                href={item.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-primary dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-primary"
+                className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-blue-50 hover:text-blue-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-blue-400"
               >
-                {link.label}
+                {item.icon}
+                {item.label}
               </a>
             ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Header utama ─────────────────────────────────────────────────────────────
+export default function Header() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-slate-800/80 dark:bg-slate-950/95"
+          : "bg-white dark:bg-slate-950"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        {/* Logo */}
+        <a href="#" className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 shadow-md">
+            <span className="text-xs font-extrabold text-white tracking-tight">CE</span>
+          </div>
+          <div className="leading-tight">
+            <span className="block text-base font-extrabold text-slate-800 dark:text-white">
+              Cakrawala
+            </span>
+            <span className="block text-[10px] font-semibold uppercase tracking-widest text-blue-600">
+              EduCentre
+            </span>
+          </div>
+        </a>
+
+        {/* Nav Desktop */}
+        <nav className="hidden items-center gap-7 md:flex">
+          <Dropdown label="Pilih Jenjang" items={jenjangItems} />
+          <Dropdown label="Pilih Program" items={programItems} />
+
+          <a
+            href="#about"
+            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+          >
+            Branch
+          </a>
+          <a
+            href="#testimonials"
+            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+          >
+            Kata Alumni
+          </a>
+          <a
+            href="#blog"
+            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+          >
+            Blog
+          </a>
+          <a
+            href="#cta"
+            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+          >
+            Promo
+          </a>
+        </nav>
+
+        {/* CTA + toggle */}
+        <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
+          <a
+            href="https://wa.me/6281324868790"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-500/25 transition-all hover:shadow-lg hover:shadow-blue-500/40 active:scale-[0.97]"
+          >
+            <Phone className="h-4 w-4" />
+            Coba Kelas Gratis
+          </a>
+        </div>
+
+        {/* Mobile toggle */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="border-t border-slate-200 bg-white px-4 pb-5 pt-2 dark:border-slate-800 dark:bg-slate-950 md:hidden">
+          <div className="flex flex-col gap-1">
+            <p className="mt-3 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+              Jenjang
+            </p>
+            {jenjangItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+              >
+                {item.icon} {item.label}
+              </a>
+            ))}
+
+            <p className="mt-3 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+              Program
+            </p>
+            {programItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+              >
+                {item.icon} {item.label}
+              </a>
+            ))}
+
+            <div className="mt-4 border-t border-slate-100 pt-4 dark:border-slate-800">
+              {[
+                { label: "Branch", icon: <MapPin className="h-4 w-4" />, href: "#about" },
+                { label: "Kata Alumni", icon: <Users className="h-4 w-4" />, href: "#testimonials" },
+                { label: "Blog", icon: <BookOpen className="h-4 w-4" />, href: "#blog" },
+              ].map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  {item.icon} {item.label}
+                </a>
+              ))}
+            </div>
+
             <a
               href="https://wa.me/6281324868790"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setOpen(false)}
-              className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-light"
+              onClick={() => setMobileOpen(false)}
+              className="mt-3 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-3 text-sm font-bold text-white shadow-md"
             >
               <Phone className="h-4 w-4" />
-              Konsultasi Gratis
+              Coba Kelas Gratis
             </a>
-          </nav>
+          </div>
         </div>
       )}
     </header>
