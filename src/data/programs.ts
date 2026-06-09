@@ -21,6 +21,7 @@ import {
 export interface Program {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
+  slug: string;
   age: string;
   description: string;
   highlights: string[];
@@ -31,6 +32,7 @@ export const programs: Program[] = [
   {
     icon: BookOpen,
     title: "Rumbel Cakrawala (Rumah Belajar)",
+    slug: "rumbel-cakrawala",
     age: "Semua Jenjang (SD, SMP, SMA)",
     description:
       "Program bimbingan belajar tatap muka kelas reguler dan intensif untuk meningkatkan prestasi akademik dan pemahaman materi sekolah.",
@@ -40,6 +42,7 @@ export const programs: Program[] = [
   {
     icon: Home,
     title: "Cakrawala Home Visit",
+    slug: "cakrawala-home-visit",
     age: "Semua Jenjang",
     description:
       "Layanan les privat guru datang ke rumah untuk kenyamanan belajar maksimal dan pembelajaran yang disesuaikan secara personal.",
@@ -49,6 +52,7 @@ export const programs: Program[] = [
   {
     icon: MessageSquare,
     title: "Cakrashare (Brainly)",
+    slug: "cakrashare-brainly",
     age: "Siswa & Guru",
     description:
       "Platform diskusi dan tanya jawab interaktif untuk membantu menyelesaikan tugas sekolah dengan penjelasan yang jelas dan cepat.",
@@ -58,6 +62,7 @@ export const programs: Program[] = [
   {
     icon: ShoppingBag,
     title: "Cakra Bookstore",
+    slug: "cakra-bookstore",
     age: "Umum",
     description:
       "Penyedia buku teks pelajaran, modul soal tryout, dan referensi belajar terlengkap untuk mendukung persiapan ujian.",
@@ -67,6 +72,7 @@ export const programs: Program[] = [
   {
     icon: Baby,
     title: "Cakrakids",
+    slug: "cakrakids",
     age: "PAUD & TK (Usia 3 - 6 tahun)",
     description:
       "Program stimulasi tumbuh kembang anak usia dini berfokus pada membaca, menulis, berhitung (calistung) dengan metode bermain yang menyenangkan.",
@@ -76,6 +82,7 @@ export const programs: Program[] = [
   {
     icon: Languages,
     title: "Cakra English Centre",
+    slug: "cakra-english-centre",
     age: "Semua Usia",
     description:
       "Pusat pelatihan bahasa Inggris intensif dari dasar hingga tingkat lanjut, termasuk percakapan (speaking) dan tata bahasa.",
@@ -85,6 +92,7 @@ export const programs: Program[] = [
   {
     icon: TrendingUp,
     title: "Cakra Skills Up",
+    slug: "cakra-skills-up",
     age: "Remaja & Dewasa",
     description:
       "Program pelatihan keterampilan digital dan praktis untuk mempersiapkan diri menghadapi dunia kerja dan meningkatkan produktivitas.",
@@ -94,6 +102,7 @@ export const programs: Program[] = [
   {
     icon: Laptop,
     title: "Rumbel Cakrawala (Kelas Online)",
+    slug: "rumbel-cakrawala-online",
     age: "Semua Jenjang",
     description:
       "Program bimbingan belajar jarak jauh (online) yang interaktif dengan fasilitas rekaman kelas dan materi digital lengkap.",
@@ -103,6 +112,7 @@ export const programs: Program[] = [
   {
     icon: Code,
     title: "Cakra Tech",
+    slug: "cakra-tech",
     age: "Siswa & Umum",
     description:
       "Pelatihan coding, pemrograman web, robotika, dan kecerdasan buatan untuk membangun logika berpikir komputasional sejak dini.",
@@ -112,6 +122,7 @@ export const programs: Program[] = [
   {
     icon: Monitor,
     title: "TryOut CBT",
+    slug: "tryout-cbt",
     age: "Siswa Kelas 6, 9, 12 & Alumni",
     description:
       "Platform simulasi ujian berbasis komputer yang dirancang semirip mungkin dengan sistem ujian resmi (UTBK, ANBK, Ujian Sekolah).",
@@ -121,6 +132,7 @@ export const programs: Program[] = [
   {
     icon: Handshake,
     title: "Cakra Edu Partner",
+    slug: "cakra-edu-partner",
     age: "Sekolah & Instansi",
     description:
       "Kemitraan strategis dengan sekolah dan instansi untuk penyediaan guru pengganti, kegiatan ekstrakurikuler, dan pelatihan peningkatan kompetensi guru.",
@@ -130,6 +142,7 @@ export const programs: Program[] = [
   {
     icon: FileText,
     title: "Cakra Bimskrip",
+    slug: "cakra-bimskrip",
     age: "Mahasiswa",
     description:
       "Bimbingan penyusunan tugas akhir, skripsi, tesis, dan olah data statistik dengan mentor akademis berpengalaman.",
@@ -139,6 +152,7 @@ export const programs: Program[] = [
   {
     icon: Heart,
     title: "Cakra Islami Terpadu",
+    slug: "cakra-islami-terpadu",
     age: "Anak-anak & Remaja",
     description:
       "Program bimbingan keislaman terpadu, termasuk cara membaca Al-Qur'an (Tahsin/Tahfidz), fiqih ibadah praktis, dan akhlak.",
@@ -148,6 +162,7 @@ export const programs: Program[] = [
   {
     icon: Globe,
     title: "Cakra Language Centre",
+    slug: "cakra-language-centre",
     age: "Semua Jenjang",
     description:
       "Pusat pembelajaran bahasa asing non-Inggris seperti bahasa Mandarin, Jepang, Korea, Jerman, dan Arab untuk studi atau karir.",
@@ -157,6 +172,7 @@ export const programs: Program[] = [
   {
     icon: Trophy,
     title: "Cakra Prestasi",
+    slug: "cakra-prestasi",
     age: "Siswa Berbakat",
     description:
       "Bimbingan khusus persiapan olimpiade sains nasional (OSN), lomba akademik, dan kompetisi bergengsi tingkat nasional.",
@@ -166,6 +182,7 @@ export const programs: Program[] = [
   {
     icon: Shield,
     title: "Cakra Kedinasan (Cakdin)",
+    slug: "cakra-kedinasan",
     age: "Lulusan SMA/SMK",
     description:
       "Program persiapan intensif seleksi masuk perguruan tinggi kedinasan seperti STAN, STIS, IPDN, AKPOL, dan AKMIL.",
@@ -175,6 +192,7 @@ export const programs: Program[] = [
   {
     icon: CreditCard,
     title: "Cakra Member",
+    slug: "cakra-member",
     age: "Semua Pelanggan",
     description:
       "Program loyalitas keanggotaan eksklusif dengan berbagai keuntungan seperti diskon biaya bimbingan, voucher belajar, dan prioritas layanan.",

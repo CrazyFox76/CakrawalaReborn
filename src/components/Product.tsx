@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowRight, Search, Inbox, ChevronDown, ChevronUp, Building2, ChevronRight } from "lucide-react";
+import { ArrowRight, Search, Inbox, ChevronDown, ChevronUp } from "lucide-react";
 import { programs } from "@/data/programs";
 
 const TABS = [
@@ -112,16 +112,6 @@ export default function Programs() {
             Temukan berbagai layanan bimbingan belajar, kursus bahasa asing, program keterampilan digital,
             dan kemitraan edukasi terbaik yang dirancang untuk mendukung kesuksesan akademis dan karir Anda.
           </p>
-          <div className="mt-6 flex justify-center">
-            <Link
-              href="/brand"
-              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-600 transition-all hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-400 dark:hover:border-primary dark:hover:text-primary"
-            >
-              <Building2 className="h-4 w-4" />
-              Jelajahi Semua Brand & Program
-              <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
         </div>
 
         {/* Filters and Search Bar Container */}
@@ -256,6 +246,14 @@ export default function Programs() {
                         ))}
                       </ul>
                     </div>
+
+                    <Link
+                      href={`/program/${program.slug}`}
+                      className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 text-sm font-semibold text-zinc-700 transition-all hover:border-primary hover:bg-primary hover:text-white dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:border-primary dark:hover:bg-primary dark:hover:text-white"
+                    >
+                      Lihat Detail
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
                   </div>
                 );
               })}
