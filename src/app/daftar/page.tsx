@@ -4,8 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, MessageCircle, User, Phone, BookText, Mail, Calendar,
-  Home, Clock, MapPin, FileText, Copy, CheckCircle2, Banknote,
+  Clock, MapPin, FileText, Banknote,
 } from "lucide-react";
+import { createRegistration } from "@/db/actions";
 
 type Paket = { label: string; sesi: number; harga: number };
 
@@ -91,8 +92,28 @@ export default function Daftar() {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      await createRegistration({
+        nama: form.nama,
+        wa: form.wa,
+        email: form.email || null,
+        program: form.program,
+        jenjang: form.jenjang,
+        paket: selectedPaket?.label ?? null,
+        harga: selectedPaket?.harga ?? null,
+        jenisLes: form.jenisLes,
+        alamat: form.alamat,
+        waktuLes: form.waktuLes,
+        durasi: form.durasi,
+        orangTua: form.orangTua || null,
+        pesan: form.pesan || null,
+        invoiceNo: invoiceNo.full,
+      });
+    } catch (err) {
+      console.error("Gagal menyimpan pendaftaran:", err);
+    }
     setStep("invoice");
   };
 

@@ -33,7 +33,7 @@ export default function Faq() {
                   className="flex w-full items-center justify-between px-4 py-3 text-left transition-colors sm:px-6 sm:py-4 hover:bg-zinc-50 dark:hover:bg-slate-800"
                 >
                   <span className="pr-3 text-xs font-semibold text-zinc-900 sm:pr-4 sm:text-base dark:text-slate-100">
-                    {faq.q}
+                    {faq.question}
                   </span>
                   <ChevronDown
                     className={`h-5 w-5 flex-shrink-0 text-zinc-400 transition-transform ${
@@ -50,7 +50,7 @@ export default function Faq() {
                 >
                   <div className="overflow-hidden">
                     <p className="border-t border-zinc-100 px-4 py-3 text-xs leading-relaxed text-zinc-500 sm:px-6 sm:py-4 sm:text-sm dark:border-zinc-700 dark:text-slate-400">
-                      {faq.a}
+                      {faq.answer}
                     </p>
                   </div>
                 </div>
