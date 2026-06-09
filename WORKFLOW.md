@@ -16,9 +16,12 @@ git push origin Wega   # atau ibeng
 ```
 
 ## Kalo mau gabung ke main (gabungin hasil kerja):
-Buka GitHub.com → repo → **Pull Requests** → **New Pull Request**
-- base: main ← compare: Wega (atau ibeng)
-- klik **Create Pull Request** → **Merge Pull Request**
+```bash
+git checkout main
+git pull origin main
+git merge Wega              # ganti sesuai branch lu
+git push origin main
+```
 
 ## Biar aman:
 1. Sebelum coding: selalu pull + merge main dulu
