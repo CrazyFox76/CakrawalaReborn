@@ -108,8 +108,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-zinc-800 pt-6 text-center text-sm text-zinc-600">
-          &copy; {new Date().getFullYear()} Cakrawala EduCentre. All rights
-          reserved.
+          &copy; {new Date().getFullYear()} Cakrawala EduCentre. Hak cipta dilindungi.
         </div>
       </div>
     </footer>
