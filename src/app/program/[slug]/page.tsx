@@ -2,23 +2,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
-import { programs } from "@/data/programs";
+import { getProgramBySlug, getPrograms } from "@/db/actions";
+import { getProgramIcon } from "@/lib/icon-map";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const p = programs.find((p) => p.slug === slug);
+  const p = await getProgramBySlug(slug);
   if (!p) return { title: "Program Tidak Ditemukan" };
   return { title: `${p.title} | Cakrawala EduCentre`, description: p.description, openGraph: { title: p.title, description: p.description } };
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const programs = await getPrograms();
   return programs.map((p) => ({ slug: p.slug }));
 }
 
 export default async function ProgramDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const program = programs.find((p) => p.slug === slug);
+  const program = await getProgramBySlug(slug);
   if (!program) notFound();
+  const Icon = getProgramIcon(program.iconName);
 
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
@@ -33,7 +36,7 @@ export default async function ProgramDetail({ params }: { params: Promise<{ slug
 
         <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-10 dark:border-slate-800 dark:bg-slate-900/50">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary sm:h-14 sm:w-14 sm:rounded-xl dark:bg-blue-900/30">
-            <program.icon className="h-5 w-5 sm:h-7 sm:w-7" />
+            <Icon className="h-5 w-5 sm:h-7 sm:w-7" />
           </div>
 
           <h1 className="mt-4 text-lg font-bold text-zinc-900 sm:mt-5 sm:text-3xl dark:text-slate-100">

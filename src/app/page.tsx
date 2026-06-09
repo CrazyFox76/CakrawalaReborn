@@ -15,22 +15,24 @@ import Footer from "@/components/footer";
 import WaFloating from "@/components/wa-floating";
 import BackToTop from "@/components/back-to-top";
 import Reveal from "@/components/reveal";
+import { getTestimonials } from "@/db/actions";
 
-const sections = [
-  { Component: About, id: "about" },
-  { Component: CakraPoints, id: "cakrapoints" },
-  { Component: CakraPointsPromo, id: "cakrapoints-promo" },
-  { Component: Programs, id: "programs" },
-  { Component: WhyUs, id: "why-us" },
-  { Component: Tutors, id: "tutors" },
-  { Component: Testimonials, id: "testimonials" },
-  { Component: BlogPreview, id: "blog" },
-  { Component: Faq, id: "faq" },
-  { Component: CtaConsult, id: "cta" },
-  { Component: ScreeningRaport, id: "screening" },
-];
+export default async function Home() {
+  const testimonials = await getTestimonials();
 
-export default function Home() {
+  const sections = [
+    { Component: About, id: "about" },
+    { Component: CakraPoints, id: "cakrapoints" },
+    { Component: CakraPointsPromo, id: "cakrapoints-promo" },
+    { Component: Programs, id: "programs" },
+    { Component: WhyUs, id: "why-us" },
+    { Component: Tutors, id: "tutors" },
+    { Component: BlogPreview, id: "blog" },
+    { Component: Faq, id: "faq" },
+    { Component: CtaConsult, id: "cta" },
+    { Component: ScreeningRaport, id: "screening" },
+  ];
+
   return (
     <>
       <Header />
@@ -41,6 +43,9 @@ export default function Home() {
             <Component />
           </Reveal>
         ))}
+        <Reveal>
+          <Testimonials testimonials={testimonials} />
+        </Reveal>
       </main>
       <Footer />
       <WaFloating />

@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { testimonials } from "@/data/testimonials";
+import type { InferSelectModel } from "drizzle-orm";
+import type { testimonials as testimonialsTable } from "@/db/schema";
 
-export default function Testimonials() {
+type Testimonial = InferSelectModel<typeof testimonialsTable>;
+
+export default function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
   const [current, setCurrent] = useState(0);
   const total = testimonials.length;
 

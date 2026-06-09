@@ -2,22 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, MessageCircle } from "lucide-react";
-import { blogPosts } from "@/data/blog-posts";
+import { getBlogPostBySlug, getBlogPosts } from "@/db/actions";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = await getBlogPostBySlug(slug);
   if (!post) return { title: "Artikel Tidak Ditemukan" };
   return { title: `${post.title} | Cakrawala EduCentre`, description: post.excerpt, openGraph: { title: post.title, description: post.excerpt } };
 }
 
-export function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
 export default async function BlogDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = await getBlogPostBySlug(slug);
   if (!post) notFound();
 
   return (

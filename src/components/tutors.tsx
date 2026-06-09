@@ -1,7 +1,8 @@
-import { tutors } from "@/data/tutors";
 import { Star } from "lucide-react";
+import { getTutors } from "@/db/actions";
 
-export default function Tutors() {
+export default async function Tutors() {
+  const tutors = await getTutors();
   return (
     <section className="py-12 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

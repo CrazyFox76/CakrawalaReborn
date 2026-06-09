@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Calendar, ArrowRight } from "lucide-react";
-import { blogPosts } from "@/data/blog-posts";
+import { getBlogPosts } from "@/db/actions";
 
-export default function BlogPreview() {
+export default async function BlogPreview() {
+  const blogPosts = await getBlogPosts();
   return (
     <section id="blog" className="py-12 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
