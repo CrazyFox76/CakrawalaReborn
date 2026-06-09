@@ -136,7 +136,7 @@ export default function Hero() {
             <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-yellow-400/20 px-4 py-1.5 text-sm font-bold text-yellow-300 ring-1 ring-yellow-300/30">
               <Zap className="h-4 w-4 fill-yellow-300" />
               Sisa 6 hari lagi!&nbsp;
-              <span className="font-mono text-base tracking-widest text-white">
+              <span className="font-mono text-base tracking-widest text-white" suppressHydrationWarning>
                 {h} : {m} : {s}
               </span>
             </div>

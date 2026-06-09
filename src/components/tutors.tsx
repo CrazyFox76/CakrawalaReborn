@@ -19,7 +19,7 @@ export default async function Tutors() {
         <div className="mt-8 grid gap-4 sm:mt-12 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {tutors.map((tutor) => (
             <div
-              key={tutor.name}
+              key={tutor.id}
               className="group rounded-2xl border border-zinc-200 bg-white p-4 text-center transition-all sm:p-6 hover:border-primary/20 hover:shadow-lg dark:border-slate-700/50 dark:bg-slate-800/50"
             >
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-light text-sm font-bold text-white shadow-md sm:h-16 sm:w-16 sm:text-lg">
