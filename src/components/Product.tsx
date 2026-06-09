@@ -282,22 +282,6 @@ export default function Programs() {
             )}
           </>
         )}
-
-        {/* Footer Consultation CTA */}
-        <div className="mt-16 text-center">
-          <p className="mb-4 text-sm text-zinc-500 font-medium dark:text-slate-400">
-            Bingung memilih program atau produk yang cocok untuk kebutuhan Anda?
-          </p>
-          <a
-            href="https://wa.me/6281324868790"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/15 transition-all hover:bg-primary-light hover:shadow-xl hover:shadow-primary/20"
-          >
-            Konsultasikan Produk yang Tepat
-            <ArrowRight className="h-4 w-4" />
-          </a>
-        </div>
       </div>
     </section>
   );
