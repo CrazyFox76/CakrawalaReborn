@@ -1,6 +1,8 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import About from "@/components/about";
+import CakraPoints from "@/components/cakrapoints";
+import CakraPointsPromo from "@/components/cakrapoints-promo";
 import Programs from "@/components/Product";
 import WhyUs from "@/components/why-us";
 import Tutors from "@/components/tutors";
@@ -15,6 +17,8 @@ import Reveal from "@/components/reveal";
 
 const sections = [
   { Component: About, id: "about" },
+  { Component: CakraPoints, id: "cakrapoints" },
+  { Component: CakraPointsPromo, id: "cakrapoints-promo" },
   { Component: Programs, id: "programs" },
   { Component: WhyUs, id: "why-us" },
   { Component: Tutors, id: "tutors" },
