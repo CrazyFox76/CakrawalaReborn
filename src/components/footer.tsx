@@ -2,17 +2,18 @@ import { Mail, Phone, MapPin, Globe, ExternalLink, MessageCircle } from "lucide-
 
 const quickLinks = [
   { label: "Home", href: "#" },
-  { label: "Produk", href: "#products" },
+  { label: "Harga", href: "/harga" },
+  { label: "Produk", href: "#programs" },
   { label: "Tentang Kami", href: "/tentang-kami" },
   { label: "Pendaftaran", href: "/daftar" },
   { label: "Blog", href: "#blog" },
 ];
 
 const socialLinks = [
-  { icon: Globe, href: "#", label: "Facebook" },
-  { icon: ExternalLink, href: "#", label: "Twitter" },
-  { icon: ExternalLink, href: "#", label: "LinkedIn" },
   { icon: MessageCircle, href: "https://wa.me/6281324868790", label: "WhatsApp" },
+  { icon: Globe, href: "https://instagram.com/cakrawala_educentre", label: "Instagram" },
+  { icon: ExternalLink, href: "https://facebook.com/cakrawalaeducentre", label: "Facebook" },
+  { icon: ExternalLink, href: "https://tiktok.com/@cakrawala_educentre", label: "TikTok" },
 ];
 
 export default function Footer() {
