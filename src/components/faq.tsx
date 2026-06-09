@@ -8,19 +8,19 @@ export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-surface py-16 sm:py-24 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
+    <section className="bg-surface py-12 sm:py-24 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-4xl">
             Pertanyaan yang Sering Diajukan
           </h2>
-          <p className="mt-4 text-lg text-zinc-600 dark:text-slate-400">
+          <p className="mt-3 text-sm text-zinc-600 sm:mt-4 sm:text-lg dark:text-slate-400">
             Masih ragu? Temukan jawaban dari pertanyaan berikut atau hubungi
             kami langsung.
           </p>
         </div>
 
-        <div className="mt-12 space-y-3">
+        <div className="mt-8 space-y-2 sm:mt-12 sm:space-y-3">
           {faqs.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
@@ -30,9 +30,9 @@ export default function Faq() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-slate-800"
+                  className="flex w-full items-center justify-between px-4 py-3 text-left transition-colors sm:px-6 sm:py-4 hover:bg-zinc-50 dark:hover:bg-slate-800"
                 >
-                  <span className="pr-4 text-sm font-semibold text-zinc-900 sm:text-base dark:text-slate-100">
+                  <span className="pr-3 text-xs font-semibold text-zinc-900 sm:pr-4 sm:text-base dark:text-slate-100">
                     {faq.q}
                   </span>
                   <ChevronDown
@@ -49,7 +49,7 @@ export default function Faq() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="border-t border-zinc-100 px-6 py-4 text-sm leading-relaxed text-zinc-500 dark:border-zinc-700 dark:text-slate-400">
+                    <p className="border-t border-zinc-100 px-4 py-3 text-xs leading-relaxed text-zinc-500 sm:px-6 sm:py-4 sm:text-sm dark:border-zinc-700 dark:text-slate-400">
                       {faq.a}
                     </p>
                   </div>
@@ -59,8 +59,8 @@ export default function Faq() {
           })}
         </div>
 
-        <div className="mt-8 rounded-xl border border-zinc-200 bg-white p-6 text-center dark:border-slate-700 dark:bg-slate-800/50">
-          <p className="text-sm text-zinc-600">
+        <div className="mt-6 rounded-xl border border-zinc-200 bg-white p-4 text-center sm:mt-8 sm:p-6 dark:border-slate-700 dark:bg-slate-800/50">
+          <p className="text-xs text-zinc-600 sm:text-sm">
             Tidak menemukan jawaban yang Anda cari?
           </p>
           <a
