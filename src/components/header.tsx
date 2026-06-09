@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown, Phone, BookOpen, GraduationCap, Globe, Users, MapPin } from "lucide-react";
+import { Menu, X, ChevronDown, BookOpen, GraduationCap, Globe, Users, MapPin, LogIn } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
+import Link from "next/link";
 
 // ─── Data navigasi ────────────────────────────────────────────────────────────
 const jenjangItems = [
@@ -140,15 +141,13 @@ export default function Header() {
         {/* CTA + toggle */}
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
-          <a
-            href="https://wa.me/6281324868790"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-500/25 transition-all hover:shadow-lg hover:shadow-blue-500/40 active:scale-[0.97]"
+          <Link
+            href="/login"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-500/25 transition-all hover:shadow-lg hover:shadow-blue-500/40 hover:from-blue-500 hover:to-indigo-600 active:scale-[0.97]"
           >
-            <Phone className="h-4 w-4" />
-            Coba Kelas Gratis
-          </a>
+            <LogIn className="h-4 w-4" />
+            Login LMS
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -213,16 +212,14 @@ export default function Header() {
               ))}
             </div>
 
-            <a
-              href="https://wa.me/6281324868790"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/login"
               onClick={() => setMobileOpen(false)}
               className="mt-3 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-3 text-sm font-bold text-white shadow-md"
             >
-              <Phone className="h-4 w-4" />
-              Coba Kelas Gratis
-            </a>
+              <LogIn className="h-4 w-4" />
+              Login LMS
+            </Link>
           </div>
         </div>
       )}
