@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Search, Inbox, ChevronDown, ChevronUp } from "lucide-react";
 import { programs } from "@/data/programs";
@@ -17,6 +17,16 @@ export default function Programs() {
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const initialCount = isMobile ? 3 : 6;
 
   const filteredPrograms = useMemo(() => {
     return programs.filter((program) => {
@@ -46,8 +56,8 @@ export default function Programs() {
   }, [activeTab, searchQuery]);
 
   const displayedPrograms = useMemo(() => {
-    return showAll ? filteredPrograms : filteredPrograms.slice(0, 6);
-  }, [filteredPrograms, showAll]);
+    return showAll ? filteredPrograms : filteredPrograms.slice(0, initialCount);
+  }, [filteredPrograms, showAll, initialCount]);
 
   const getCategoryLabel = (category: string) => {
     switch (category) {
@@ -262,7 +272,7 @@ export default function Programs() {
             </div>
 
             {/* Show More / Show Less Button */}
-            {filteredPrograms.length > 6 && (
+            {filteredPrograms.length > initialCount && (
               <div className="mt-12 text-center animate-fadeIn">
                 <button
                   onClick={() => setShowAll(!showAll)}
@@ -275,7 +285,7 @@ export default function Programs() {
                     </>
                   ) : (
                     <>
-                      Lihat Selengkapnya ({filteredPrograms.length - 6} produk lainnya)
+                      Lihat Selengkapnya ({filteredPrograms.length - initialCount} produk lainnya)
                       <ChevronDown className="h-4 w-4" />
                     </>
                   )}
