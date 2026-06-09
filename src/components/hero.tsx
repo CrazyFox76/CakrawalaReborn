@@ -232,7 +232,7 @@ export default function Hero() {
           <div className="relative">
             {/* Label judul grid */}
             <div className="mb-4 text-right text-xs font-semibold uppercase tracking-widest text-white/40">
-              Alumni Cakrawala yang Diterima PTN Terbaik ✨
+              Alumni Cakrawala yang Diterima PTN Terbaik
             </div>
 
             {/* Grid 3 kolom */}
