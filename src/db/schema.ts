@@ -20,6 +20,7 @@ export const programs = pgTable("programs", {
   highlights: text("highlights").array().notNull(),
   category: varchar("category", { length: 50 }).notNull(),
   iconName: varchar("icon_name", { length: 50 }).notNull(),
+  isPopular: boolean("is_popular").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -162,6 +163,14 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   }),
 );
+
+// ─── Leads (hero lead capture) ─────────────────────────────────────────────────
+export const leads = pgTable("leads", {
+  id: serial("id").primaryKey(),
+  phone: varchar("phone", { length: 50 }).notNull(),
+  source: varchar("source", { length: 100 }).default("hero"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
 
 // ─── Bank Accounts ─────────────────────────────────────────────────────────────
 export const bankAccounts = pgTable("bank_accounts", {

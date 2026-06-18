@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle, MessageCircle, GraduationCap, BookOpen, ScrollText, Building2 } from "lucide-react";
+import Script from "next/script";
+import { ArrowLeft, CheckCircle, MessageCircle, GraduationCap, BookOpen, ScrollText, Building2, ExternalLink } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Biaya Les & Harga Paket | Cakrawala EduCentre",
-  description: "Informasi lengkap biaya les privat, bimbel, bimbingan skripsi, dan sewa balai pertemuan. Harga terjangkau dengan kualitas terbaik.",
+  title: "Biaya Les Privat & Harga Paket Bimbel 2026 | Cakrawala EduCentre",
+  description: "Informasi lengkap biaya les privat SD, SMP, SMA, UTBK, bimbingan skripsi, dan sewa balai pertemuan. Harga terjangkau, kualitas terbaik. Mulai dari Rp 540rb!",
+  openGraph: {
+    title: "Biaya Les Privat & Harga Paket | Cakrawala EduCentre",
+    description: "Informasi lengkap biaya les privat SD, SMP, SMA, UTBK, bimbingan skripsi. Harga terjangkau, kualitas terbaik.",
+    locale: "id_ID",
+    siteName: "Cakrawala EduCentre",
+  },
 };
 
 const paketLes = [
@@ -40,7 +47,7 @@ const layananBiaya = [
     icon: Building2,
     title: "Sewa Laboratorium & Balai",
     description: "Cakrawala menyediakan ruang laboratorium komputer dan balai pertemuan untuk tryout, workshop, dan pelatihan dengan harga sewa kompetitif.",
-    link: "#",
+    link: "/tentang-kami",
   },
 ];
 
@@ -80,8 +87,18 @@ export default function Biaya() {
         </div>
 
         <div id="les" className="mt-10 scroll-mt-20 sm:mt-14">
-          <h2 className="text-lg font-bold text-primary sm:text-2xl">Paket Les Privat</h2>
-          <p className="mt-1 text-sm text-zinc-500 dark:text-slate-400">Pilih paket sesuai kebutuhan. Biaya per sesi sudah termasuk modul & laporan belajar.</p>
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div>
+              <h2 className="text-lg font-bold text-primary sm:text-2xl">Paket Les Privat</h2>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-slate-400">Pilih paket sesuai kebutuhan. Biaya per sesi sudah termasuk modul & laporan belajar.</p>
+            </div>
+            <Link
+              href="/harga"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary-light"
+            >
+              Lihat Rincian Harga <ExternalLink className="h-3 w-3" />
+            </Link>
+          </div>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-5">
             {paketLes.map((j) => (
@@ -147,6 +164,25 @@ export default function Biaya() {
             </a>
           </div>
         </div>
+
+        <Script id="biaya-jsonld" type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: "Paket Les Privat Cakrawala EduCentre",
+            description: "Paket les privat SD, SMP, SMA, UTBK, bimbingan skripsi",
+            provider: { "@type": "Organization", name: "Cakrawala EduCentre" },
+            offers: paketLes.flatMap((j) =>
+              Object.entries(j.prices).map(([sesi, harga]) => ({
+                "@type": "Offer",
+                name: `${j.label} - ${sesi}`,
+                price: harga,
+                priceCurrency: "IDR",
+                description: `Paket les ${j.label} ${sesi}`,
+              }))
+            ),
+          }),
+        }} />
       </div>
     </div>
   );

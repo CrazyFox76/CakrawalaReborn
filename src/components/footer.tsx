@@ -1,10 +1,12 @@
 import { Mail, Phone, MapPin, Globe, ExternalLink, MessageCircle } from "lucide-react";
+import MapSection from "@/components/map-section";
 
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "Program", href: "/program" },
   { label: "Bimbel", href: "/bimbel" },
   { label: "Biaya", href: "/biaya" },
+  { label: "Harga Les", href: "/harga" },
   { label: "Tentang Kami", href: "/tentang-kami" },
   { label: "Blog", href: "/blog" },
   { label: "Karir", href: "/karir" },
@@ -110,9 +112,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-zinc-800 pt-6 text-center text-sm text-zinc-600">
-          &copy; {new Date().getFullYear()} Cakrawala EduCentre. Hak cipta dilindungi.
-        </div>
+      </div>
+
+      <MapSection />
+
+      <div className="border-t border-zinc-800 py-6 text-center text-sm text-zinc-600">
+        &copy; {new Date().getFullYear()} Cakrawala EduCentre. Hak cipta dilindungi.
       </div>
     </footer>
   );

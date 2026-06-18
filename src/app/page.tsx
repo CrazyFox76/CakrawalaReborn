@@ -1,18 +1,13 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
-import About from "@/components/about";
+import PopularPackages from "@/components/popular-packages";
 import CakraPoints from "@/components/cakrapoints";
-import CakraPointsPromo from "@/components/cakrapoints-promo";
 import Programs from "@/components/Product";
-import WhyUs from "@/components/why-us";
 import Tutors from "@/components/tutors";
 import Testimonials from "@/components/testimonials";
 import BlogPreview from "@/components/blog-preview";
 import Faq from "@/components/faq";
 import CtaConsult from "@/components/cta-consult";
-import ScreeningRaport from "@/components/screening-raport";
-import GallerySection from "@/components/gallery";
-import MapSection from "@/components/map-section";
 import Footer from "@/components/footer";
 import WaFloating from "@/components/wa-floating";
 import BackToTop from "@/components/back-to-top";
@@ -26,18 +21,12 @@ export default async function Home() {
   ]);
 
   const sections = [
-    { Component: About, id: "about" },
-    { Component: CakraPoints, id: "cakrapoints" },
-    { Component: CakraPointsPromo, id: "cakrapoints-promo" },
     { Component: () => <Programs brands={brands} />, id: "programs" },
-    { Component: WhyUs, id: "why-us" },
+    { Component: CakraPoints, id: "cakrapoints" },
     { Component: Tutors, id: "tutors" },
     { Component: BlogPreview, id: "blog" },
     { Component: Faq, id: "faq" },
     { Component: CtaConsult, id: "cta" },
-    { Component: ScreeningRaport, id: "screening" },
-    { Component: GallerySection, id: "gallery" },
-    { Component: MapSection, id: "map" },
   ];
 
   return (
@@ -45,6 +34,9 @@ export default async function Home() {
       <Header />
       <main>
         <Hero />
+        <Reveal>
+          <PopularPackages />
+        </Reveal>
         {sections.map(({ Component, id }) => (
           <Reveal key={id}>
             <Component />

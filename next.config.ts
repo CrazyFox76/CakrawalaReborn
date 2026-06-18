@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  images: { unoptimized: true },
+  async redirects() {
+    return [
+      { source: "/cakrakarir", destination: "/karir", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

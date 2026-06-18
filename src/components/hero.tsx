@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Zap, ArrowRight, CheckCircle, GraduationCap } from "lucide-react";
+import { createLead } from "@/db/actions";
 
 const COLORS = [
   "from-blue-500 to-blue-600",
@@ -81,6 +82,7 @@ export default function Hero() {
       return;
     }
     setError("");
+    createLead(cleaned).catch(console.error);
     setSubmitted(true);
   };
 

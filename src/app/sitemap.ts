@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPrograms, getBlogPosts } from "@/db/actions";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://cakrawala-educentre.vercel.app";
+  const baseUrl = "http://localhost:3000";
 
   const staticPages = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 1 },

@@ -1,23 +1,33 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown, BookOpen, GraduationCap, Globe, Users, MapPin, LogIn, FileText } from "lucide-react";
+import { Menu, X, ChevronDown, BookOpen, GraduationCap, Globe, Users, MapPin, LogIn, FileText, Code, Baby, Monitor, Heart, Shield, Zap } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 import Link from "next/link";
 
 // ─── Data navigasi ────────────────────────────────────────────────────────────
-const jenjangItems = [
-  { label: "SD (Kelas 1–6)", icon: <BookOpen className="h-4 w-4 text-blue-400" />, href: "/bimbel" },
-  { label: "SMP (Kelas 7–9)", icon: <BookOpen className="h-4 w-4 text-indigo-400" />, href: "/bimbel" },
-  { label: "SMA (Kelas 10–12)", icon: <GraduationCap className="h-4 w-4 text-purple-400" />, href: "/bimbel" },
-  { label: "Gap Year / UTBK", icon: <GraduationCap className="h-4 w-4 text-orange-400" />, href: "/program/tryout-cbt" },
+const produkItems = [
+  { label: "Semua Produk", icon: <GraduationCap className="h-4 w-4 text-blue-400" />, href: "/program" },
+  { label: "Cakrawala Centre", icon: <BookOpen className="h-4 w-4 text-blue-400" />, href: "/program/rumbel-cakrawala" },
+  { label: "Balai Tutor", icon: <Users className="h-4 w-4 text-indigo-400" />, href: "/program/cakrawala-home-visit" },
+  { label: "Cakra English Centre", icon: <Globe className="h-4 w-4 text-teal-400" />, href: "/program/cakra-english-centre" },
+  { label: "Cakra Coding", icon: <Code className="h-4 w-4 text-purple-400" />, href: "/program/cakra-tech" },
+  { label: "Cakra Kids", icon: <Baby className="h-4 w-4 text-pink-400" />, href: "/program/cakrakids" },
+  { label: "TryOut CBT", icon: <Monitor className="h-4 w-4 text-orange-400" />, href: "/program/tryout-cbt" },
+  { label: "Bimbingan Skripsi", icon: <FileText className="h-4 w-4 text-green-400" />, href: "/program/cakra-bimskrip" },
+  { label: "Cakra Islami", icon: <Heart className="h-4 w-4 text-red-400" />, href: "/program/cakra-islami-terpadu" },
 ];
 
 const programItems = [
   { label: "Semua Program", icon: <GraduationCap className="h-4 w-4 text-blue-400" />, href: "/program" },
+  { label: "SD (Kelas 1–6)", icon: <BookOpen className="h-4 w-4 text-blue-400" />, href: "/program/rumbel-cakrawala" },
+  { label: "SMP (Kelas 7–9)", icon: <BookOpen className="h-4 w-4 text-indigo-400" />, href: "/program/rumbel-cakrawala" },
+  { label: "SMA (Kelas 10–12)", icon: <GraduationCap className="h-4 w-4 text-purple-400" />, href: "/program/rumbel-cakrawala" },
   { label: "Les Privat Online", icon: <Globe className="h-4 w-4 text-teal-400" />, href: "/program/rumbel-cakrawala" },
   { label: "Les Privat Tatap Muka", icon: <Users className="h-4 w-4 text-pink-400" />, href: "/program/cakrawala-home-visit" },
-  { label: "Persiapan SNBT", icon: <GraduationCap className="h-4 w-4 text-yellow-500" />, href: "/program/tryout-cbt" },
+  { label: "Persiapan SNBT / UTBK", icon: <GraduationCap className="h-4 w-4 text-yellow-500" />, href: "/program/tryout-cbt" },
+  { label: "Persiapan Kedinasan", icon: <Shield className="h-4 w-4 text-green-400" />, href: "/program/cakra-kedinasan" },
+  { label: "Les Bahasa Asing", icon: <Globe className="h-4 w-4 text-teal-400" />, href: "/program/cakra-english-centre" },
 ];
 
 // ─── Dropdown wrapper ─────────────────────────────────────────────────────────
@@ -108,22 +118,9 @@ export default function Header() {
         </Link>
 
         {/* Nav Desktop */}
-        <nav className="hidden items-center gap-7 md:flex">
-          <Dropdown label="Pilih Jenjang" items={jenjangItems} />
-          <Dropdown label="Pilih Program" items={programItems} />
-
-          <Link
-            href="/program"
-            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
-          >
-            Program
-          </Link>
-          <Link
-            href="/bimbel"
-            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
-          >
-            Bimbel
-          </Link>
+        <nav className="hidden items-center gap-6 md:flex">
+          <Dropdown label="Produk" items={produkItems} />
+          <Dropdown label="Program" items={programItems} />
           <Link
             href="/biaya"
             className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
@@ -143,29 +140,29 @@ export default function Header() {
             Blog
           </Link>
           <Link
-            href="/karir"
-            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+            href="/free-trial-bimbel"
+            className="text-sm font-semibold text-green-600 transition-colors hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
           >
-            Karir
+            Trial Gratis
           </Link>
           <Link
             href="/daftar"
-            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-accent to-gold-600 px-4 py-1.5 text-sm font-bold text-white shadow-sm transition-all hover:shadow-md hover:from-gold-600 hover:to-gold-700"
+            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-1.5 text-sm font-bold text-white shadow-sm transition-all hover:shadow-md hover:from-orange-600 hover:to-red-600"
           >
             <FileText className="h-3.5 w-3.5" />
             Daftar
           </Link>
         </nav>
 
-        {/* CTA + toggle */}
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Theme + Login desktop */}
+        <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle />
           <Link
             href="/login"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-500/25 transition-all hover:shadow-lg hover:shadow-blue-500/40 hover:from-blue-500 hover:to-indigo-600 active:scale-[0.97]"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
           >
-            <LogIn className="h-4 w-4" />
-            Login LMS
+            <LogIn className="h-3.5 w-3.5" />
+            Login
           </Link>
         </div>
 
@@ -187,9 +184,9 @@ export default function Header() {
         <div className="border-t border-slate-200 bg-white px-4 pb-4 pt-1 dark:border-slate-800 dark:bg-slate-950 md:hidden">
           <div className="flex flex-col gap-0.5">
             <p className="mt-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
-              Jenjang
+              Produk
             </p>
-            {jenjangItems.map((item) => (
+            {produkItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -216,12 +213,10 @@ export default function Header() {
 
             <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">
               {[
-                { label: "Program", icon: <GraduationCap className="h-3.5 w-3.5" />, href: "/program" },
-                { label: "Bimbel", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/bimbel" },
                 { label: "Biaya", icon: <MapPin className="h-3.5 w-3.5" />, href: "/biaya" },
-                { label: "Tentang Kami", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/tentang-kami" },
+                { label: "Tentang", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/tentang-kami" },
                 { label: "Blog", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/blog" },
-                { label: "Karir", icon: <Users className="h-3.5 w-3.5" />, href: "/karir" },
+                { label: "Trial Gratis", icon: <Zap className="h-3.5 w-3.5" />, href: "/free-trial-bimbel" },
               ].map((item) => (
                 <a
                   key={item.label}
@@ -234,22 +229,24 @@ export default function Header() {
               ))}
             </div>
 
-            <Link
-              href="/daftar"
-              onClick={() => setMobileOpen(false)}
-              className="mt-3 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-gold-600 px-5 py-2.5 text-xs font-bold text-white shadow-md"
-            >
-              <FileText className="h-3.5 w-3.5" />
-              Daftar Sekarang
-            </Link>
-            <Link
-              href="/login"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 px-5 py-2.5 text-xs font-bold text-white shadow-md"
-            >
-              <LogIn className="h-3.5 w-3.5" />
-              Login LMS
-            </Link>
+            <div className="mt-3 flex gap-2">
+              <Link
+                href="/daftar"
+                onClick={() => setMobileOpen(false)}
+                className="flex-1 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-5 py-2.5 text-xs font-bold text-white shadow-md"
+              >
+                <FileText className="h-3.5 w-3.5" />
+                Daftar
+              </Link>
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="flex-1 flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-5 py-2.5 text-xs font-semibold text-slate-500 dark:border-slate-700 dark:text-slate-400"
+              >
+                <LogIn className="h-3.5 w-3.5" />
+                Login
+              </Link>
+            </div>
           </div>
         </div>
       )}

@@ -14,6 +14,7 @@ import {
   aboutFeatures,
   whyUs,
   registrations,
+  leads,
 } from "./schema";
 import { eq, asc } from "drizzle-orm";
 import bcrypt from "bcryptjs";
@@ -119,4 +120,14 @@ export async function getBrandWithProgramsBySlug(slug: string) {
 export async function createRegistration(data: NewRegistration) {
   const rows = await db.insert(registrations).values(data).returning();
   return rows[0];
+}
+
+// ─── Leads ─────────────────────────────────────────────────────────────────────
+export async function createLead(phone: string, source = "hero") {
+  const rows = await db.insert(leads).values({ phone, source }).returning();
+  return rows[0];
+}
+
+export async function getPopularPrograms() {
+  return db.select().from(programs).where(eq(programs.isPopular, true));
 }

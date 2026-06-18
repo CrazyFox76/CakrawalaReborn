@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
+import Script from "next/script";
+import { CheckCircle, MessageCircle, Users, Clock, Award } from "lucide-react";
 import { getBrandWithProgramsBySlug } from "@/db/actions";
 import { getProgramIcon } from "@/lib/icon-map";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 type Props = { params: Promise<{ slug: string; subSlug: string }> };
 
@@ -13,8 +15,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const prog = brand?.programs.find((p) => p.slug === subSlug) ?? null;
   if (!prog) return { title: "Program Tidak Ditemukan | Cakrawala EduCentre" };
   return {
-    title: `${prog.title} | Cakrawala EduCentre`,
+    title: `${prog.title} - ${prog.age} | Cakrawala EduCentre`,
     description: prog.description,
+    openGraph: {
+      title: `${prog.title} | Cakrawala EduCentre`,
+      description: prog.description.slice(0, 160),
+      locale: "id_ID",
+      siteName: "Cakrawala EduCentre",
+    },
   };
 }
 
@@ -29,13 +37,10 @@ export default async function SubProgramDetail({ params }: Props) {
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <Link
-          href={`/program/${brand.slug}`}
-          className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-zinc-500 transition-colors hover:text-primary sm:mb-6 sm:text-sm dark:text-slate-400 dark:hover:text-primary"
-        >
-          <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-          Kembali ke {brand.name}
-        </Link>
+        <Breadcrumbs items={[
+          { label: brand.name, href: `/program/${brand.slug}` },
+          { label: prog.title },
+        ]} />
 
         <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-10 dark:border-slate-800 dark:bg-slate-900/50">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary sm:h-14 sm:w-14 sm:rounded-xl dark:bg-blue-900/30">
@@ -68,6 +73,30 @@ export default async function SubProgramDetail({ params }: Props) {
             </ul>
           </div>
 
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <div className="flex items-center gap-3 rounded-xl border border-zinc-100 bg-zinc-50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
+              <Users className="h-5 w-5 text-primary" />
+              <div>
+                <p className="text-xs font-bold text-zinc-900 dark:text-slate-100">Tutor Profesional</p>
+                <p className="text-[10px] text-zinc-500 dark:text-slate-400">Berpengalaman & tersertifikasi</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-xl border border-zinc-100 bg-zinc-50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
+              <Clock className="h-5 w-5 text-primary" />
+              <div>
+                <p className="text-xs font-bold text-zinc-900 dark:text-slate-100">Jadwal Fleksibel</p>
+                <p className="text-[10px] text-zinc-500 dark:text-slate-400">Sesuaikan dengan waktu luang</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-xl border border-zinc-100 bg-zinc-50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
+              <Award className="h-5 w-5 text-primary" />
+              <div>
+                <p className="text-xs font-bold text-zinc-900 dark:text-slate-100">Laporan Berkala</p>
+                <p className="text-[10px] text-zinc-500 dark:text-slate-400">Pantau perkembangan belajar</p>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
             <Link
               href="/daftar"
@@ -86,6 +115,17 @@ export default async function SubProgramDetail({ params }: Props) {
             </a>
           </div>
         </div>
+
+        <Script id="program-jsonld" type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Course",
+            name: prog.title,
+            description: prog.description,
+            provider: { "@type": "Organization", name: "Cakrawala EduCentre" },
+            audience: { "@type": "EducationalAudience", educationalRole: prog.age },
+          }),
+        }} />
       </div>
     </div>
   );

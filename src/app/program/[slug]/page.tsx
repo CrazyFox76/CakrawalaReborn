@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
+import Script from "next/script";
+import { CheckCircle, MessageCircle } from "lucide-react";
 import { getBrandWithProgramsBySlug } from "@/db/actions";
 import { getProgramIcon } from "@/lib/icon-map";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -12,8 +14,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const brand = await getBrandWithProgramsBySlug(slug);
   if (!brand) return { title: "Brand Tidak Ditemukan | Cakrawala EduCentre" };
   return {
-    title: `${brand.name} | Cakrawala EduCentre`,
+    title: `${brand.name} - Program & Biaya | Cakrawala EduCentre`,
     description: brand.description,
+    openGraph: {
+      title: `${brand.name} | Cakrawala EduCentre`,
+      description: brand.description.slice(0, 160),
+      locale: "id_ID",
+      siteName: "Cakrawala EduCentre",
+    },
   };
 }
 
@@ -27,13 +35,9 @@ export default async function BrandDetail({ params }: Props) {
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <Link
-          href="/"
-          className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-zinc-500 transition-colors hover:text-primary sm:mb-6 sm:text-sm dark:text-slate-400 dark:hover:text-primary"
-        >
-          <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-          Kembali ke Beranda
-        </Link>
+        <Breadcrumbs items={[
+          { label: brand.name },
+        ]} />
 
         <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-10 dark:border-slate-800 dark:bg-slate-900/50">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-primary sm:h-16 sm:w-16 dark:bg-blue-900/30">
@@ -108,6 +112,26 @@ export default async function BrandDetail({ params }: Props) {
             </Link>
           </div>
         </div>
+
+        <Script id="brand-jsonld" type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: brand.name,
+            description: brand.description,
+            numberOfItems: brand.programs.length,
+            itemListElement: brand.programs.map((p, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              item: {
+                "@type": "Course",
+                name: p.title,
+                description: p.description,
+                url: `${process.env.NEXT_PUBLIC_URL || "https://cakrawala-educentre.vercel.app"}/program/${brand.slug}/${p.slug}`,
+              },
+            })),
+          }),
+        }} />
       </div>
     </div>
   );

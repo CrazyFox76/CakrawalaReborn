@@ -37,7 +37,7 @@ const jsonLd = {
       ],
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Jl. Siti 2, Jl. Bayan II No.7, Mustikajaya",
+        streetAddress: "Jl. Bayan II No.7, RT.002/RW.008, Mustikajaya",
         addressLocality: "Kota Bekasi",
         addressRegion: "Jawa Barat",
         postalCode: "17158",
@@ -45,7 +45,7 @@ const jsonLd = {
       },
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+62-813-2486-8790",
+        telephone: "+6281324868790",
         contactType: "customer service",
         availableLanguage: ["Indonesian"],
       },

@@ -1,15 +1,29 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, Clock, MessageCircle } from "lucide-react";
+import Script from "next/script";
+import { Calendar, Clock, MessageCircle } from "lucide-react";
 import { getBlogPostBySlug, getBlogPosts } from "@/db/actions";
 import { sanitize } from "@/lib/sanitize";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
-  if (!post) return { title: "Artikel Tidak Ditemukan" };
-  return { title: `${post.title} | Cakrawala EduCentre`, description: post.excerpt, openGraph: { title: post.title, description: post.excerpt } };
+  if (!post) return { title: "Artikel Tidak Ditemukan | Cakrawala EduCentre" };
+  return {
+    title: `${post.title} | Cakrawala EduCentre`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      locale: "id_ID",
+      siteName: "Cakrawala EduCentre",
+      publishedTime: post.createdAt?.toISOString(),
+      authors: [post.author],
+    },
+  };
 }
 
 export async function generateStaticParams() {
@@ -25,13 +39,10 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
       <article className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <Link
-          href="/"
-          className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-zinc-500 transition-colors sm:mb-6 sm:text-sm hover:text-primary dark:text-slate-400 dark:hover:text-primary"
-        >
-          <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-          Kembali ke Blog
-        </Link>
+        <Breadcrumbs items={[
+          { label: "Blog", href: "/blog" },
+          { label: post.title },
+        ]} />
 
         <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-10 dark:border-slate-800 dark:bg-slate-900/50">
           <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px] text-zinc-400 sm:mb-4 sm:gap-3 sm:text-xs dark:text-slate-500">
@@ -76,6 +87,18 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
             Konsultasi Gratis via WhatsApp
           </a>
         </div>
+
+        <Script id="blog-jsonld" type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.excerpt,
+            datePublished: post.createdAt?.toISOString() || post.date,
+            author: { "@type": "Person", name: post.author },
+            publisher: { "@type": "Organization", name: "Cakrawala EduCentre" },
+          }),
+        }} />
       </article>
     </div>
   );
