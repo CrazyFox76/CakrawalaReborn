@@ -367,7 +367,7 @@ async function seed() {
   ];
 
   for (const p of pgData) {
-    await db.insert(passingGrades).values(p);
+    await db.insert(passingGrades).values(p).onConflictDoNothing();
   }
 
   console.log("Seeding about features...");
@@ -376,7 +376,7 @@ async function seed() {
     { iconName: "Target", title: "Kurikulum Terarah", desc: "Materi disesuaikan dengan kebutuhan siswa", sortOrder: 2 },
     { iconName: "Users", title: "Pendekatan Personal", desc: "Pendampingan 1-on-1 yang intensif dan fokus", sortOrder: 3 },
     { iconName: "Award", title: "Terpercaya", desc: "Sudah berpengalaman 10+ tahun mencetak generasi unggul", sortOrder: 4 },
-  ]);
+  ]).onConflictDoNothing();
 
   console.log("Seeding why us...");
   await db.insert(whyUs).values([
@@ -386,7 +386,7 @@ async function seed() {
     { title: "Pendampingan Intensif 1-on-1", desc: "Setiap siswa mendapat perhatian penuh dari tutor, sehingga perkembangan belajar terpantau secara optimal.", sortOrder: 4 },
     { title: "Evaluasi Berkala", desc: "Laporan perkembangan belajar diberikan secara rutin kepada orang tua untuk memonitor kemajuan siswa.", sortOrder: 5 },
     { title: "Biaya Terjangkau", desc: "Kualitas pendidikan terbaik dengan biaya yang kompetitif dan opsi paket yang bisa disesuaikan.", sortOrder: 6 },
-  ]);
+  ]).onConflictDoNothing();
 
   console.log("Seeding prices...");
   const priceData = [
