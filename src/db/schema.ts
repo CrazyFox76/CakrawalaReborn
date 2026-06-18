@@ -1,7 +1,18 @@
-import { pgTable, serial, varchar, text, integer, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, text, integer, timestamp, boolean, primaryKey } from "drizzle-orm/pg-core";
+
+export const brands = pgTable("brands", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  description: text("description").notNull(),
+  category: varchar("category", { length: 50 }).notNull(),
+  iconName: varchar("icon_name", { length: 50 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
 
 export const programs = pgTable("programs", {
   id: serial("id").primaryKey(),
+  brandId: integer("brand_id").references(() => brands.id),
   title: varchar("title", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   age: varchar("age", { length: 255 }).notNull(),
@@ -95,5 +106,69 @@ export const registrations = pgTable("registrations", {
   pesan: text("pesan"),
   invoiceNo: varchar("invoice_no", { length: 100 }),
   status: varchar("status", { length: 50 }).default("baru"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// ─── NextAuth Tables ───────────────────────────────────────────────────────────
+export const users = pgTable("user", {
+  id: text("id").primaryKey(),
+  name: text("name"),
+  email: text("email").notNull().unique(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  image: text("image"),
+  password: text("password"),
+});
+
+export const accounts = pgTable(
+  "account",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("providerAccountId").notNull(),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
+  },
+  (account) => ({
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
+  }),
+);
+
+export const sessions = pgTable("session", {
+  sessionToken: text("sessionToken").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+});
+
+export const verificationTokens = pgTable(
+  "verificationToken",
+  {
+    identifier: text("identifier").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+  },
+  (vt) => ({
+    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+  }),
+);
+
+// ─── Bank Accounts ─────────────────────────────────────────────────────────────
+export const bankAccounts = pgTable("bank_accounts", {
+  id: serial("id").primaryKey(),
+  bankName: varchar("bank_name", { length: 100 }).notNull(),
+  accountNumber: varchar("account_number", { length: 50 }).notNull(),
+  accountHolder: varchar("account_holder", { length: 255 }).notNull(),
+  isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });

@@ -7,17 +7,17 @@ import Link from "next/link";
 
 // ─── Data navigasi ────────────────────────────────────────────────────────────
 const jenjangItems = [
-  { label: "SD (Kelas 1–6)", icon: <BookOpen className="h-4 w-4 text-blue-400" />, href: "#" },
-  { label: "SMP (Kelas 7–9)", icon: <BookOpen className="h-4 w-4 text-indigo-400" />, href: "#" },
-  { label: "SMA (Kelas 10–12)", icon: <GraduationCap className="h-4 w-4 text-purple-400" />, href: "#" },
-  { label: "Gap Year / UTBK", icon: <GraduationCap className="h-4 w-4 text-orange-400" />, href: "#" },
+  { label: "SD (Kelas 1–6)", icon: <BookOpen className="h-4 w-4 text-blue-400" />, href: "/bimbel" },
+  { label: "SMP (Kelas 7–9)", icon: <BookOpen className="h-4 w-4 text-indigo-400" />, href: "/bimbel" },
+  { label: "SMA (Kelas 10–12)", icon: <GraduationCap className="h-4 w-4 text-purple-400" />, href: "/bimbel" },
+  { label: "Gap Year / UTBK", icon: <GraduationCap className="h-4 w-4 text-orange-400" />, href: "/program/tryout-cbt" },
 ];
 
 const programItems = [
-  { label: "Les Privat Online", icon: <Globe className="h-4 w-4 text-teal-400" />, href: "#" },
-  { label: "Les Privat Tatap Muka", icon: <Users className="h-4 w-4 text-pink-400" />, href: "#" },
-  { label: "Persiapan SNBT", icon: <GraduationCap className="h-4 w-4 text-yellow-500" />, href: "#" },
-  { label: "Bahasa Asing", icon: <Globe className="h-4 w-4 text-cyan-400" />, href: "#" },
+  { label: "Semua Program", icon: <GraduationCap className="h-4 w-4 text-blue-400" />, href: "/program" },
+  { label: "Les Privat Online", icon: <Globe className="h-4 w-4 text-teal-400" />, href: "/program/rumbel-cakrawala" },
+  { label: "Les Privat Tatap Muka", icon: <Users className="h-4 w-4 text-pink-400" />, href: "/program/cakrawala-home-visit" },
+  { label: "Persiapan SNBT", icon: <GraduationCap className="h-4 w-4 text-yellow-500" />, href: "/program/tryout-cbt" },
 ];
 
 // ─── Dropdown wrapper ─────────────────────────────────────────────────────────
@@ -93,7 +93,7 @@ export default function Header() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 shadow-md">
             <span className="text-xs font-extrabold text-white tracking-tight">CE</span>
           </div>
@@ -105,37 +105,31 @@ export default function Header() {
               EduCentre
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Nav Desktop */}
         <nav className="hidden items-center gap-7 md:flex">
           <Dropdown label="Pilih Jenjang" items={jenjangItems} />
           <Dropdown label="Pilih Program" items={programItems} />
 
-          <a
-            href="#about"
+          <Link
+            href="/program"
             className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
           >
-            Branch
-          </a>
-          <a
-            href="#testimonials"
+            Program
+          </Link>
+          <Link
+            href="/bimbel"
             className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
           >
-            Kata Alumni
-          </a>
-          <a
-            href="#blog"
+            Bimbel
+          </Link>
+          <Link
+            href="/biaya"
             className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
           >
-            Blog
-          </a>
-          <a
-            href="#cta"
-            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
-          >
-            Promo
-          </a>
+            Biaya
+          </Link>
           <Link
             href="/tentang-kami"
             className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
@@ -143,10 +137,16 @@ export default function Header() {
             Tentang
           </Link>
           <Link
-            href="/harga"
+            href="/blog"
             className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
           >
-            Harga
+            Blog
+          </Link>
+          <Link
+            href="/karir"
+            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+          >
+            Karir
           </Link>
           <Link
             href="/daftar"
@@ -216,11 +216,12 @@ export default function Header() {
 
             <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">
               {[
+                { label: "Program", icon: <GraduationCap className="h-3.5 w-3.5" />, href: "/program" },
+                { label: "Bimbel", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/bimbel" },
+                { label: "Biaya", icon: <MapPin className="h-3.5 w-3.5" />, href: "/biaya" },
                 { label: "Tentang Kami", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/tentang-kami" },
-                { label: "Harga", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/harga" },
-                { label: "Branch", icon: <MapPin className="h-3.5 w-3.5" />, href: "#about" },
-                { label: "Kata Alumni", icon: <Users className="h-3.5 w-3.5" />, href: "#testimonials" },
-                { label: "Blog", icon: <BookOpen className="h-3.5 w-3.5" />, href: "#blog" },
+                { label: "Blog", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/blog" },
+                { label: "Karir", icon: <Users className="h-3.5 w-3.5" />, href: "/karir" },
               ].map((item) => (
                 <a
                   key={item.label}

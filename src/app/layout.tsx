@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import ThemeProvider from "@/components/theme-provider";
+import SessionProvider from "@/components/session-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -84,7 +85,7 @@ export default function RootLayout({
         />
         <Script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXXXXX"}`}
           strategy="afterInteractive"
         />
         <Script
@@ -95,13 +96,15 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-XXXXXXXXXX');
+              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXXXXX"}');
             `,
           }}
         />
       </head>
       <body className="min-h-dvh flex flex-col bg-white text-zinc-800 antialiased dark:bg-slate-950 dark:text-slate-200">
-        <ThemeProvider>{children}</ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

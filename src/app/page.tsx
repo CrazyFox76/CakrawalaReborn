@@ -17,16 +17,19 @@ import Footer from "@/components/footer";
 import WaFloating from "@/components/wa-floating";
 import BackToTop from "@/components/back-to-top";
 import Reveal from "@/components/reveal";
-import { getTestimonials } from "@/db/actions";
+import { getTestimonials, getBrandsWithPrograms } from "@/db/actions";
 
 export default async function Home() {
-  const testimonials = await getTestimonials();
+  const [testimonials, brands] = await Promise.all([
+    getTestimonials(),
+    getBrandsWithPrograms(),
+  ]);
 
   const sections = [
     { Component: About, id: "about" },
     { Component: CakraPoints, id: "cakrapoints" },
     { Component: CakraPointsPromo, id: "cakrapoints-promo" },
-    { Component: Programs, id: "programs" },
+    { Component: () => <Programs brands={brands} />, id: "programs" },
     { Component: WhyUs, id: "why-us" },
     { Component: Tutors, id: "tutors" },
     { Component: BlogPreview, id: "blog" },

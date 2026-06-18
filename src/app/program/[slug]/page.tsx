@@ -2,79 +2,110 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
-import { getProgramBySlug, getPrograms } from "@/db/actions";
+import { getBrandWithProgramsBySlug } from "@/db/actions";
 import { getProgramIcon } from "@/lib/icon-map";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const p = await getProgramBySlug(slug);
-  if (!p) return { title: "Program Tidak Ditemukan" };
-  return { title: `${p.title} | Cakrawala EduCentre`, description: p.description, openGraph: { title: p.title, description: p.description } };
+  const brand = await getBrandWithProgramsBySlug(slug);
+  if (!brand) return { title: "Brand Tidak Ditemukan | Cakrawala EduCentre" };
+  return {
+    title: `${brand.name} | Cakrawala EduCentre`,
+    description: brand.description,
+  };
 }
 
-export async function generateStaticParams() {
-  const programs = await getPrograms();
-  return programs.map((p) => ({ slug: p.slug }));
-}
-
-export default async function ProgramDetail({ params }: { params: Promise<{ slug: string }> }) {
+export default async function BrandDetail({ params }: Props) {
   const { slug } = await params;
-  const program = await getProgramBySlug(slug);
-  if (!program) notFound();
-  const Icon = getProgramIcon(program.iconName);
+  const brand = await getBrandWithProgramsBySlug(slug);
+  if (!brand) notFound();
+
+  const Icon = getProgramIcon(brand.iconName);
 
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
-      <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <Link
           href="/"
-          className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-zinc-500 transition-colors sm:mb-6 sm:text-sm hover:text-primary dark:text-slate-400 dark:hover:text-primary"
+          className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-zinc-500 transition-colors hover:text-primary sm:mb-6 sm:text-sm dark:text-slate-400 dark:hover:text-primary"
         >
           <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-          Kembali
+          Kembali ke Beranda
         </Link>
 
         <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-10 dark:border-slate-800 dark:bg-slate-900/50">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary sm:h-14 sm:w-14 sm:rounded-xl dark:bg-blue-900/30">
-            <Icon className="h-5 w-5 sm:h-7 sm:w-7" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-primary sm:h-16 sm:w-16 dark:bg-blue-900/30">
+            <Icon className="h-6 w-6 sm:h-8 sm:w-8" />
           </div>
 
-          <h1 className="mt-4 text-lg font-bold text-zinc-900 sm:mt-5 sm:text-3xl dark:text-slate-100">
-            {program.title}
+          <h1 className="mt-4 text-xl font-bold text-zinc-900 sm:mt-5 sm:text-3xl dark:text-slate-100">
+            {brand.name}
           </h1>
-          <p className="mt-0.5 text-xs font-semibold text-accent sm:mt-1 sm:text-sm">{program.age}</p>
 
-          <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:mt-5 sm:text-base dark:text-slate-400">
-            {program.description}
+          <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:mt-4 sm:text-base dark:text-slate-400">
+            {brand.description}
           </p>
 
-          <div className="mt-6 sm:mt-8">
-            <h2 className="text-sm font-bold text-zinc-900 sm:text-lg dark:text-slate-100">
-              Apa yang Anda Dapatkan?
+          <div className="mt-8 sm:mt-10">
+            <h2 className="text-base font-bold text-zinc-900 sm:text-xl dark:text-slate-100">
+              Program Tersedia ({brand.programs.length})
             </h2>
-            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
-              {program.highlights.map((h) => (
-                <li
-                  key={h}
-                  className="flex items-start gap-2 text-xs text-zinc-600 sm:gap-3 sm:text-sm dark:text-slate-400"
+
+            <div className="mt-4 grid gap-4 sm:mt-6 sm:gap-6">
+              {brand.programs.map((prog) => (
+                <Link
+                  key={prog.slug}
+                  href={`/program/${brand.slug}/${prog.slug}`}
+                  className="group rounded-xl border border-zinc-200 bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-lg sm:p-6 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-primary"
                 >
-                  <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500 sm:h-5 sm:w-5" />
-                  {h}
-                </li>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-zinc-900 group-hover:text-primary sm:text-lg dark:text-slate-100">
+                        {prog.title}
+                      </h3>
+                      <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent sm:mt-1 sm:text-xs">
+                        {prog.age}
+                      </p>
+                      <p className="mt-2 text-xs leading-relaxed text-zinc-500 sm:mt-3 sm:text-sm dark:text-slate-400">
+                        {prog.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4">
+                    {prog.highlights.map((h) => (
+                      <span
+                        key={h}
+                        className="inline-flex items-center gap-1 rounded-full bg-zinc-50 px-2 py-0.5 text-[10px] font-medium text-zinc-500 sm:px-3 sm:py-1 sm:text-xs dark:bg-slate-700 dark:text-slate-400"
+                      >
+                        <CheckCircle className="h-2.5 w-2.5 text-green-500 sm:h-3 sm:w-3" />
+                        {h}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row">
             <a
               href="https://wa.me/6281324868790"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-semibold text-white transition-colors sm:px-6 sm:py-3 sm:text-sm hover:bg-primary-light"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-primary-light sm:px-6 sm:py-3 sm:text-sm"
             >
               <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               Konsultasikan Program Ini
             </a>
+            <Link
+              href="/daftar"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-white px-5 py-2.5 text-xs font-semibold text-zinc-700 transition-colors hover:border-primary hover:text-primary sm:px-6 sm:py-3 sm:text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-primary"
+            >
+              Daftar Sekarang
+            </Link>
           </div>
         </div>
       </div>

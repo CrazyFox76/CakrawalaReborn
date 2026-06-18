@@ -1,23 +1,28 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import { Zap, ArrowRight, CheckCircle } from "lucide-react";
+import { Zap, ArrowRight, CheckCircle, GraduationCap } from "lucide-react";
 
-// ─── Data siswa berprestasi ────────────────────────────────────────────────────
+const COLORS = [
+  "from-blue-500 to-blue-600",
+  "from-emerald-500 to-emerald-600",
+  "from-amber-500 to-amber-600",
+  "from-purple-500 to-purple-600",
+];
+
 const students = [
-  { name: "Rizky A.", major: "Teknik ITB", branch: "Cakrawala Jakarta", img: "/student1.png" },
-  { name: "Bunga P.", major: "Hukum UI", branch: "Cakrawala Manado", img: "/student2.png" },
-  { name: "Calista A.", major: "Kedokteran UGM", branch: "Cakrawala Bandung", img: "/student3.png" },
-  { name: "Angel J.", major: "Psikologi UGM", branch: "Cakrawala Pontianak", img: "/student1.png" },
-  { name: "Nadia A.", major: "Psikologi UI", branch: "Cakrawala Mataram", img: "/student2.png" },
-  { name: "Aryagani M.", major: "Kedokteran UGM", branch: "Cakrawala Padang", img: "/student3.png" },
-  { name: "Indah L.", major: "Kedokteran UI", branch: "Cakrawala Bengkulu", img: "/student4.png" },
-  { name: "Davina A.", major: "Sastra Inggris UI", branch: "Cakrawala Bukittinggi", img: "/student1.png" },
-  { name: "Fathur Q.", major: "Mesin UI", branch: "Cakrawala Jakarta", img: "/student2.png" },
-  { name: "Jesslyn E.", major: "Farmasi ITB", branch: "Cakrawala Tasikmalaya", img: "/student3.png" },
-  { name: "Gusti A.", major: "Kedokteran Gigi Udayana", branch: "Cakrawala Denpasar", img: "/student4.png" },
-  { name: "Annisa R.", major: "Elektro UI", branch: "Cakrawala Karawang", img: "/student1.png" },
+  { name: "Rizky A.", major: "Teknik ITB", branch: "Cakrawala Jakarta" },
+  { name: "Bunga P.", major: "Hukum UI", branch: "Cakrawala Manado" },
+  { name: "Calista A.", major: "Kedokteran UGM", branch: "Cakrawala Bandung" },
+  { name: "Angel J.", major: "Psikologi UGM", branch: "Cakrawala Pontianak" },
+  { name: "Nadia A.", major: "Psikologi UI", branch: "Cakrawala Mataram" },
+  { name: "Aryagani M.", major: "Kedokteran UGM", branch: "Cakrawala Padang" },
+  { name: "Indah L.", major: "Kedokteran UI", branch: "Cakrawala Bengkulu" },
+  { name: "Davina A.", major: "Sastra Inggris UI", branch: "Cakrawala Bukittinggi" },
+  { name: "Fathur Q.", major: "Mesin UI", branch: "Cakrawala Jakarta" },
+  { name: "Jesslyn E.", major: "Farmasi ITB", branch: "Cakrawala Tasikmalaya" },
+  { name: "Gusti A.", major: "Kedokteran Gigi Udayana", branch: "Cakrawala Denpasar" },
+  { name: "Annisa R.", major: "Elektro UI", branch: "Cakrawala Karawang" },
 ];
 
 // ─── Countdown target: 6 hari dari sekarang ────────────────────────────────
@@ -45,16 +50,11 @@ function useCountdown(target: Date) {
 }
 
 // ─── Kartu siswa (tile) ───────────────────────────────────────────────────────
-function StudentCard({ student }: { student: (typeof students)[0] }) {
+function StudentCard({ student, index }: { student: (typeof students)[0]; index: number }) {
   return (
     <div className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:shadow-lg">
-      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-white/30">
-        <Image
-          src={student.img}
-          alt={student.name}
-          fill
-          className="object-cover"
-        />
+      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${COLORS[index % COLORS.length]} text-xs font-bold text-white`}>
+        {student.name.charAt(0)}
       </div>
       <div className="min-w-0">
         <p className="truncate text-xs font-bold text-white">{student.name}</p>
@@ -243,7 +243,7 @@ export default function Hero() {
                   className="w-48 flex-shrink-0 animate-fadeIn lg:w-auto"
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
-                  <StudentCard student={s} />
+                  <StudentCard student={s} index={i} />
                 </div>
               ))}
             </div>

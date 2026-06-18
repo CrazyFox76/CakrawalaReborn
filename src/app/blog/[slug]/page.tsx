@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, MessageCircle } from "lucide-react";
 import { getBlogPostBySlug, getBlogPosts } from "@/db/actions";
+import { sanitize } from "@/lib/sanitize";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -57,7 +58,7 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
 
           <div
             className="mt-5 prose prose-sm max-w-none prose-headings:text-zinc-900 prose-p:text-zinc-600 prose-li:text-zinc-600 sm:mt-8 dark:prose-headings:text-slate-100 dark:prose-p:text-slate-400 dark:prose-li:text-slate-400 prose-strong:text-zinc-900 dark:prose-strong:text-slate-100"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: sanitize(post.content) }}
           />
         </div>
 

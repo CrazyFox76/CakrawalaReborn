@@ -1,12 +1,14 @@
 import { Mail, Phone, MapPin, Globe, ExternalLink, MessageCircle } from "lucide-react";
 
 const quickLinks = [
-  { label: "Home", href: "#" },
-  { label: "Harga", href: "/harga" },
-  { label: "Produk", href: "#programs" },
+  { label: "Home", href: "/" },
+  { label: "Program", href: "/program" },
+  { label: "Bimbel", href: "/bimbel" },
+  { label: "Biaya", href: "/biaya" },
   { label: "Tentang Kami", href: "/tentang-kami" },
+  { label: "Blog", href: "/blog" },
+  { label: "Karir", href: "/karir" },
   { label: "Pendaftaran", href: "/daftar" },
-  { label: "Blog", href: "#blog" },
 ];
 
 const socialLinks = [
@@ -27,7 +29,7 @@ export default function Footer() {
                 <span className="text-sm font-bold text-white">CE</span>
               </div>
               <span className="text-lg font-bold text-white">
-                Cakar <span className="text-accent">EduCentre</span>
+                Cakrawala <span className="text-accent">EduCentre</span>
               </span>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-zinc-500">

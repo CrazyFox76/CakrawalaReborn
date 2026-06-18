@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, MessageCircle, User, Phone, BookText, Mail, Calendar,
   Clock, MapPin, FileText, Banknote,
 } from "lucide-react";
-import { createRegistration } from "@/db/actions";
+import { createRegistration, getActiveBankAccounts } from "@/db/actions";
+import { terbilang } from "@/lib/terbilang";
 
 type Paket = { label: string; sesi: number; harga: number };
 
@@ -80,6 +81,11 @@ export default function Daftar() {
 
   const [step, setStep] = useState<"form" | "invoice">("form");
   const [invoiceNo] = useState(generateInvoiceNumber);
+  const [bankAccounts, setBankAccounts] = useState<{ bankName: string; accountNumber: string; accountHolder: string }[]>([]);
+
+  useEffect(() => {
+    getActiveBankAccounts().then(setBankAccounts);
+  }, []);
 
   const paketList = PAKET[form.jenjang] || [];
   const selectedPaket = paketList[Number(form.paketIndex)];
@@ -131,6 +137,10 @@ export default function Daftar() {
         `*Orang Tua:* ${form.orangTua}%0A*Pesan:* ${form.pesan}`;
       window.open(`https://wa.me/6281324868790?text=${text}`, "_blank");
     } else {
+      const bank = bankAccounts[0];
+      const paymentInfo = bank
+        ? `${bank.bankName}: ${bank.accountNumber}%0Aa/n: ${bank.accountHolder}`
+        : "BCA: 6611335226%0Aa/n: Citarani Anggraini";
       const header =
         `*INVOICE PEMBAYARAN LES*%0A${invoiceNo.full}%0A%0A` +
         `*Tanggal:* ${tgl}%0A%0A` +
@@ -142,7 +152,7 @@ export default function Daftar() {
         `${selectedPaket?.label} ${form.jenjang}: ${fmtRupiah(totalHarga)}%0A%0A` +
         `*Grand Total: ${fmtRupiah(totalHarga)}*%0A%0A` +
         `--- METODE PEMBAYARAN ---%0A` +
-        `BCA: 6611335226%0Aa/n: Citarani Anggraini%0A%0A` +
+        `${paymentInfo}%0A%0A` +
         `Kirim bukti bayar ke +62 813-2486-8790`;
       window.open(`https://wa.me/6281324868790?text=${encodeURIComponent(header)}`, "_blank");
     }
@@ -152,6 +162,7 @@ export default function Daftar() {
   if (step === "invoice") {
     const now = new Date();
     const tgl = `${now.getDate()} ${bulanIndo[now.getMonth()]} ${now.getFullYear()}`;
+    const bank = bankAccounts[0];
 
     return (
       <div className="min-h-dvh bg-zinc-50 dark:bg-slate-950">
@@ -278,21 +289,23 @@ export default function Daftar() {
             </div>
 
             {/* Metode Pembayaran */}
-            <div className="mt-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-xs sm:mt-6 sm:p-5 sm:text-sm dark:border-slate-700 dark:bg-slate-800/50">
-              <h2 className="flex items-center gap-2 font-bold text-zinc-900 dark:text-slate-100">
-                <Banknote className="h-4 w-4" /> Metode Pembayaran
-              </h2>
-              <p className="mt-2 leading-relaxed text-zinc-600 dark:text-slate-400">
-                Pembayaran dilakukan melalui <strong>Rekening BCA: 6611335226</strong> a/n{" "}
-                <strong>Citarani Anggraini</strong> dengan total biaya{" "}
-                <strong>{fmtRupiah(totalHarga)}</strong> ({terbilang(totalHarga)}) dibayarkan
-                sebelum pertemuan pertama dimulai.
-              </p>
-              <p className="mt-2 text-zinc-600 dark:text-slate-400">
-                Seluruh bukti pembayaran dikirimkan ke Official WhatsApp Cakrawala EduCentre:{" "}
-                <strong>+62 813-2486-8790</strong>
-              </p>
-            </div>
+            {bank && (
+              <div className="mt-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-xs sm:mt-6 sm:p-5 sm:text-sm dark:border-slate-700 dark:bg-slate-800/50">
+                <h2 className="flex items-center gap-2 font-bold text-zinc-900 dark:text-slate-100">
+                  <Banknote className="h-4 w-4" /> Metode Pembayaran
+                </h2>
+                <p className="mt-2 leading-relaxed text-zinc-600 dark:text-slate-400">
+                  Pembayaran dilakukan melalui <strong>Rekening {bank.bankName}: {bank.accountNumber}</strong> a/n{" "}
+                  <strong>{bank.accountHolder}</strong> dengan total biaya{" "}
+                  <strong>{fmtRupiah(totalHarga)}</strong> ({terbilang(totalHarga)}) dibayarkan
+                  sebelum pertemuan pertama dimulai.
+                </p>
+                <p className="mt-2 text-zinc-600 dark:text-slate-400">
+                  Seluruh bukti pembayaran dikirimkan ke Official WhatsApp Cakrawala EduCentre:{" "}
+                  <strong>+62 813-2486-8790</strong>
+                </p>
+              </div>
+            )}
 
             {/* Tanda Tangan */}
             <div className="mt-6 text-right text-xs sm:mt-8 sm:text-sm">
@@ -548,36 +561,4 @@ export default function Daftar() {
   );
 }
 
-// ─── Terbilang ────────────────────────────────────────────────────────────────
-function terbilang(n: number): string {
-  const angka = [
-    "", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh",
-    "delapan", "sembilan", "sepuluh", "sebelas",
-  ];
 
-  if (n < 12) return angka[n];
-  if (n < 20) return `${angka[n - 10]} belas`;
-  if (n < 100) {
-    const puluhan = Math.floor(n / 10);
-    const sisa = n % 10;
-    return sisa === 0 ? `${angka[puluhan]} puluh` : `${angka[puluhan]} puluh ${angka[sisa]}`;
-  }
-  if (n < 200) return `seratus ${terbilang(n - 100)}`;
-  if (n < 1000) {
-    const ratusan = Math.floor(n / 100);
-    const sisa = n % 100;
-    return sisa === 0 ? `${angka[ratusan]} ratus` : `${angka[ratusan]} ratus ${terbilang(sisa)}`;
-  }
-  if (n < 2000) return `seribu ${terbilang(n - 1000)}`;
-  if (n < 1_000_000) {
-    const ribuan = Math.floor(n / 1000);
-    const sisa = n % 1000;
-    return sisa === 0 ? `${terbilang(ribuan)} ribu` : `${terbilang(ribuan)} ribu ${terbilang(sisa)}`;
-  }
-  if (n < 1_000_000_000) {
-    const jutaan = Math.floor(n / 1_000_000);
-    const sisa = n % 1_000_000;
-    return sisa === 0 ? `${terbilang(jutaan)} juta` : `${terbilang(jutaan)} juta ${terbilang(sisa)}`;
-  }
-  return `${n}`;
-}
