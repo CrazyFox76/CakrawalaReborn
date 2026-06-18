@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import { ArrowLeft, CheckCircle, MessageCircle, GraduationCap, BookOpen, ScrollText, Building2, ExternalLink } from "lucide-react";
+import { getPrices } from "@/db/actions";
 
 export const metadata: Metadata = {
   title: "Biaya Les Privat & Harga Paket Bimbel 2026 | Cakrawala EduCentre",
@@ -13,14 +14,6 @@ export const metadata: Metadata = {
     siteName: "Cakrawala EduCentre",
   },
 };
-
-const paketLes = [
-  { label: "PAUD/TK", prices: { "6 Sesi": 540000, "12 Sesi": 960000, "24 Sesi": 1680000 }, populer: "6 Sesi" },
-  { label: "SD", prices: { "6 Sesi": 600000, "12 Sesi": 1080000, "24 Sesi": 1920000 }, populer: "12 Sesi" },
-  { label: "SMP", prices: { "6 Sesi": 720000, "12 Sesi": 1260000, "24 Sesi": 2280000 }, populer: "12 Sesi" },
-  { label: "SMA", prices: { "6 Sesi": 840000, "12 Sesi": 1440000, "24 Sesi": 2640000 }, populer: "12 Sesi" },
-  { label: "Umum/Mahasiswa", prices: { "6 Sesi": 900000, "12 Sesi": 1560000, "24 Sesi": 2880000 }, populer: "12 Sesi" },
-];
 
 const rupiah = (n: number) => `Rp ${n.toLocaleString("id-ID")}`;
 
@@ -51,7 +44,25 @@ const layananBiaya = [
   },
 ];
 
-export default function Biaya() {
+export default async function Biaya() {
+  const priceRows = await getPrices();
+
+  const grouped = priceRows.reduce<Record<string, { sesi: number; harga: number; isPopular: boolean }[]>>((acc, p) => {
+    if (!acc[p.jenjang]) acc[p.jenjang] = [];
+    acc[p.jenjang].push({ sesi: p.sesi, harga: Number(p.harga), isPopular: p.isPopular ?? false });
+    return acc;
+  }, {});
+
+  const paketLes = Object.entries(grouped).map(([label, items]) => {
+    const prices: Record<string, number> = {};
+    let populer = "";
+    for (const item of items) {
+      const key = `${item.sesi} Sesi`;
+      prices[key] = item.harga;
+      if (item.isPopular) populer = key;
+    }
+    return { label, prices, populer };
+  });
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">

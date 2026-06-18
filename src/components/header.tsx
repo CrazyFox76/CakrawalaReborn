@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown, BookOpen, GraduationCap, Globe, Users, MapPin, LogIn, FileText, Code, Baby, Monitor, Heart, Shield, Zap } from "lucide-react";
+import { Menu, X, ChevronDown, BookOpen, GraduationCap, Globe, Users, MapPin, LogIn, FileText, Code, Baby, Monitor, Heart, Shield, Search, Zap } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 import Link from "next/link";
 
@@ -140,6 +140,13 @@ export default function Header() {
             Blog
           </Link>
           <Link
+            href="/screening"
+            className="text-sm font-semibold text-slate-700 transition-colors hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400"
+          >
+            <Search className="mr-1 inline-block h-3.5 w-3.5" />
+            Cek PTN
+          </Link>
+          <Link
             href="/free-trial-bimbel"
             className="text-sm font-semibold text-green-600 transition-colors hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
           >
@@ -216,6 +223,7 @@ export default function Header() {
                 { label: "Biaya", icon: <MapPin className="h-3.5 w-3.5" />, href: "/biaya" },
                 { label: "Tentang", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/tentang-kami" },
                 { label: "Blog", icon: <BookOpen className="h-3.5 w-3.5" />, href: "/blog" },
+                { label: "Cek PTN", icon: <Search className="h-3.5 w-3.5" />, href: "/screening" },
                 { label: "Trial Gratis", icon: <Zap className="h-3.5 w-3.5" />, href: "/free-trial-bimbel" },
               ].map((item) => (
                 <a

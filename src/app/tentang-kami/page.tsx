@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, MessageCircle, GraduationCap, Users, Target, Award, Heart, Eye, BookOpen } from "lucide-react";
+import GallerySection from "@/components/gallery";
 
 export const metadata: Metadata = {
   title: "Tentang Kami | Cakrawala EduCentre",
@@ -84,6 +85,10 @@ export default function TentangKami() {
                 <p className="mt-1 text-sm text-zinc-600 dark:text-slate-400">{v.desc}</p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10">
+            <GallerySection />
           </div>
 
           <div className="mt-10 text-center">

@@ -2,9 +2,44 @@
 
 import { useState, useMemo } from "react";
 import { Search, GraduationCap, TrendingUp, Filter, AlertCircle } from "lucide-react";
-import { passingGrades, universities, categories, hitungPeluang, labelPeluang } from "@/data/passing-grade";
 
-export default function ScreeningRaport() {
+export type PassingGrade = {
+  university: string;
+  program: string;
+  grade: number;
+  category: string;
+  peminat: number;
+};
+
+function hitungPeluang(nilai: number, passingGrade: number): number {
+  if (nilai <= 0) return 0;
+  if (nilai >= 100) return 99;
+  const selisih = nilai - passingGrade;
+  if (selisih >= 5) return 90 + Math.min(selisih * 2, 9);
+  if (selisih >= 2) return 75 + (selisih - 2) * 5;
+  if (selisih >= 0) return 60 + selisih * 7.5;
+  if (selisih >= -3) return 40 + (selisih + 3) * 6.7;
+  if (selisih >= -6) return 20 + (selisih + 3) * 6.7;
+  return Math.max(5, 20 + (selisih + 6) * 11.7);
+}
+
+function labelPeluang(persen: number): { text: string; color: string } {
+  if (persen >= 80) return { text: "Sangat Besar", color: "text-green-600" };
+  if (persen >= 60) return { text: "Besar", color: "text-emerald-600" };
+  if (persen >= 40) return { text: "Sedang", color: "text-yellow-600" };
+  if (persen >= 20) return { text: "Kecil", color: "text-orange-600" };
+  return { text: "Sulit", color: "text-red-600" };
+}
+
+export default function ScreeningRaport({
+  passingGrades,
+  universities,
+  categories,
+}: {
+  passingGrades: PassingGrade[];
+  universities: string[];
+  categories: string[];
+}) {
   const [nilai, setNilai] = useState("");
   const [uniFilter, setUniFilter] = useState("");
   const [catFilter, setCatFilter] = useState("");

@@ -1,43 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, MessageCircle, User, Phone, BookText, Mail, Calendar,
-  Clock, MapPin, FileText, Banknote,
+  Clock, MapPin, FileText, Banknote, Tag,
 } from "lucide-react";
-import { createRegistration, getActiveBankAccounts } from "@/db/actions";
+import { createRegistration, getActiveBankAccounts, getPrices, validateVoucher, redeemVoucher } from "@/db/actions";
 import { terbilang } from "@/lib/terbilang";
 
+type PriceRow = { jenjang: string; sesi: number; harga: number };
 type Paket = { label: string; sesi: number; harga: number };
 
-const PAKET: Record<string, Paket[]> = {
-  "PAUD/TK": [
-    { label: "Paket 6 Sesi", sesi: 6, harga: 540000 },
-    { label: "Paket 12 Sesi", sesi: 12, harga: 960000 },
-    { label: "Paket 24 Sesi", sesi: 24, harga: 1_680_000 },
-  ],
-  SD: [
-    { label: "Paket 6 Sesi", sesi: 6, harga: 600000 },
-    { label: "Paket 12 Sesi", sesi: 12, harga: 1_080_000 },
-    { label: "Paket 24 Sesi", sesi: 24, harga: 1_920_000 },
-  ],
-  SMP: [
-    { label: "Paket 6 Sesi", sesi: 6, harga: 720000 },
-    { label: "Paket 12 Sesi", sesi: 12, harga: 1_260_000 },
-    { label: "Paket 24 Sesi", sesi: 24, harga: 2_280_000 },
-  ],
-  SMA: [
-    { label: "Paket 6 Sesi", sesi: 6, harga: 840000 },
-    { label: "Paket 12 Sesi", sesi: 12, harga: 1_440_000 },
-    { label: "Paket 24 Sesi", sesi: 24, harga: 2_640_000 },
-  ],
-  "Umum/Mahasiswa": [
-    { label: "Paket 6 Sesi", sesi: 6, harga: 900000 },
-    { label: "Paket 12 Sesi", sesi: 12, harga: 1_560_000 },
-    { label: "Paket 24 Sesi", sesi: 24, harga: 2_880_000 },
-  ],
-};
+function buildPaketMap(rows: PriceRow[]): Record<string, Paket[]> {
+  const map: Record<string, Paket[]> = {};
+  for (const r of rows) {
+    if (!map[r.jenjang]) map[r.jenjang] = [];
+    map[r.jenjang].push({ label: `Paket ${r.sesi} Sesi`, sesi: r.sesi, harga: r.harga });
+  }
+  return map;
+}
 
 const JENIS_LES = ["Online (Jarak Jauh)", "Tatap Muka (Home Visit)"];
 
@@ -79,23 +61,49 @@ export default function Daftar() {
     pesan: "",
   });
 
+  const [voucherCode, setVoucherCode] = useState("");
+  const [voucherDiscount, setVoucherDiscount] = useState(0);
+  const [voucherError, setVoucherError] = useState("");
+  const [voucherApplied, setVoucherApplied] = useState("");
+
   const [step, setStep] = useState<"form" | "invoice">("form");
   const [invoiceNo] = useState(generateInvoiceNumber);
   const [bankAccounts, setBankAccounts] = useState<{ bankName: string; accountNumber: string; accountHolder: string }[]>([]);
+  const [priceRows, setPriceRows] = useState<PriceRow[]>([]);
 
   useEffect(() => {
     getActiveBankAccounts().then(setBankAccounts);
+    getPrices().then((rows) => {
+      setPriceRows(rows.map((r) => ({ jenjang: r.jenjang, sesi: r.sesi, harga: Number(r.harga) })));
+    });
   }, []);
 
-  const paketList = PAKET[form.jenjang] || [];
+  const PAKET_MAP = useMemo(() => buildPaketMap(priceRows), [priceRows]);
+  const paketList = PAKET_MAP[form.jenjang] || [];
   const selectedPaket = paketList[Number(form.paketIndex)];
 
   const totalHarga = selectedPaket?.harga ?? 0;
+  const finalHarga = Math.max(0, totalHarga - voucherDiscount);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  };
+
+  const handleApplyVoucher = async () => {
+    if (!voucherCode.trim()) return;
+    setVoucherError("");
+    const result = await validateVoucher(voucherCode.trim(), totalHarga);
+    if (!result.valid) {
+      setVoucherError(result.error);
+      setVoucherDiscount(0);
+      setVoucherApplied("");
+      return;
+    }
+    setVoucherDiscount(result.discount);
+    setVoucherApplied(result.code);
+    await redeemVoucher(result.code);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -149,8 +157,9 @@ export default function Daftar() {
         `Alamat: ${form.alamat}%0AJenis Les: ${form.jenisLes}%0A` +
         `Waktu: ${form.waktuLes}%0ADurasi: ${form.durasi} Menit/Pertemuan%0A%0A` +
         `--- RINCIAN BIAYA ---%0A` +
-        `${selectedPaket?.label} ${form.jenjang}: ${fmtRupiah(totalHarga)}%0A%0A` +
-        `*Grand Total: ${fmtRupiah(totalHarga)}*%0A%0A` +
+        `${selectedPaket?.label} ${form.jenjang}: ${fmtRupiah(totalHarga)}%0A` +
+        (voucherDiscount > 0 ? `Diskon Voucher: ${fmtRupiah(voucherDiscount)}%0A` : "") +
+        `*Grand Total: ${fmtRupiah(finalHarga)}*%0A%0A` +
         `--- METODE PEMBAYARAN ---%0A` +
         `${paymentInfo}%0A%0A` +
         `Kirim bukti bayar ke +62 813-2486-8790`;
@@ -258,7 +267,7 @@ export default function Daftar() {
                       <td className="py-1.5 pr-2 sm:py-2">Potongan Harga</td>
                       <td className="py-1.5 pr-2 text-right sm:py-2">-</td>
                       <td className="py-1.5 pr-2 text-right sm:py-2">-</td>
-                      <td className="py-1.5 text-right sm:py-2">0</td>
+                      <td className="py-1.5 text-right sm:py-2">{voucherDiscount ? `(${fmtRupiah(voucherDiscount)})` : "0"}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -279,11 +288,11 @@ export default function Daftar() {
                 </div>
                 <div className="flex justify-between text-zinc-500">
                   <span>Total Potongan Harga</span>
-                  <span>Rp 0</span>
+                  <span>{voucherDiscount ? fmtRupiah(voucherDiscount) : "Rp 0"}</span>
                 </div>
                 <div className="flex justify-between text-base font-bold text-primary">
                   <span>Grand Total</span>
-                  <span>{fmtRupiah(totalHarga)}</span>
+                  <span>{fmtRupiah(finalHarga)}</span>
                 </div>
               </div>
             </div>
@@ -297,7 +306,7 @@ export default function Daftar() {
                 <p className="mt-2 leading-relaxed text-zinc-600 dark:text-slate-400">
                   Pembayaran dilakukan melalui <strong>Rekening {bank.bankName}: {bank.accountNumber}</strong> a/n{" "}
                   <strong>{bank.accountHolder}</strong> dengan total biaya{" "}
-                  <strong>{fmtRupiah(totalHarga)}</strong> ({terbilang(totalHarga)}) dibayarkan
+                  <strong>{fmtRupiah(finalHarga)}</strong> ({terbilang(finalHarga)}) dibayarkan
                   sebelum pertemuan pertama dimulai.
                 </p>
                 <p className="mt-2 text-zinc-600 dark:text-slate-400">
@@ -546,6 +555,45 @@ export default function Daftar() {
                 className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
               />
             </div>
+
+            {/* Voucher */}
+            {!voucherApplied && (
+              <div>
+                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                  <Tag className="h-4 w-4" /> Kode Voucher (opsional)
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="text" value={voucherCode}
+                    onChange={(e) => setVoucherCode(e.target.value)}
+                    placeholder="Masukkan kode voucher"
+                    className="flex-1 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
+                  />
+                  <button
+                    type="button" onClick={handleApplyVoucher}
+                    className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-primary-light sm:rounded-xl sm:px-5 sm:text-sm"
+                  >
+                    Pakai
+                  </button>
+                </div>
+                {voucherError && (
+                  <p className="mt-1 text-xs text-red-500">{voucherError}</p>
+                )}
+              </div>
+            )}
+            {voucherApplied && (
+              <div className="flex items-center justify-between rounded-lg bg-green-50 p-3 text-xs dark:bg-green-900/20">
+                <span className="text-green-700 dark:text-green-300">
+                  ✅ Voucher {voucherApplied} diterapkan! Diskon {fmtRupiah(voucherDiscount)}
+                </span>
+                <button
+                  type="button" onClick={() => { setVoucherApplied(""); setVoucherDiscount(0); setVoucherCode(""); }}
+                  className="text-green-600 hover:text-green-800 dark:text-green-400"
+                >
+                  Hapus
+                </button>
+              </div>
+            )}
 
             <button
               type="submit"

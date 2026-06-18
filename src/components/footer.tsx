@@ -9,6 +9,7 @@ const quickLinks = [
   { label: "Harga Les", href: "/harga" },
   { label: "Tentang Kami", href: "/tentang-kami" },
   { label: "Blog", href: "/blog" },
+  { label: "Cek PTN", href: "/screening" },
   { label: "Karir", href: "/karir" },
   { label: "Pendaftaran", href: "/daftar" },
 ];

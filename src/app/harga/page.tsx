@@ -1,45 +1,36 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
+import { getPrices } from "@/db/actions";
 
 export const metadata: Metadata = {
   title: "Harga Paket Les | Cakrawala EduCentre",
   description: "Informasi harga paket les privat SD, SMP, SMA, dan umum. Biaya terjangkau dengan kualitas terbaik.",
 };
 
-const JENJANG = [
-  {
-    label: "PAUD/TK",
-    harga: { "6 Sesi": 540000, "12 Sesi": 960000, "24 Sesi": 1680000 },
-    rekomendasi: "6 Sesi",
-  },
-  {
-    label: "SD",
-    harga: { "6 Sesi": 600000, "12 Sesi": 1080000, "24 Sesi": 1920000 },
-    rekomendasi: "12 Sesi",
-  },
-  {
-    label: "SMP",
-    harga: { "6 Sesi": 720000, "12 Sesi": 1260000, "24 Sesi": 2280000 },
-    rekomendasi: "12 Sesi",
-  },
-  {
-    label: "SMA",
-    harga: { "6 Sesi": 840000, "12 Sesi": 1440000, "24 Sesi": 2640000 },
-    rekomendasi: "12 Sesi",
-  },
-  {
-    label: "Umum/Mahasiswa",
-    harga: { "6 Sesi": 900000, "12 Sesi": 1560000, "24 Sesi": 2880000 },
-    rekomendasi: "12 Sesi",
-  },
-];
-
 function fmtRupiah(n: number) {
   return `Rp ${n.toLocaleString("id-ID")}`;
 }
 
-export default function Harga() {
+export default async function Harga() {
+  const priceRows = await getPrices();
+
+  const grouped = priceRows.reduce<Record<string, { sesi: number; harga: number; isPopular: boolean }[]>>((acc, p) => {
+    if (!acc[p.jenjang]) acc[p.jenjang] = [];
+    acc[p.jenjang].push({ sesi: p.sesi, harga: Number(p.harga), isPopular: p.isPopular ?? false });
+    return acc;
+  }, {});
+
+  const JENJANG = Object.entries(grouped).map(([label, items]) => {
+    const harga: Record<string, number> = {};
+    let rekomendasi = "";
+    for (const item of items) {
+      const key = `${item.sesi} Sesi`;
+      harga[key] = item.harga;
+      if (item.isPopular) rekomendasi = key;
+    }
+    return { label, harga, rekomendasi };
+  });
   return (
     <div className="min-h-dvh bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">

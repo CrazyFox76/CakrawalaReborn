@@ -11,6 +11,10 @@ import {
   aboutFeatures,
   whyUs,
   bankAccounts,
+  prices,
+  cakraPointStats,
+  cakraPointRewards,
+  vouchers,
 } from "./schema";
 
 async function seed() {
@@ -173,6 +177,22 @@ async function seed() {
     await db.insert(programs).values(p).onConflictDoNothing({ target: programs.slug });
   }
   console.log(`  ${programData.length} programs inserted`);
+
+    // ── CakraPoints ──────────────────────────────────────────────────────────
+  console.log("Seeding cakra point stats...");
+  await db.insert(cakraPointStats).values([
+    { label: "Siswa Aktif", value: 1200, suffix: "+", sortOrder: 1 },
+    { label: "Poin Ditukarkan", value: 50000, suffix: "+", sortOrder: 2 },
+    { label: "Kepuasan Siswa", value: 98, suffix: "%", sortOrder: 3 },
+  ]);
+
+  console.log("Seeding cakra point rewards...");
+  await db.insert(cakraPointRewards).values([
+    { name: "Diskon 25% Kelas", points: 500, icon: "🎓", tag: "Populer", sortOrder: 1 },
+    { name: "Modul Belajar Premium", points: 750, icon: "📚", tag: "Hot", sortOrder: 2 },
+    { name: "1 Sesi Konsultasi", points: 1000, icon: "💡", tag: "Eksklusif", sortOrder: 3 },
+    { name: "Diskon 50% Tryout", points: 1500, icon: "🏆", tag: "Terbaik", sortOrder: 4 },
+  ]);
 
   // ── Bank Accounts ───────────────────────────────────────────────────────
   console.log("Seeding bank accounts...");
@@ -367,6 +387,33 @@ async function seed() {
     { title: "Evaluasi Berkala", desc: "Laporan perkembangan belajar diberikan secara rutin kepada orang tua untuk memonitor kemajuan siswa.", sortOrder: 5 },
     { title: "Biaya Terjangkau", desc: "Kualitas pendidikan terbaik dengan biaya yang kompetitif dan opsi paket yang bisa disesuaikan.", sortOrder: 6 },
   ]);
+
+  console.log("Seeding prices...");
+  const priceData = [
+    { jenjang: "PAUD/TK", sesi: 6, harga: 540000, isPopular: true },
+    { jenjang: "PAUD/TK", sesi: 12, harga: 960000, isPopular: false },
+    { jenjang: "PAUD/TK", sesi: 24, harga: 1680000, isPopular: false },
+    { jenjang: "SD", sesi: 6, harga: 600000, isPopular: false },
+    { jenjang: "SD", sesi: 12, harga: 1080000, isPopular: true },
+    { jenjang: "SD", sesi: 24, harga: 1920000, isPopular: false },
+    { jenjang: "SMP", sesi: 6, harga: 720000, isPopular: false },
+    { jenjang: "SMP", sesi: 12, harga: 1260000, isPopular: true },
+    { jenjang: "SMP", sesi: 24, harga: 2280000, isPopular: false },
+    { jenjang: "SMA", sesi: 6, harga: 840000, isPopular: false },
+    { jenjang: "SMA", sesi: 12, harga: 1440000, isPopular: true },
+    { jenjang: "SMA", sesi: 24, harga: 2640000, isPopular: false },
+    { jenjang: "Umum/Mahasiswa", sesi: 6, harga: 900000, isPopular: false },
+    { jenjang: "Umum/Mahasiswa", sesi: 12, harga: 1560000, isPopular: true },
+    { jenjang: "Umum/Mahasiswa", sesi: 24, harga: 2880000, isPopular: false },
+  ];
+  await db.insert(prices).values(priceData).onConflictDoNothing();
+
+  console.log("Seeding vouchers...");
+  await db.insert(vouchers).values([
+    { code: "CAKRAWALA10", type: "nominal", value: 100000, minPurchase: 500000, maxUses: 50, isActive: true },
+    { code: "DISKON15", type: "percentage", value: 15, minPurchase: 1000000, maxUses: 30, isActive: true },
+    { code: "GRATIS50", type: "nominal", value: 50000, minPurchase: 300000, maxUses: 100, isActive: true },
+  ]).onConflictDoNothing();
 
   console.log("✅ Seed selesai!");
 }

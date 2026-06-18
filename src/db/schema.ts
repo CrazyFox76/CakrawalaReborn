@@ -164,6 +164,51 @@ export const verificationTokens = pgTable(
   }),
 );
 
+// ─── Prices ────────────────────────────────────────────────────────────────────
+export const prices = pgTable("prices", {
+  id: serial("id").primaryKey(),
+  jenjang: varchar("jenjang", { length: 50 }).notNull(),
+  sesi: integer("sesi").notNull(),
+  harga: integer("harga").notNull(),
+  isPopular: boolean("is_popular").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// ─── CakraPoints ────────────────────────────────────────────────────────────────
+export const cakraPointStats = pgTable("cakra_point_stats", {
+  id: serial("id").primaryKey(),
+  label: varchar("label", { length: 255 }).notNull(),
+  value: integer("value").notNull(),
+  suffix: varchar("suffix", { length: 10 }).default(""),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const cakraPointRewards = pgTable("cakra_point_rewards", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  points: integer("points").notNull(),
+  icon: varchar("icon", { length: 10 }).notNull(),
+  tag: varchar("tag", { length: 100 }).notNull(),
+  sortOrder: integer("sort_order").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// ─── Vouchers ───────────────────────────────────────────────────────────────────
+export const vouchers = pgTable("vouchers", {
+  id: serial("id").primaryKey(),
+  code: varchar("code", { length: 50 }).notNull().unique(),
+  type: varchar("type", { length: 20 }).notNull().default("nominal"),
+  value: integer("value").notNull(),
+  minPurchase: integer("min_purchase").default(0),
+  maxUses: integer("max_uses").default(0),
+  usedCount: integer("used_count").default(0),
+  expiresAt: timestamp("expires_at"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // ─── Leads (hero lead capture) ─────────────────────────────────────────────────
 export const leads = pgTable("leads", {
   id: serial("id").primaryKey(),

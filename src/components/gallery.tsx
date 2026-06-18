@@ -1,11 +1,11 @@
 export default function GallerySection() {
   const photos = [
-    { label: "Kegiatan Belajar", color: "from-blue-400 to-blue-600", emoji: "📚" },
-    { label: "Tutor & Siswa", color: "from-accent to-accent/60", emoji: "👨‍🏫" },
-    { label: "Suasana Kelas", color: "from-green-400 to-green-600", emoji: "🏫" },
-    { label: "Kegiatan Outdoor", color: "from-purple-400 to-purple-600", emoji: "🌳" },
-    { label: "Sesi TryOut", color: "from-red-400 to-red-600", emoji: "✍️" },
-    { label: "Kelulusan", color: "from-yellow-400 to-yellow-600", emoji: "🎓" },
+    { label: "Kegiatan Belajar", url: "https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=600&q=80" },
+    { label: "Tutor & Siswa", url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" },
+    { label: "Suasana Kelas", url: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80" },
+    { label: "Kegiatan Outdoor", url: "https://images.unsplash.com/photo-1577896851231-70f1885d09cd?w=600&q=80" },
+    { label: "Sesi TryOut", url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80" },
+    { label: "Kelulusan", url: "https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=600&q=80" },
   ];
 
   return (
@@ -24,12 +24,18 @@ export default function GallerySection() {
           {photos.map((p) => (
             <div
               key={p.label}
-              className={`relative flex h-40 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${p.color} sm:h-64`}
+              className="relative h-40 overflow-hidden rounded-2xl sm:h-64"
             >
-              <div className="text-center">
-                <span className="text-3xl sm:text-5xl">{p.emoji}</span>
-                <p className="mt-2 text-xs font-semibold text-white/90 sm:text-sm">{p.label}</p>
-              </div>
+              <img
+                src={p.url}
+                alt={p.label}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <p className="absolute bottom-0 left-0 right-0 p-3 text-xs font-semibold text-white sm:p-4 sm:text-sm">
+                {p.label}
+              </p>
             </div>
           ))}
         </div>
