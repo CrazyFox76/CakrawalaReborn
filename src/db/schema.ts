@@ -177,7 +177,7 @@ export const prices = pgTable("prices", {
 // ─── CakraPoints ────────────────────────────────────────────────────────────────
 export const cakraPointStats = pgTable("cakra_point_stats", {
   id: serial("id").primaryKey(),
-  label: varchar("label", { length: 255 }).notNull(),
+  label: varchar("label", { length: 255 }).notNull().unique(),
   value: integer("value").notNull(),
   suffix: varchar("suffix", { length: 10 }).default(""),
   sortOrder: integer("sort_order").default(0),
@@ -186,7 +186,7 @@ export const cakraPointStats = pgTable("cakra_point_stats", {
 
 export const cakraPointRewards = pgTable("cakra_point_rewards", {
   id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
   points: integer("points").notNull(),
   icon: varchar("icon", { length: 10 }).notNull(),
   tag: varchar("tag", { length: 100 }).notNull(),

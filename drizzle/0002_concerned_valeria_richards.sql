@@ -1,0 +1,2 @@
+ALTER TABLE "cakra_point_rewards" ADD CONSTRAINT "cakra_point_rewards_name_unique" UNIQUE("name");--> statement-breakpoint
+ALTER TABLE "cakra_point_stats" ADD CONSTRAINT "cakra_point_stats_label_unique" UNIQUE("label");

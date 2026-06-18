@@ -184,7 +184,7 @@ async function seed() {
     { label: "Siswa Aktif", value: 1200, suffix: "+", sortOrder: 1 },
     { label: "Poin Ditukarkan", value: 50000, suffix: "+", sortOrder: 2 },
     { label: "Kepuasan Siswa", value: 98, suffix: "%", sortOrder: 3 },
-  ]);
+  ]).onConflictDoNothing();
 
   console.log("Seeding cakra point rewards...");
   await db.insert(cakraPointRewards).values([
@@ -192,7 +192,7 @@ async function seed() {
     { name: "Modul Belajar Premium", points: 750, icon: "📚", tag: "Hot", sortOrder: 2 },
     { name: "1 Sesi Konsultasi", points: 1000, icon: "💡", tag: "Eksklusif", sortOrder: 3 },
     { name: "Diskon 50% Tryout", points: 1500, icon: "🏆", tag: "Terbaik", sortOrder: 4 },
-  ]);
+  ]).onConflictDoNothing();
 
   // ── Bank Accounts ───────────────────────────────────────────────────────
   console.log("Seeding bank accounts...");

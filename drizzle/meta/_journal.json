@@ -15,6 +15,13 @@
       "when": 1781809220994,
       "tag": "0001_rich_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1781809755450,
+      "tag": "0002_concerned_valeria_richards",
+      "breakpoints": true
     }
   ]
 }
