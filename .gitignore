@@ -35,6 +35,17 @@ yarn-error.log*
 .env.local
 .env.production
 
+# agent tooling (local only — not needed for the app)
+.agents/
+.opencode/
+skills-lock.json
+opencode.json
+AGENTS.md
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright output
+playwright-report/
+test-results/
