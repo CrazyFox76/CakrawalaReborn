@@ -1,5 +1,3 @@
-"use client";
-
 import { Star, ArrowRight, Sparkles, Gift, Clock } from "lucide-react";
 
 export default function CakraPointsPromo() {

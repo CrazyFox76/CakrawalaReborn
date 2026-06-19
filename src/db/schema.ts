@@ -1,95 +1,5 @@
 import { pgTable, serial, varchar, text, integer, timestamp, boolean, primaryKey } from "drizzle-orm/pg-core";
 
-export const brands = pgTable("brands", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
-  description: text("description").notNull(),
-  category: varchar("category", { length: 50 }).notNull(),
-  iconName: varchar("icon_name", { length: 50 }).notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const programs = pgTable("programs", {
-  id: serial("id").primaryKey(),
-  brandId: integer("brand_id").references(() => brands.id),
-  title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
-  age: varchar("age", { length: 255 }).notNull(),
-  description: text("description").notNull(),
-  highlights: text("highlights").array().notNull(),
-  category: varchar("category", { length: 50 }).notNull(),
-  iconName: varchar("icon_name", { length: 50 }).notNull(),
-  isPopular: boolean("is_popular").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const blogPosts = pgTable("blog_posts", {
-  id: varchar("id", { length: 10 }).primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
-  excerpt: text("excerpt").notNull(),
-  content: text("content").notNull(),
-  category: varchar("category", { length: 100 }).notNull(),
-  date: varchar("date", { length: 50 }).notNull(),
-  author: varchar("author", { length: 255 }).notNull(),
-  readTime: varchar("read_time", { length: 50 }).notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const tutors = pgTable("tutors", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  initials: varchar("initials", { length: 10 }).notNull(),
-  subject: varchar("subject", { length: 255 }).notNull(),
-  education: varchar("education", { length: 255 }).notNull(),
-  desc: text("desc").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const testimonials = pgTable("testimonials", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  role: varchar("role", { length: 255 }).notNull(),
-  content: text("content").notNull(),
-  rating: integer("rating").notNull().default(5),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const faqs = pgTable("faqs", {
-  id: serial("id").primaryKey(),
-  question: varchar("question", { length: 500 }).notNull(),
-  answer: text("answer").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const passingGrades = pgTable("passing_grades", {
-  id: serial("id").primaryKey(),
-  university: varchar("university", { length: 255 }).notNull(),
-  program: varchar("program", { length: 255 }).notNull(),
-  grade: integer("grade").notNull(),
-  category: varchar("category", { length: 50 }).notNull(),
-  peminat: integer("peminat").notNull().default(0),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const aboutFeatures = pgTable("about_features", {
-  id: serial("id").primaryKey(),
-  iconName: varchar("icon_name", { length: 50 }).notNull(),
-  title: varchar("title", { length: 255 }).notNull(),
-  desc: text("desc").notNull(),
-  sortOrder: integer("sort_order").default(0),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const whyUs = pgTable("why_us", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  desc: text("desc").notNull(),
-  sortOrder: integer("sort_order").default(0),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
 export const registrations = pgTable("registrations", {
   id: serial("id").primaryKey(),
   nama: varchar("nama", { length: 255 }).notNull(),
@@ -164,37 +74,6 @@ export const verificationTokens = pgTable(
   }),
 );
 
-// ─── Prices ────────────────────────────────────────────────────────────────────
-export const prices = pgTable("prices", {
-  id: serial("id").primaryKey(),
-  jenjang: varchar("jenjang", { length: 50 }).notNull(),
-  sesi: integer("sesi").notNull(),
-  harga: integer("harga").notNull(),
-  isPopular: boolean("is_popular").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-// ─── CakraPoints ────────────────────────────────────────────────────────────────
-export const cakraPointStats = pgTable("cakra_point_stats", {
-  id: serial("id").primaryKey(),
-  label: varchar("label", { length: 255 }).notNull().unique(),
-  value: integer("value").notNull(),
-  suffix: varchar("suffix", { length: 10 }).default(""),
-  sortOrder: integer("sort_order").default(0),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const cakraPointRewards = pgTable("cakra_point_rewards", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull().unique(),
-  points: integer("points").notNull(),
-  icon: varchar("icon", { length: 10 }).notNull(),
-  tag: varchar("tag", { length: 100 }).notNull(),
-  sortOrder: integer("sort_order").default(0),
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
 // ─── Vouchers ───────────────────────────────────────────────────────────────────
 export const vouchers = pgTable("vouchers", {
   id: serial("id").primaryKey(),
@@ -214,15 +93,5 @@ export const leads = pgTable("leads", {
   id: serial("id").primaryKey(),
   phone: varchar("phone", { length: 50 }).notNull(),
   source: varchar("source", { length: 100 }).default("hero"),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-// ─── Bank Accounts ─────────────────────────────────────────────────────────────
-export const bankAccounts = pgTable("bank_accounts", {
-  id: serial("id").primaryKey(),
-  bankName: varchar("bank_name", { length: 100 }).notNull(),
-  accountNumber: varchar("account_number", { length: 50 }).notNull(),
-  accountHolder: varchar("account_holder", { length: 255 }).notNull(),
-  isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });

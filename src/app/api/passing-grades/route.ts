@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/db/index";
-import { passingGrades } from "@/db/schema";
+import { getPassingGrades } from "@/data/passing-grade";
 import { corsHeaders } from "@/lib/api-utils";
 
 export async function OPTIONS() {
@@ -9,6 +8,6 @@ export async function OPTIONS() {
 
 export async function GET(request: Request) {
   const origin = request.headers.get("origin");
-  const data = await db.select().from(passingGrades);
+  const data = getPassingGrades();
   return NextResponse.json(data, { headers: corsHeaders(origin) });
 }

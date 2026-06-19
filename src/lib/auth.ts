@@ -7,7 +7,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import type { Adapter } from "next-auth/adapters";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, signIn, auth } = NextAuth({
   adapter: DrizzleAdapter(db) as Adapter,
   session: { strategy: "jwt" },
   pages: {

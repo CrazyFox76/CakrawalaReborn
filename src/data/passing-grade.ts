@@ -6,6 +6,8 @@ export type PassingGrade = {
   peminat: number;
 };
 
+export async function getPassingGrades() { return passingGrades; }
+
 export const passingGrades: PassingGrade[] = [
   // ═══ UI ═══
   { university: "Universitas Indonesia", program: "Kedokteran", grade: 95, category: "IPA", peminat: 4500 },
@@ -139,27 +141,301 @@ export const passingGrades: PassingGrade[] = [
   { university: "Universitas Mataram", program: "Kedokteran", grade: 83, category: "IPA", peminat: 1600 },
   { university: "Universitas Palangkaraya", program: "Ilmu Hukum", grade: 68, category: "IPS", peminat: 900 },
   { university: "Universitas Cenderawasih", program: "Kedokteran", grade: 78, category: "IPA", peminat: 1200 },
+
+  // ═══ UI Tambahan ═══
+  { university: "Universitas Indonesia", program: "Manajemen", grade: 87, category: "IPS", peminat: 3200 },
+  { university: "Universitas Indonesia", program: "Ilmu Komunikasi", grade: 85, category: "IPS", peminat: 2900 },
+  { university: "Universitas Indonesia", program: "Teknik Industri", grade: 86, category: "IPA", peminat: 2200 },
+  { university: "Universitas Indonesia", program: "Teknik Mesin", grade: 85, category: "IPA", peminat: 1800 },
+  { university: "Universitas Indonesia", program: "Teknik Elektro", grade: 87, category: "IPA", peminat: 2000 },
+  { university: "Universitas Indonesia", program: "Arsitektur", grade: 84, category: "Campuran", peminat: 1600 },
+  { university: "Universitas Indonesia", program: "Sastra Inggris", grade: 80, category: "IPS", peminat: 1800 },
+  { university: "Universitas Indonesia", program: "Sastra Jepang", grade: 78, category: "IPS", peminat: 1400 },
+  { university: "Universitas Indonesia", program: "Ilmu Administrasi Negara", grade: 83, category: "IPS", peminat: 2500 },
+  { university: "Universitas Indonesia", program: "Ilmu Administrasi Fiskal", grade: 82, category: "IPS", peminat: 2200 },
+  { university: "Universitas Indonesia", program: "Geografi", grade: 78, category: "Campuran", peminat: 1200 },
+  { university: "Universitas Indonesia", program: "Kriminologi", grade: 82, category: "IPS", peminat: 2000 },
+
+  // ═══ ITB Tambahan ═══
+  { university: "Institut Teknologi Bandung", program: "Teknik Industri", grade: 88, category: "IPA", peminat: 2400 },
+  { university: "Institut Teknologi Bandung", program: "Teknik Sipil", grade: 86, category: "IPA", peminat: 2100 },
+  { university: "Institut Teknologi Bandung", program: "Perencanaan Wilayah & Kota", grade: 84, category: "Campuran", peminat: 1500 },
+  { university: "Institut Teknologi Bandung", program: "Sistem Informasi", grade: 89, category: "Campuran", peminat: 2200 },
+  { university: "Institut Teknologi Bandung", program: "Teknik Geologi", grade: 83, category: "IPA", peminat: 1300 },
+  { university: "Institut Teknologi Bandung", program: "Teknik Perminyakan", grade: 86, category: "IPA", peminat: 1700 },
+  { university: "Institut Teknologi Bandung", program: "Manajemen Rekayasa", grade: 85, category: "IPA", peminat: 1400 },
+  { university: "Institut Teknologi Bandung", program: "Teknik Lingkungan", grade: 82, category: "IPA", peminat: 1200 },
+  { university: "Institut Teknologi Bandung", program: "Teknik Pangan", grade: 81, category: "IPA", peminat: 1000 },
+  { university: "Institut Teknologi Bandung", program: "Desain Komunikasi Visual", grade: 85, category: "Campuran", peminat: 2000 },
+  { university: "Institut Teknologi Bandung", program: "Desain Interior", grade: 82, category: "Campuran", peminat: 1200 },
+
+  // ═══ UGM Tambahan ═══
+  { university: "Universitas Gadjah Mada", program: "Teknik Mesin", grade: 86, category: "IPA", peminat: 2000 },
+  { university: "Universitas Gadjah Mada", program: "Teknik Elektro", grade: 87, category: "IPA", peminat: 2100 },
+  { university: "Universitas Gadjah Mada", program: "Teknik Kimia", grade: 85, category: "IPA", peminat: 1600 },
+  { university: "Universitas Gadjah Mada", program: "Ilmu Komputer", grade: 89, category: "Campuran", peminat: 2500 },
+  { university: "Universitas Gadjah Mada", program: "Hubungan Internasional", grade: 86, category: "IPS", peminat: 2400 },
+  { university: "Universitas Gadjah Mada", program: "Geografi", grade: 78, category: "Campuran", peminat: 1300 },
+  { university: "Universitas Gadjah Mada", program: "Sastra Inggris", grade: 80, category: "IPS", peminat: 1700 },
+  { university: "Universitas Gadjah Mada", program: "Ilmu Sejarah", grade: 76, category: "IPS", peminat: 1000 },
+  { university: "Universitas Gadjah Mada", program: "Ekonomi Pembangunan", grade: 84, category: "IPS", peminat: 2400 },
+  { university: "Universitas Gadjah Mada", program: "Kedokteran Gigi", grade: 91, category: "IPA", peminat: 2500 },
+  { university: "Universitas Gadjah Mada", program: "Teknologi Hasil Pertanian", grade: 78, category: "IPA", peminat: 1100 },
+  { university: "Universitas Gadjah Mada", program: "Biologi", grade: 82, category: "IPA", peminat: 1400 },
+  { university: "Universitas Gadjah Mada", program: "Kimia", grade: 80, category: "IPA", peminat: 1100 },
+
+  // ═══ ITS Tambahan ═══
+  { university: "Institut Teknologi Sepuluh Nopember", program: "Sistem Informasi", grade: 87, category: "Campuran", peminat: 2200 },
+  { university: "Institut Teknologi Sepuluh Nopember", program: "Teknik Industri", grade: 85, category: "IPA", peminat: 1800 },
+  { university: "Institut Teknologi Sepuluh Nopember", program: "Teknik Perkapalan", grade: 83, category: "IPA", peminat: 1400 },
+  { university: "Institut Teknologi Sepuluh Nopember", program: "Teknik Kelautan", grade: 82, category: "IPA", peminat: 1200 },
+  { university: "Institut Teknologi Sepuluh Nopember", program: "Teknik Lingkungan", grade: 81, category: "IPA", peminat: 1300 },
+  { university: "Institut Teknologi Sepuluh Nopember", program: "Teknik Kimia", grade: 84, category: "IPA", peminat: 1500 },
+  { university: "Institut Teknologi Sepuluh Nopember", program: "Teknik Material", grade: 80, category: "IPA", peminat: 1000 },
+  { university: "Institut Teknologi Sepuluh Nopember", program: "Statistika", grade: 84, category: "Campuran", peminat: 1700 },
+
+  // ═══ IPB Tambahan ═══
+  { university: "IPB University", program: "Manajemen", grade: 80, category: "IPS", peminat: 1800 },
+  { university: "IPB University", program: "Ilmu Ekonomi", grade: 76, category: "IPS", peminat: 1200 },
+  { university: "IPB University", program: "Gizi", grade: 82, category: "IPA", peminat: 1800 },
+  { university: "IPB University", program: "Ilmu Kelautan", grade: 76, category: "IPA", peminat: 1000 },
+  { university: "IPB University", program: "Teknologi Hasil Perikanan", grade: 74, category: "IPA", peminat: 900 },
+  { university: "IPB University", program: "Arsitektur Lanskap", grade: 78, category: "Campuran", peminat: 1100 },
+  { university: "IPB University", program: "Konservasi Sumber Daya Hutan", grade: 72, category: "IPA", peminat: 800 },
+  { university: "IPB University", program: "Ilmu Nutrisi", grade: 80, category: "IPA", peminat: 1400 },
+
+  // ═══ UNPAD Tambahan ═══
+  { university: "Universitas Padjadjaran", program: "Manajemen", grade: 84, category: "IPS", peminat: 2600 },
+  { university: "Universitas Padjadjaran", program: "Hubungan Internasional", grade: 84, category: "IPS", peminat: 2300 },
+  { university: "Universitas Padjadjaran", program: "Teknik Informatika", grade: 86, category: "Campuran", peminat: 2400 },
+  { university: "Universitas Padjadjaran", program: "Ekonomi Pembangunan", grade: 82, category: "IPS", peminat: 1800 },
+  { university: "Universitas Padjadjaran", program: "Sastra Inggris", grade: 80, category: "IPS", peminat: 1600 },
+  { university: "Universitas Padjadjaran", program: "Sastra Jepang", grade: 78, category: "IPS", peminat: 1400 },
+  { university: "Universitas Padjadjaran", program: "Perpajakan", grade: 83, category: "IPS", peminat: 2000 },
+  { university: "Universitas Padjadjaran", program: "Ilmu Pemerintahan", grade: 82, category: "IPS", peminat: 1900 },
+  { university: "Universitas Padjadjaran", program: "Peternakan", grade: 74, category: "IPA", peminat: 900 },
+  { university: "Universitas Padjadjaran", program: "Hubungan Masyarakat", grade: 81, category: "IPS", peminat: 1800 },
+
+  // ═══ UNDIP Tambahan ═══
+  { university: "Universitas Diponegoro", program: "Psikologi", grade: 84, category: "IPS", peminat: 2200 },
+  { university: "Universitas Diponegoro", program: "Farmasi", grade: 86, category: "IPA", peminat: 1800 },
+  { university: "Universitas Diponegoro", program: "Teknik Elektro", grade: 84, category: "IPA", peminat: 1700 },
+  { university: "Universitas Diponegoro", program: "Teknik Mesin", grade: 83, category: "IPA", peminat: 1600 },
+  { university: "Universitas Diponegoro", program: "Peternakan", grade: 76, category: "IPA", peminat: 1100 },
+  { university: "Universitas Diponegoro", program: "Ekonomi Pembangunan", grade: 82, category: "IPS", peminat: 2000 },
+  { university: "Universitas Diponegoro", program: "Ilmu Komunikasi", grade: 83, category: "IPS", peminat: 2100 },
+  { university: "Universitas Diponegoro", program: "Teknik Lingkungan", grade: 80, category: "IPA", peminat: 1200 },
+  { university: "Universitas Diponegoro", program: "Akuakultur", grade: 74, category: "IPA", peminat: 900 },
+
+  // ═══ UNAIR Tambahan ═══
+  { university: "Universitas Airlangga", program: "Manajemen", grade: 84, category: "IPS", peminat: 2400 },
+  { university: "Universitas Airlangga", program: "Ilmu Komunikasi", grade: 83, category: "IPS", peminat: 2000 },
+  { university: "Universitas Airlangga", program: "Teknik Informatika", grade: 86, category: "Campuran", peminat: 2200 },
+  { university: "Universitas Airlangga", program: "Hubungan Internasional", grade: 82, category: "IPS", peminat: 1800 },
+  { university: "Universitas Airlangga", program: "Ekonomi Pembangunan", grade: 82, category: "IPS", peminat: 1900 },
+  { university: "Universitas Airlangga", program: "Kedokteran Gigi", grade: 90, category: "IPA", peminat: 2600 },
+  { university: "Universitas Airlangga", program: "Kesehatan Masyarakat", grade: 80, category: "IPA", peminat: 1600 },
+  { university: "Universitas Airlangga", program: "Ilmu Perpustakaan", grade: 74, category: "IPS", peminat: 1000 },
+  { university: "Universitas Airlangga", program: "Teknobiologi", grade: 78, category: "IPA", peminat: 1200 },
+
+  // ═══ UNIBRAW Tambahan ═══
+  { university: "Universitas Brawijaya", program: "Psikologi", grade: 84, category: "IPS", peminat: 2000 },
+  { university: "Universitas Brawijaya", program: "Farmasi", grade: 86, category: "IPA", peminat: 1800 },
+  { university: "Universitas Brawijaya", program: "Ilmu Komunikasi", grade: 83, category: "IPS", peminat: 2200 },
+  { university: "Universitas Brawijaya", program: "Teknik Elektro", grade: 84, category: "IPA", peminat: 1700 },
+  { university: "Universitas Brawijaya", program: "Teknik Mesin", grade: 83, category: "IPA", peminat: 1500 },
+  { university: "Universitas Brawijaya", program: "Peternakan", grade: 76, category: "IPA", peminat: 1200 },
+  { university: "Universitas Brawijaya", program: "Teknologi Pangan", grade: 82, category: "IPA", peminat: 1600 },
+  { university: "Universitas Brawijaya", program: "Ekonomi Pembangunan", grade: 82, category: "IPS", peminat: 1900 },
+  { university: "Universitas Brawijaya", program: "Hubungan Internasional", grade: 81, category: "IPS", peminat: 1700 },
+  { university: "Universitas Brawijaya", program: "Agribisnis", grade: 76, category: "IPA", peminat: 1300 },
+  { university: "Universitas Brawijaya", program: "Ilmu Kelautan", grade: 72, category: "IPA", peminat: 900 },
+
+  // ═══ UPI Tambahan ═══
+  { university: "Universitas Pendidikan Indonesia", program: "Pendidikan Jasmani", grade: 74, category: "Campuran", peminat: 1800 },
+  { university: "Universitas Pendidikan Indonesia", program: "Pendidikan IPA", grade: 76, category: "IPA", peminat: 1400 },
+  { university: "Universitas Pendidikan Indonesia", program: "Pendidikan IPS", grade: 74, category: "IPS", peminat: 1600 },
+  { university: "Universitas Pendidikan Indonesia", program: "Pendidikan Seni Rupa", grade: 72, category: "Campuran", peminat: 1000 },
+  { university: "Universitas Pendidikan Indonesia", program: "Manajemen Pendidikan", grade: 76, category: "IPS", peminat: 1200 },
+  { university: "Universitas Pendidikan Indonesia", program: "Ilmu Pendidikan Agama Islam", grade: 70, category: "IPS", peminat: 1300 },
+
+  // ═══ UNS Tambahan ═══
+  { university: "Universitas Sebelas Maret", program: "Psikologi", grade: 82, category: "IPS", peminat: 2000 },
+  { university: "Universitas Sebelas Maret", program: "Manajemen", grade: 82, category: "IPS", peminat: 2200 },
+  { university: "Universitas Sebelas Maret", program: "Teknik Sipil", grade: 82, category: "IPA", peminat: 1600 },
+  { university: "Universitas Sebelas Maret", program: "Agribisnis", grade: 76, category: "IPA", peminat: 1400 },
+  { university: "Universitas Sebelas Maret", program: "Ilmu Komunikasi", grade: 81, category: "IPS", peminat: 1800 },
+  { university: "Universitas Sebelas Maret", program: "Pendidikan Kedokteran", grade: 86, category: "IPA", peminat: 2200 },
+  { university: "Universitas Sebelas Maret", program: "Teknik Mesin", grade: 80, category: "IPA", peminat: 1400 },
+  { university: "Universitas Sebelas Maret", program: "Arsitektur", grade: 80, category: "Campuran", peminat: 1300 },
+
+  // ═══ UNHAS Tambahan ═══
+  { university: "Universitas Hasanuddin", program: "Psikologi", grade: 80, category: "IPS", peminat: 1600 },
+  { university: "Universitas Hasanuddin", program: "Teknik Sipil", grade: 80, category: "IPA", peminat: 1500 },
+  { university: "Universitas Hasanuddin", program: "Farmasi", grade: 82, category: "IPA", peminat: 1500 },
+  { university: "Universitas Hasanuddin", program: "Keperawatan", grade: 78, category: "IPA", peminat: 1800 },
+  { university: "Universitas Hasanuddin", program: "Kedokteran Gigi", grade: 86, category: "IPA", peminat: 2000 },
+  { university: "Universitas Hasanuddin", program: "Ilmu Komunikasi", grade: 78, category: "IPS", peminat: 1600 },
+
+  // ═══ PTN Regional Tambahan ═══
+  { university: "Universitas Negeri Semarang", program: "Psikologi", grade: 78, category: "IPS", peminat: 1800 },
+  { university: "Universitas Negeri Semarang", program: "Teknik Informatika", grade: 80, category: "Campuran", peminat: 2000 },
+  { university: "Universitas Negeri Semarang", program: "Manajemen", grade: 78, category: "IPS", peminat: 2000 },
+  { university: "Universitas Negeri Semarang", program: "Pendidikan Matematika", grade: 74, category: "IPA", peminat: 1600 },
+  { university: "Universitas Negeri Semarang", program: "Pendidikan Bahasa Inggris", grade: 76, category: "Campuran", peminat: 1800 },
+  { university: "Universitas Negeri Malang", program: "Psikologi", grade: 80, category: "IPS", peminat: 1700 },
+  { university: "Universitas Negeri Malang", program: "Manajemen", grade: 80, category: "IPS", peminat: 2000 },
+  { university: "Universitas Negeri Malang", program: "Pendidikan Matematika", grade: 76, category: "IPA", peminat: 1600 },
+  { university: "Universitas Negeri Malang", program: "Pendidikan Bahasa Inggris", grade: 78, category: "Campuran", peminat: 1800 },
+  { university: "Universitas Negeri Malang", program: "Farmasi", grade: 82, category: "IPA", peminat: 1500 },
+  { university: "Universitas Negeri Jakarta", program: "Manajemen", grade: 78, category: "IPS", peminat: 2200 },
+  { university: "Universitas Negeri Jakarta", program: "Akuntansi", grade: 80, category: "IPS", peminat: 2000 },
+  { university: "Universitas Negeri Jakarta", program: "Teknik Informatika", grade: 80, category: "Campuran", peminat: 1800 },
+  { university: "Universitas Negeri Jakarta", program: "Ilmu Komunikasi", grade: 78, category: "IPS", peminat: 1700 },
+  { university: "Universitas Negeri Jakarta", program: "Pendidikan Guru PAUD", grade: 70, category: "Campuran", peminat: 1400 },
+  { university: "Universitas Negeri Surabaya", program: "Manajemen", grade: 76, category: "IPS", peminat: 1600 },
+  { university: "Universitas Negeri Surabaya", program: "Akuntansi", grade: 76, category: "IPS", peminat: 1500 },
+  { university: "Universitas Negeri Surabaya", program: "Pendidikan Bahasa Inggris", grade: 74, category: "Campuran", peminat: 1400 },
+  { university: "Universitas Negeri Surabaya", program: "Teknik Informatika", grade: 78, category: "Campuran", peminat: 1600 },
+  { university: "Universitas Jenderal Soedirman", program: "Manajemen", grade: 78, category: "IPS", peminat: 1800 },
+  { university: "Universitas Jenderal Soedirman", program: "Akuntansi", grade: 78, category: "IPS", peminat: 1600 },
+  { university: "Universitas Jenderal Soedirman", program: "Teknik Informatika", grade: 80, category: "Campuran", peminat: 1700 },
+  { university: "Universitas Jenderal Soedirman", program: "Farmasi", grade: 82, category: "IPA", peminat: 1400 },
+  { university: "Universitas Sriwijaya", program: "Manajemen", grade: 78, category: "IPS", peminat: 1800 },
+  { university: "Universitas Sriwijaya", program: "Teknik Informatika", grade: 80, category: "Campuran", peminat: 1800 },
+  { university: "Universitas Sriwijaya", program: "Farmasi", grade: 82, category: "IPA", peminat: 1400 },
+  { university: "Universitas Sriwijaya", program: "Keperawatan", grade: 78, category: "IPA", peminat: 1600 },
+  { university: "Universitas Sriwijaya", program: "Teknik Sipil", grade: 78, category: "IPA", peminat: 1300 },
+  { university: "Universitas Sumatera Utara", program: "Manajemen", grade: 80, category: "IPS", peminat: 2200 },
+  { university: "Universitas Sumatera Utara", program: "Ilmu Hukum", grade: 82, category: "IPS", peminat: 2400 },
+  { university: "Universitas Sumatera Utara", program: "Psikologi", grade: 80, category: "IPS", peminat: 1800 },
+  { university: "Universitas Sumatera Utara", program: "Farmasi", grade: 83, category: "IPA", peminat: 1600 },
+  { university: "Universitas Sumatera Utara", program: "Keperawatan", grade: 78, category: "IPA", peminat: 1800 },
+  { university: "Universitas Syiah Kuala", program: "Manajemen", grade: 78, category: "IPS", peminat: 1600 },
+  { university: "Universitas Syiah Kuala", program: "Teknik Informatika", grade: 80, category: "Campuran", peminat: 1600 },
+  { university: "Universitas Syiah Kuala", program: "Ilmu Hukum", grade: 78, category: "IPS", peminat: 1800 },
+  { university: "Universitas Riau", program: "Ilmu Hukum", grade: 76, category: "IPS", peminat: 1600 },
+  { university: "Universitas Riau", program: "Manajemen", grade: 76, category: "IPS", peminat: 1800 },
+  { university: "Universitas Riau", program: "Kedokteran", grade: 84, category: "IPA", peminat: 2000 },
+  { university: "Universitas Riau", program: "Teknik Informatika", grade: 78, category: "Campuran", peminat: 1500 },
+  { university: "Universitas Sam Ratulangi", program: "Manajemen", grade: 76, category: "IPS", peminat: 1400 },
+  { university: "Universitas Sam Ratulangi", program: "Ilmu Hukum", grade: 76, category: "IPS", peminat: 1500 },
+  { university: "Universitas Sam Ratulangi", program: "Teknik Informatika", grade: 77, category: "Campuran", peminat: 1300 },
+  { university: "Universitas Bengkulu", program: "Manajemen", grade: 74, category: "IPS", peminat: 1300 },
+  { university: "Universitas Bengkulu", program: "Ilmu Hukum", grade: 74, category: "IPS", peminat: 1400 },
+  { university: "Universitas Bengkulu", program: "Teknik Informatika", grade: 76, category: "Campuran", peminat: 1200 },
+  { university: "Universitas Bengkulu", program: "Keperawatan", grade: 76, category: "IPA", peminat: 1400 },
+  { university: "Universitas Mataram", program: "Ilmu Hukum", grade: 76, category: "IPS", peminat: 1500 },
+  { university: "Universitas Mataram", program: "Manajemen", grade: 76, category: "IPS", peminat: 1600 },
+  { university: "Universitas Mataram", program: "Teknik Informatika", grade: 78, category: "Campuran", peminat: 1400 },
+  { university: "Universitas Mataram", program: "Keperawatan", grade: 76, category: "IPA", peminat: 1300 },
+  { university: "Universitas Mataram", program: "Peternakan", grade: 70, category: "IPA", peminat: 900 },
+  { university: "Universitas Mulawarman", program: "Manajemen", grade: 76, category: "IPS", peminat: 1600 },
+  { university: "Universitas Mulawarman", program: "Keperawatan", grade: 78, category: "IPA", peminat: 1500 },
+  { university: "Universitas Mulawarman", program: "Psikologi", grade: 76, category: "IPS", peminat: 1300 },
+  { university: "Universitas Mulawarman", program: "Teknik Sipil", grade: 76, category: "IPA", peminat: 1100 },
+  { university: "Universitas Lambung Mangkurat", program: "Manajemen", grade: 74, category: "IPS", peminat: 1500 },
+  { university: "Universitas Lambung Mangkurat", program: "Akuntansi", grade: 74, category: "IPS", peminat: 1400 },
+  { university: "Universitas Lambung Mangkurat", program: "Keperawatan", grade: 76, category: "IPA", peminat: 1400 },
+  { university: "Universitas Lambung Mangkurat", program: "Teknik Informatika", grade: 76, category: "Campuran", peminat: 1300 },
+  { university: "Universitas Halu Oleo", program: "Ilmu Hukum", grade: 70, category: "IPS", peminat: 1200 },
+  { university: "Universitas Halu Oleo", program: "Manajemen", grade: 70, category: "IPS", peminat: 1300 },
+  { university: "Universitas Halu Oleo", program: "Keperawatan", grade: 72, category: "IPA", peminat: 1100 },
+  { university: "Universitas Halu Oleo", program: "Agribisnis", grade: 68, category: "IPA", peminat: 900 },
+  { university: "Universitas Tadulako", program: "Manajemen", grade: 72, category: "IPS", peminat: 1400 },
+  { university: "Universitas Tadulako", program: "Kedokteran", grade: 82, category: "IPA", peminat: 1600 },
+  { university: "Universitas Tadulako", program: "Keperawatan", grade: 74, category: "IPA", peminat: 1200 },
+  { university: "Universitas Tadulako", program: "Teknik Sipil", grade: 72, category: "IPA", peminat: 1000 },
+  { university: "Universitas Pattimura", program: "Manajemen", grade: 70, category: "IPS", peminat: 1200 },
+  { university: "Universitas Pattimura", program: "Kedokteran", grade: 80, category: "IPA", peminat: 1400 },
+  { university: "Universitas Pattimura", program: "Keperawatan", grade: 72, category: "IPA", peminat: 1100 },
+  { university: "Universitas Palangkaraya", program: "Manajemen", grade: 70, category: "IPS", peminat: 1200 },
+  { university: "Universitas Palangkaraya", program: "Kedokteran", grade: 80, category: "IPA", peminat: 1400 },
+  { university: "Universitas Palangkaraya", program: "Teknik Sipil", grade: 70, category: "IPA", peminat: 900 },
+  { university: "Universitas Cenderawasih", program: "Manajemen", grade: 72, category: "IPS", peminat: 1200 },
+  { university: "Universitas Cenderawasih", program: "Ilmu Hukum", grade: 72, category: "IPS", peminat: 1300 },
+  { university: "Universitas Cenderawasih", program: "Teknik Informatika", grade: 74, category: "Campuran", peminat: 1000 },
+
+  // ═══ Universitas Negeri Yogyakarta ═══
+  // ═══ Universitas Telkom ═══
+  { university: "Universitas Telkom", program: "Teknik Informatika", grade: 82, category: "Campuran", peminat: 4000 },
+  { university: "Universitas Telkom", program: "Sistem Informasi", grade: 80, category: "Campuran", peminat: 3500 },
+  { university: "Universitas Telkom", program: "Teknik Komputer", grade: 80, category: "Campuran", peminat: 2200 },
+  { university: "Universitas Telkom", program: "Ilmu Komunikasi", grade: 78, category: "IPS", peminat: 2800 },
+  { university: "Universitas Telkom", program: "Desain Komunikasi Visual", grade: 78, category: "Campuran", peminat: 2500 },
+  { university: "Universitas Telkom", program: "Manajemen", grade: 78, category: "IPS", peminat: 3000 },
+  { university: "Universitas Telkom", program: "Akuntansi", grade: 76, category: "IPS", peminat: 2200 },
+  { university: "Universitas Telkom", program: "Teknik Elektro", grade: 78, category: "IPA", peminat: 1500 },
+
+  // ═══ BINUS University ═══
+  { university: "BINUS University", program: "Teknik Informatika", grade: 81, category: "Campuran", peminat: 5000 },
+  { university: "BINUS University", program: "Sistem Informasi", grade: 79, category: "Campuran", peminat: 3500 },
+  { university: "BINUS University", program: "Manajemen", grade: 78, category: "IPS", peminat: 4000 },
+  { university: "BINUS University", program: "Akuntansi", grade: 78, category: "IPS", peminat: 3000 },
+  { university: "BINUS University", program: "Ilmu Komunikasi", grade: 77, category: "IPS", peminat: 2800 },
+  { university: "BINUS University", program: "Desain Komunikasi Visual", grade: 78, category: "Campuran", peminat: 2500 },
+  { university: "BINUS University", program: "Teknik Industri", grade: 76, category: "IPA", peminat: 1500 },
+  { university: "BINUS University", program: "Psikologi", grade: 78, category: "IPS", peminat: 2200 },
+
+  // ═══ Universitas Gunadarma ═══
+  { university: "Universitas Gunadarma", program: "Teknik Informatika", grade: 74, category: "Campuran", peminat: 4000 },
+  { university: "Universitas Gunadarma", program: "Sistem Informasi", grade: 72, category: "Campuran", peminat: 3500 },
+  { university: "Universitas Gunadarma", program: "Manajemen", grade: 72, category: "IPS", peminat: 3500 },
+  { university: "Universitas Gunadarma", program: "Akuntansi", grade: 74, category: "IPS", peminat: 3000 },
+  { university: "Universitas Gunadarma", program: "Teknik Elektro", grade: 72, category: "IPA", peminat: 1500 },
+  { university: "Universitas Gunadarma", program: "Psikologi", grade: 74, category: "IPS", peminat: 2000 },
+  { university: "Universitas Gunadarma", program: "Ilmu Komunikasi", grade: 72, category: "IPS", peminat: 2000 },
+  { university: "Universitas Gunadarma", program: "Arsitektur", grade: 72, category: "Campuran", peminat: 1200 },
+
+  // ═══ Universitas Pelita Harapan ═══
+  { university: "Universitas Pelita Harapan", program: "Manajemen", grade: 76, category: "IPS", peminat: 2800 },
+  { university: "Universitas Pelita Harapan", program: "Akuntansi", grade: 76, category: "IPS", peminat: 2200 },
+  { university: "Universitas Pelita Harapan", program: "Ilmu Komunikasi", grade: 76, category: "IPS", peminat: 2500 },
+  { university: "Universitas Pelita Harapan", program: "Psikologi", grade: 78, category: "IPS", peminat: 2000 },
+  { university: "Universitas Pelita Harapan", program: "Teknik Informatika", grade: 78, category: "Campuran", peminat: 1800 },
+  { university: "Universitas Pelita Harapan", program: "Desain Komunikasi Visual", grade: 76, category: "Campuran", peminat: 2000 },
+  { university: "Universitas Pelita Harapan", program: "Hukum", grade: 78, category: "IPS", peminat: 1800 },
+
+  // ═══ Universitas Trisakti ═══
+  { university: "Universitas Trisakti", program: "Manajemen", grade: 74, category: "IPS", peminat: 3000 },
+  { university: "Universitas Trisakti", program: "Akuntansi", grade: 74, category: "IPS", peminat: 2500 },
+  { university: "Universitas Trisakti", program: "Ilmu Hukum", grade: 76, category: "IPS", peminat: 2800 },
+  { university: "Universitas Trisakti", program: "Teknik Informatika", grade: 76, category: "Campuran", peminat: 2000 },
+  { university: "Universitas Trisakti", program: "Kedokteran", grade: 88, category: "IPA", peminat: 2500 },
+  { university: "Universitas Trisakti", program: "Ilmu Komunikasi", grade: 74, category: "IPS", peminat: 2200 },
+  { university: "Universitas Trisakti", program: "Arsitektur", grade: 74, category: "Campuran", peminat: 1400 },
+  { university: "Universitas Trisakti", program: "Desain Interior", grade: 72, category: "Campuran", peminat: 1200 },
+
+  // ═══ UIN (Universitas Islam Negeri) ═══
+  { university: "UIN Syarif Hidayatullah Jakarta", program: "Psikologi", grade: 76, category: "IPS", peminat: 2200 },
+  { university: "UIN Syarif Hidayatullah Jakarta", program: "Manajemen", grade: 74, category: "IPS", peminat: 2500 },
+  { university: "UIN Syarif Hidayatullah Jakarta", program: "Teknik Informatika", grade: 76, category: "Campuran", peminat: 2000 },
+  { university: "UIN Syarif Hidayatullah Jakarta", program: "Ilmu Hukum", grade: 76, category: "IPS", peminat: 2200 },
+  { university: "UIN Syarif Hidayatullah Jakarta", program: "Kedokteran", grade: 86, category: "IPA", peminat: 2200 },
+  { university: "UIN Syarif Hidayatullah Jakarta", program: "Ilmu Komunikasi", grade: 74, category: "IPS", peminat: 1800 },
+  { university: "UIN Sunan Kalijaga Yogyakarta", program: "Psikologi", grade: 74, category: "IPS", peminat: 1800 },
+  { university: "UIN Sunan Kalijaga Yogyakarta", program: "Manajemen", grade: 74, category: "IPS", peminat: 2000 },
+  { university: "UIN Sunan Kalijaga Yogyakarta", program: "Ilmu Hukum", grade: 74, category: "IPS", peminat: 1800 },
+  { university: "UIN Sunan Kalijaga Yogyakarta", program: "Pendidikan Bahasa Inggris", grade: 72, category: "Campuran", peminat: 1600 },
+  { university: "UIN Sunan Ampel Surabaya", program: "Manajemen", grade: 72, category: "IPS", peminat: 1600 },
+  { university: "UIN Sunan Ampel Surabaya", program: "Psikologi", grade: 72, category: "IPS", peminat: 1400 },
+  { university: "UIN Sunan Ampel Surabaya", program: "Ilmu Hukum", grade: 72, category: "IPS", peminat: 1500 },
+  { university: "UIN Alauddin Makassar", program: "Kedokteran", grade: 82, category: "IPA", peminat: 1800 },
+  { university: "UIN Alauddin Makassar", program: "Manajemen", grade: 72, category: "IPS", peminat: 1600 },
+  { university: "UIN Alauddin Makassar", program: "Ilmu Hukum", grade: 72, category: "IPS", peminat: 1400 },
+
+  // ═══ Politeknik ═══
+  { university: "Politeknik Negeri Jakarta", program: "Teknik Informatika", grade: 72, category: "Campuran", peminat: 1800 },
+  { university: "Politeknik Negeri Jakarta", program: "Akuntansi", grade: 72, category: "IPS", peminat: 2000 },
+  { university: "Politeknik Negeri Jakarta", program: "Manajemen Bisnis", grade: 70, category: "IPS", peminat: 1800 },
+  { university: "Politeknik Negeri Jakarta", program: "Teknik Elektro", grade: 70, category: "IPA", peminat: 1200 },
+  { university: "Politeknik Negeri Bandung", program: "Teknik Informatika", grade: 74, category: "Campuran", peminat: 2200 },
+  { university: "Politeknik Negeri Bandung", program: "Akuntansi", grade: 72, category: "IPS", peminat: 2000 },
+  { university: "Politeknik Negeri Bandung", program: "Teknik Elektro", grade: 72, category: "IPA", peminat: 1400 },
+  { university: "Politeknik Negeri Bandung", program: "Teknik Mesin", grade: 70, category: "IPA", peminat: 1200 },
+  { university: "Politeknik Elektronika Negeri Surabaya", program: "Teknik Informatika", grade: 78, category: "Campuran", peminat: 3000 },
+  { university: "Politeknik Elektronika Negeri Surabaya", program: "Teknik Elektro", grade: 76, category: "IPA", peminat: 1800 },
+  { university: "Politeknik Elektronika Negeri Surabaya", program: "Sistem Informasi", grade: 76, category: "Campuran", peminat: 2000 },
 ];
 
-export const universities = [...new Set(passingGrades.map((p) => p.university))].sort();
-export const categories = ["IPA", "IPS", "Campuran"] as const;
 
-export function hitungPeluang(nilai: number, passingGrade: number): number {
-  if (nilai <= 0) return 0;
-  if (nilai >= 100) return 99;
-  const selisih = nilai - passingGrade;
-  if (selisih >= 5) return 90 + Math.min(selisih * 2, 9);
-  if (selisih >= 2) return 75 + (selisih - 2) * 5;
-  if (selisih >= 0) return 60 + selisih * 7.5;
-  if (selisih >= -3) return 40 + (selisih + 3) * 6.7;
-  if (selisih >= -6) return 20 + (selisih + 3) * 6.7;
-  return Math.max(5, 20 + (selisih + 6) * 11.7);
-}
-
-export function labelPeluang(persen: number): { text: string; color: string } {
-  if (persen >= 80) return { text: "Sangat Besar", color: "text-green-600" };
-  if (persen >= 60) return { text: "Besar", color: "text-emerald-600" };
-  if (persen >= 40) return { text: "Sedang", color: "text-yellow-600" };
-  if (persen >= 20) return { text: "Kecil", color: "text-orange-600" };
-  return { text: "Sulit", color: "text-red-600" };
-}

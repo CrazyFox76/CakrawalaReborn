@@ -1,74 +1,46 @@
 "use server";
 
 import { db } from "./index";
-import {
-  users,
-  bankAccounts,
-  brands,
-  programs,
-  blogPosts,
-  tutors,
-  testimonials,
-  faqs,
-  passingGrades,
-  aboutFeatures,
-  whyUs,
-  registrations,
-  leads,
-  prices,
-  cakraPointStats,
-  cakraPointRewards,
-  vouchers,
-} from "./schema";
-import { eq, asc, or, ilike, and, sql } from "drizzle-orm";
+import { users, registrations, leads, vouchers } from "./schema";
+import { eq, and, sql } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import type { NewRegistration } from "./types";
 
-// ─── Programs (for sitemap etc.) ──────────────────────────────────────────────
-export async function getPrograms() {
-  return db.select().from(programs);
-}
+// ─── Static Data (imported from data files) ───────────────────────
+import {
+  getBrandsWithPrograms as dataGetBrandsWithPrograms,
+  getBrandWithProgramsBySlug as dataGetBrandWithProgramsBySlug,
+} from "@/data/brands";
+import { getPrograms as dataGetPrograms, getPopularPrograms as dataGetPopularPrograms } from "@/data/programs";
+import { getBlogPosts as dataGetBlogPosts, getBlogPostBySlug as dataGetBlogPostBySlug } from "@/data/blog-posts";
+import { getTutors as dataGetTutors } from "@/data/tutors";
+import { getTestimonials as dataGetTestimonials } from "@/data/testimonials";
+import { getFaqs as dataGetFaqs } from "@/data/faqs";
+import { getPassingGrades as dataGetPassingGrades } from "@/data/passing-grade";
+import { getAboutFeatures as dataGetAboutFeatures } from "@/data/about-features";
+import { getWhyUs as dataGetWhyUs } from "@/data/why-us";
+import { getActiveBankAccounts as dataGetActiveBankAccounts } from "@/data/bank-accounts";
+import { getPrices as dataGetPrices } from "@/data/prices";
+import { getCakraPointStats as dataGetCakraPointStats, getCakraPointRewards as dataGetCakraPointRewards } from "@/data/cakra-points";
 
-// ─── Blog ──────────────────────────────────────────────────────────────────────
-export async function getBlogPosts() {
-  return db.select().from(blogPosts);
-}
+export async function getBrandsWithPrograms() { return dataGetBrandsWithPrograms(); }
+export async function getBrandWithProgramsBySlug(slug: string) { return dataGetBrandWithProgramsBySlug(slug); }
+export async function getPrograms() { return dataGetPrograms(); }
+export async function getPopularPrograms() { return dataGetPopularPrograms(); }
+export async function getBlogPosts() { return dataGetBlogPosts(); }
+export async function getBlogPostBySlug(slug: string) { return dataGetBlogPostBySlug(slug); }
+export async function getTutors() { return dataGetTutors(); }
+export async function getTestimonials() { return dataGetTestimonials(); }
+export async function getFaqs() { return dataGetFaqs(); }
+export async function getPassingGrades() { return dataGetPassingGrades(); }
+export async function getAboutFeatures() { return dataGetAboutFeatures(); }
+export async function getWhyUs() { return dataGetWhyUs(); }
+export async function getActiveBankAccounts() { return dataGetActiveBankAccounts(); }
+export async function getPrices() { return dataGetPrices(); }
+export async function getCakraPointStats() { return dataGetCakraPointStats(); }
+export async function getCakraPointRewards() { return dataGetCakraPointRewards(); }
 
-export async function getBlogPostBySlug(slug: string) {
-  const rows = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
-  return rows[0] ?? null;
-}
-
-// ─── Tutors ────────────────────────────────────────────────────────────────────
-export async function getTutors() {
-  return db.select().from(tutors);
-}
-
-// ─── Testimonials ──────────────────────────────────────────────────────────────
-export async function getTestimonials() {
-  return db.select().from(testimonials);
-}
-
-// ─── FAQs ──────────────────────────────────────────────────────────────────────
-export async function getFaqs() {
-  return db.select().from(faqs);
-}
-
-// ─── Passing Grades ────────────────────────────────────────────────────────────
-export async function getPassingGrades() {
-  return db.select().from(passingGrades);
-}
-
-// ─── About ─────────────────────────────────────────────────────────────────────
-export async function getAboutFeatures() {
-  return db.select().from(aboutFeatures).orderBy(asc(aboutFeatures.sortOrder));
-}
-
-export async function getWhyUs() {
-  return db.select().from(whyUs).orderBy(asc(whyUs.sortOrder));
-}
-
-// ─── Auth ──────────────────────────────────────────────────────────────────────
+// ─── Auth ──────────────────────────────────────────────────────────
 export async function createUser(data: {
   name: string;
   email: string;
@@ -88,106 +60,53 @@ export async function createUser(data: {
   return rows[0];
 }
 
-// ─── Bank Accounts ─────────────────────────────────────────────────────────────
-export async function getActiveBankAccounts() {
-  return db
-    .select()
-    .from(bankAccounts)
-    .where(eq(bankAccounts.isActive, true));
-}
-
-// ─── Prices ────────────────────────────────────────────────────────────────────
-export async function getPrices() {
-  return db.select().from(prices).orderBy(asc(prices.jenjang), asc(prices.sesi));
-}
-
-// ─── Brands (from DB) ──────────────────────────────────────────────────────────
-export async function getBrandsWithPrograms() {
-  const allBrands = await db.select().from(brands);
-  const allPrograms = await db.select().from(programs);
-  return allBrands.map((brand) => ({
-    ...brand,
-    programs: allPrograms.filter((p) => p.brandId === brand.id),
-  }));
-}
-
-export async function getBrandWithProgramsBySlug(slug: string) {
-  const brand = await db
-    .select()
-    .from(brands)
-    .where(eq(brands.slug, slug))
-    .then((rows) => rows[0] ?? null);
-  if (!brand) return null;
-  const brandPrograms = await db
-    .select()
-    .from(programs)
-    .where(eq(programs.brandId, brand.id));
-  return { ...brand, programs: brandPrograms };
-}
-
-// ─── Registrations ─────────────────────────────────────────────────────────────
+// ─── Registrations ─────────────────────────────────────────────────
 export async function createRegistration(data: NewRegistration) {
   const rows = await db.insert(registrations).values(data).returning();
   return rows[0];
 }
 
-// ─── CakraPoints ───────────────────────────────────────────────────────────────
-export async function getCakraPointStats() {
-  return db.select().from(cakraPointStats).orderBy(asc(cakraPointStats.sortOrder));
-}
-
-export async function getCakraPointRewards() {
-  return db.select().from(cakraPointRewards).where(eq(cakraPointRewards.isActive, true)).orderBy(asc(cakraPointRewards.sortOrder));
-}
-
-// ─── Leads ─────────────────────────────────────────────────────────────────────
+// ─── Leads ─────────────────────────────────────────────────────────
 export async function createLead(phone: string, source = "hero") {
   const rows = await db.insert(leads).values({ phone, source }).returning();
   return rows[0];
 }
 
-export async function getPopularPrograms() {
-  return db.select().from(programs).where(eq(programs.isPopular, true));
-}
-
-// ─── Search ────────────────────────────────────────────────────────────────────
+// ─── Search ─────────────────────────────────────────────────────────
 export async function searchAll(query: string) {
-  const blogResults = await db
-    .select()
-    .from(blogPosts)
-    .where(
-      or(
-        ilike(blogPosts.title, `%${query}%`),
-        ilike(blogPosts.excerpt, `%${query}%`),
-        ilike(blogPosts.category, `%${query}%`),
-      )
-    );
+  const { blogPosts } = await import("@/data/blog-posts");
+  const { programs } = await import("@/data/programs");
+  const { Brands } = await import("@/data/brands");
+  const q = query.toLowerCase();
 
-  const programResults = await db
-    .select({
-      id: programs.id,
-      title: programs.title,
-      slug: programs.slug,
-      age: programs.age,
-      description: programs.description,
-      brandId: programs.brandId,
-      brandSlug: brands.slug,
-      iconName: programs.iconName,
-      category: programs.category,
-    })
-    .from(programs)
-    .leftJoin(brands, eq(programs.brandId, brands.id))
-    .where(
-      or(
-        ilike(programs.title, `%${query}%`),
-        ilike(programs.description, `%${query}%`),
-      )
-    );
+  const blogResults = blogPosts.filter(
+    (p) =>
+      p.title.toLowerCase().includes(q) ||
+      p.excerpt.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q),
+  );
+
+  const programResults = programs
+    .filter((p) => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
+    .map((p) => {
+      const brand = Brands.find((b) => b.slug === p.brandSlug);
+      return {
+        id: p.id,
+        title: p.title,
+        slug: p.slug,
+        age: p.age,
+        description: p.description,
+        brandId: brand?.id ?? 0,
+        brandSlug: p.brandSlug,
+        iconName: p.iconName,
+        category: p.category,
+      };
+    });
 
   return { blogPosts: blogResults, programs: programResults };
 }
 
-// ─── Vouchers ──────────────────────────────────────────────────────────────────
+// ─── Vouchers ──────────────────────────────────────────────────────
 export async function validateVoucher(code: string, purchaseAmount: number) {
   const rows = await db
     .select()

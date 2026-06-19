@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { Calendar, Clock, MessageCircle } from "lucide-react";
@@ -20,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article",
       locale: "id_ID",
       siteName: "Cakrawala EduCentre",
-      publishedTime: post.createdAt?.toISOString(),
+      publishedTime: post.date,
       authors: [post.author],
     },
   };
@@ -94,7 +93,7 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
             "@type": "BlogPosting",
             headline: post.title,
             description: post.excerpt,
-            datePublished: post.createdAt?.toISOString() || post.date,
+            datePublished: post.date,
             author: { "@type": "Person", name: post.author },
             publisher: { "@type": "Organization", name: "Cakrawala EduCentre" },
           }),

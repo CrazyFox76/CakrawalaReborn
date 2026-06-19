@@ -16,6 +16,18 @@ import WaFloating from "@/components/wa-floating";
 import BackToTop from "@/components/back-to-top";
 import Reveal from "@/components/reveal";
 import { getTestimonials, getBrandsWithPrograms, getCakraPointStats, getCakraPointRewards } from "@/db/actions";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cakrawala EduCentre | Les Privat Terbaik untuk SD, SMP, SMA, UTBK & Bahasa Asing",
+  description:
+    "Bimbingan belajar les privat SD, SMP, SMA, persiapan UTBK SNBT, dan Bahasa Asing. Tutor profesional datang ke rumah, jadwal fleksibel.",
+  openGraph: {
+    title: "Cakrawala EduCentre | Les Privat Terbaik",
+    description:
+      "Bimbingan intensif oleh tutor profesional. Jadwal fleksibel, kurikulum terarah. SD, SMP, SMA, UTBK & Bahasa Asing.",
+  },
+};
 
 export default async function Home() {
   const [testimonials, brands, cakraStats, cakraRewards] = await Promise.all([

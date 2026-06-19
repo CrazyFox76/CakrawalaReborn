@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/db";
-import { brands, programs } from "@/db/schema";
+import { getBrandsWithPrograms } from "@/data/brands";
 import { corsHeaders } from "@/lib/api-utils";
 
 export async function OPTIONS() {
@@ -9,11 +8,6 @@ export async function OPTIONS() {
 
 export async function GET(request: Request) {
   const origin = request.headers.get("origin");
-  const allBrands = await db.select().from(brands);
-  const allPrograms = await db.select().from(programs);
-  const data = allBrands.map((brand) => ({
-    ...brand,
-    programs: allPrograms.filter((p) => p.brandId === brand.id),
-  }));
+  const data = getBrandsWithPrograms();
   return NextResponse.json(data, { headers: corsHeaders(origin) });
 }
