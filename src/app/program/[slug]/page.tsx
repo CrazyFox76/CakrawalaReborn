@@ -3,11 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { CheckCircle, MessageCircle } from "lucide-react";
-import { getBrandWithProgramsBySlug } from "@/db/actions";
+import { Brands, getBrandWithProgramsBySlug } from "@/data/brands";
 import { getProgramIcon } from "@/lib/icon-map";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 type Props = { params: Promise<{ slug: string }> };
+
+export async function generateStaticParams() {
+  return Brands.map((brand) => ({ slug: brand.slug }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

@@ -3,11 +3,21 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { CheckCircle, MessageCircle, Users, Clock, Award } from "lucide-react";
-import { getBrandWithProgramsBySlug } from "@/db/actions";
+import { Brands, getBrandWithProgramsBySlug } from "@/data/brands";
 import { getProgramIcon } from "@/lib/icon-map";
 import Breadcrumbs from "@/components/breadcrumbs";
+import { programs } from "@/data/programs";
 
 type Props = { params: Promise<{ slug: string; subSlug: string }> };
+
+export async function generateStaticParams() {
+  const brandSlugs = Brands.flatMap((brand) =>
+    programs
+      .filter((p) => p.brandSlug === brand.slug)
+      .map((p) => ({ slug: brand.slug, subSlug: p.slug }))
+  );
+  return brandSlugs;
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, subSlug } = await params;

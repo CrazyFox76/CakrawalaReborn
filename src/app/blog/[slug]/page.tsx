@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { Calendar, Clock, MessageCircle } from "lucide-react";
-import { getBlogPostBySlug, getBlogPosts } from "@/db/actions";
+import { getBlogPostBySlug, getBlogPosts } from "@/data/blog-posts";
 import { sanitize } from "@/lib/sanitize";
 import Breadcrumbs from "@/components/breadcrumbs";
 

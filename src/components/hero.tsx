@@ -34,19 +34,26 @@ function getTarget() {
 }
 
 function useCountdown(target: Date) {
-  const calc = () => {
+  const [time, setTime] = useState(() => {
     const diff = Math.max(0, target.getTime() - Date.now());
     return {
       h: String(Math.floor(diff / 3_600_000)).padStart(2, "0"),
       m: String(Math.floor((diff % 3_600_000) / 60_000)).padStart(2, "0"),
       s: String(Math.floor((diff % 60_000) / 1000)).padStart(2, "0"),
     };
-  };
-  const [time, setTime] = useState(calc);
-  useEffect(() => {
-    const id = setInterval(() => setTime(calc()), 1000);
-    return () => clearInterval(id);
   });
+  useEffect(() => {
+    function tick() {
+      const diff = Math.max(0, target.getTime() - Date.now());
+      setTime({
+        h: String(Math.floor(diff / 3_600_000)).padStart(2, "0"),
+        m: String(Math.floor((diff % 3_600_000) / 60_000)).padStart(2, "0"),
+        s: String(Math.floor((diff % 60_000) / 1000)).padStart(2, "0"),
+      });
+    }
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [target]);
   return time;
 }
 

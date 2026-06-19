@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Star, TrendingUp, ArrowRight } from "lucide-react";
-import { getPopularPrograms } from "@/db/actions";
+import { getPopularPrograms } from "@/data/programs";
 
 export default async function PopularPackages() {
   const programs = await getPopularPrograms();

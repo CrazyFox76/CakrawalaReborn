@@ -13,5 +13,3 @@ export const whyUs: WhyUsItem[] = [
   { id: 5, title: "Evaluasi Berkala", desc: "Laporan perkembangan belajar diberikan secara rutin kepada orang tua untuk memonitor kemajuan siswa.", sortOrder: 5 },
   { id: 6, title: "Biaya Terjangkau", desc: "Kualitas pendidikan terbaik dengan biaya yang kompetitif dan opsi paket yang bisa disesuaikan.", sortOrder: 6 },
 ];
-
-export async function getWhyUs() { return [...whyUs].sort((a, b) => a.sortOrder - b.sortOrder); }

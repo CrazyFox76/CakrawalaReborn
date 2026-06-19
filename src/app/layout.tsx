@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: "Cakrawala EduCentre | Les Privat Terbaik untuk SD, SMP, SMA, UTBK & Bahasa Asing",
   description:
     "Lembaga Pendidikan dan Pelatihan yang berkomitmen mencetak generasi unggul dan kompeten. Les privat SD, SMP, SMA, UTBK, dan Bahasa Asing dengan tutor profesional.",
+  manifest: "/manifest.json",
+  themeColor: "#2563eb",
+  metadataBase: new URL("https://cakrawala-educentre.vercel.app"),
   openGraph: {
     title: "Cakrawala EduCentre | Les Privat Terbaik",
     description:
@@ -20,6 +23,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     siteName: "Cakrawala EduCentre",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cakrawala EduCentre | Les Privat Terbaik",
+    description:
+      "Bimbingan intensif oleh tutor profesional. Jadwal fleksibel, kurikulum terarah. SD, SMP, SMA, UTBK & Bahasa Asing.",
   },
   robots: { index: true, follow: true },
 };

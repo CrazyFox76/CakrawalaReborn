@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { getBrandsWithPrograms } from "@/db/actions";
+import { getBrandsWithPrograms } from "@/data/brands";
 import { getProgramIcon } from "@/lib/icon-map";
 
 export const metadata: Metadata = {

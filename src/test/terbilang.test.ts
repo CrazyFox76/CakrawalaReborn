@@ -1,0 +1,34 @@
+import { describe, it, expect } from "vitest";
+import { terbilang } from "@/lib/terbilang";
+
+describe("terbilang", () => {
+  it("0", () => expect(terbilang(0)).toBe(""));
+  it("1", () => expect(terbilang(1)).toBe("satu"));
+  it("10", () => expect(terbilang(10)).toBe("sepuluh"));
+  it("11", () => expect(terbilang(11)).toBe("sebelas"));
+  it("12", () => expect(terbilang(12)).toBe("dua belas"));
+  it("20", () => expect(terbilang(20)).toBe("dua puluh"));
+  it("21", () => expect(terbilang(21)).toBe("dua puluh satu"));
+  it("100", () => expect(terbilang(100)).toBe("seratus"));
+  it("101", () => expect(terbilang(101)).toBe("seratus satu"));
+  it("200", () => expect(terbilang(200)).toBe("dua ratus"));
+  it("1000", () => expect(terbilang(1000)).toBe("seribu"));
+  it("1001", () => expect(terbilang(1001)).toBe("seribu satu"));
+  it("2000", () => expect(terbilang(2000)).toBe("dua ribu"));
+  it("10000", () => expect(terbilang(10000)).toBe("sepuluh ribu"));
+  it("11000", () => expect(terbilang(11000)).toBe("sebelas ribu"));
+  it("12000", () => expect(terbilang(12000)).toBe("dua belas ribu"));
+  it("20000", () => expect(terbilang(20000)).toBe("dua puluh ribu"));
+  it("21000", () => expect(terbilang(21000)).toBe("dua puluh satu ribu"));
+  it("100000", () => expect(terbilang(100000)).toBe("seratus ribu"));
+  it("200000", () => expect(terbilang(200000)).toBe("dua ratus ribu"));
+  it("1000000", () => expect(terbilang(1000000)).toBe("satu juta"));
+  it("2000000", () => expect(terbilang(2000000)).toBe("dua juta"));
+  it("2500000", () => expect(terbilang(2500000)).toBe("dua juta lima ratus ribu"));
+  it("10000000", () => expect(terbilang(10000000)).toBe("sepuluh juta"));
+  it("100000000", () => expect(terbilang(100000000)).toBe("seratus juta"));
+  it("1000000000", () => expect(terbilang(1000000000)).toBe("satu miliar"));
+  it("1000000000000", () => expect(terbilang(1000000000000)).toBe("seribu miliar"));
+  it("540000", () => expect(terbilang(540000)).toBe("lima ratus empat puluh ribu"));
+  it("1440000", () => expect(terbilang(1440000)).toBe("satu juta empat ratus empat puluh ribu"));
+});

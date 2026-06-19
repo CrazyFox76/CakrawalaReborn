@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Calendar, ArrowRight } from "lucide-react";
-import { getBlogPosts } from "@/db/actions";
+import { getBlogPosts } from "@/data/blog-posts";
 
 export default async function BlogPreview() {
   const blogPosts = await getBlogPosts();

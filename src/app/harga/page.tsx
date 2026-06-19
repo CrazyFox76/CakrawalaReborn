@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
-import { getPrices } from "@/db/actions";
+import { getPrices } from "@/data/prices";
+import { groupPricesByJenjang } from "@/lib/price-utils";
 
 export const metadata: Metadata = {
   title: "Harga Paket Les | Cakrawala EduCentre",
@@ -14,12 +15,7 @@ function fmtRupiah(n: number) {
 
 export default async function Harga() {
   const priceRows = await getPrices();
-
-  const grouped = priceRows.reduce<Record<string, { sesi: number; harga: number; isPopular: boolean }[]>>((acc, p) => {
-    if (!acc[p.jenjang]) acc[p.jenjang] = [];
-    acc[p.jenjang].push({ sesi: p.sesi, harga: Number(p.harga), isPopular: p.isPopular ?? false });
-    return acc;
-  }, {});
+  const grouped = groupPricesByJenjang(priceRows);
 
   const JENJANG = Object.entries(grouped).map(([label, items]) => {
     const harga: Record<string, number> = {};

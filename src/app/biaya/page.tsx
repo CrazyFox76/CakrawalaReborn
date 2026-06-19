@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import { ArrowLeft, CheckCircle, MessageCircle, GraduationCap, BookOpen, ScrollText, Building2, ExternalLink } from "lucide-react";
-import { getPrices } from "@/db/actions";
+import { getPrices } from "@/data/prices";
+import { groupPricesByJenjang } from "@/lib/price-utils";
 
 export const metadata: Metadata = {
   title: "Biaya Les Privat & Harga Paket Bimbel 2026 | Cakrawala EduCentre",
@@ -46,12 +47,7 @@ const layananBiaya = [
 
 export default async function Biaya() {
   const priceRows = await getPrices();
-
-  const grouped = priceRows.reduce<Record<string, { sesi: number; harga: number; isPopular: boolean }[]>>((acc, p) => {
-    if (!acc[p.jenjang]) acc[p.jenjang] = [];
-    acc[p.jenjang].push({ sesi: p.sesi, harga: Number(p.harga), isPopular: p.isPopular ?? false });
-    return acc;
-  }, {});
+  const grouped = groupPricesByJenjang(priceRows);
 
   const paketLes = Object.entries(grouped).map(([label, items]) => {
     const prices: Record<string, number> = {};

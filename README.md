@@ -54,7 +54,11 @@
 - 📱 **Fully Responsive** — Mobile-first, touch-friendly
 - 🌙 **Dark Mode** — next-themes with system preference
 - 📊 **Admin Dashboard** — Registration management, voucher system
-- 🔍 **SEO Optimized** — Metadata, JSON-LD, sitemap, robots
+- 🔍 **SEO Optimized** — Metadata, JSON-LD, OG images, sitemap, robots
+- 📲 **PWA Ready** — Manifest, standalone mode, icons
+- 🧪 **E2E Tests** — Playwright with 17+ tests across critical paths
+- ♿ **Accessibility** — jsx-a11y linting, axe-core audits
+- 🔄 **CI/CD** — GitHub Actions (lint → test → build)
 
 ---
 
@@ -71,6 +75,15 @@
 | 📞 **Konsultasi WA** | Floating WhatsApp widget untuk pendaftaran cepat |
 | 🔎 **Pencarian** | Cari program dan artikel dengan cepat |
 | 🎯 **Screening Akademik** | Tes penempatan untuk menentukan level yang tepat |
+
+### Platform-wide
+| Fitur | Deskripsi |
+|-------|-----------|
+| 🖼️ **OG Images** | Dynamic Open Graph images per page & per blog post |
+| 📲 **PWA** | Manifest, standalone display, theme-color |
+| ♿ **Accessibility** | ESLint jsx-a11y rules + axe-core automated audits |
+| 🔄 **CI/CD** | GitHub Actions — lint → test → build on every push |
+| 🧪 **E2E Tests** | Playwright — 17+ tests across all critical paths |
 
 ### Untuk Admin
 | Fitur | Deskripsi |
@@ -110,8 +123,11 @@
 |-----------|----------|
 | [Vercel](https://vercel.com/) | Deployment & hosting |
 | [Vitest](https://vitest.dev/) | Unit testing |
-| [ESLint](https://eslint.org/) | Code linting |
+| [Playwright](https://playwright.dev/) | E2E testing |
+| [ESLint](https://eslint.org/) | Code linting (incl. jsx-a11y) |
+| [axe-core](https://www.deque.com/axe/) | Accessibility audits |
 | [Sharp](https://sharp.pixelplumbing.com/) | Image optimization |
+| [GitHub Actions](https://github.com/features/actions) | CI/CD pipeline |
 
 ---
 
@@ -142,22 +158,35 @@ src/
 ├── app/                     # Next.js 16 App Router pages
 │   ├── api/                 # API Routes (auth, blog, programs, etc.)
 │   ├── blog/                # Blog pages
+│   │   ├── [slug]/
+│   │   │   ├── opengraph-image.tsx   # Dynamic OG image per post
+│   │   │   └── twitter-image.tsx     # Twitter card per post
 │   ├── program/             # Program detail pages
 │   ├── daftar/              # Registration form
 │   ├── screening/           # Academic screening
-│   ├── layout.tsx           # Root layout (metadata, GA, theme)
+│   ├── opengraph-image.tsx  # Default OG image
+│   ├── twitter-image.tsx    # Default Twitter card
+│   ├── error.tsx            # Error boundary
+│   ├── loading.tsx          # Loading state
+│   ├── layout.tsx           # Root layout (metadata, GA, theme, manifest)
 │   └── page.tsx             # Homepage
 ├── components/              # React components
+│   ├── daftar-form.tsx      # Registration form wrapper
+│   ├── daftar-form-view.tsx # Registration form UI
+│   ├── daftar-invoice-view.tsx # Invoice after registration
+│   ├── programs.tsx         # Programs listing (from JSON data)
 │   ├── header.tsx           # Navigation header
 │   ├── hero.tsx             # Hero section
 │   ├── footer.tsx           # Footer
-│   ├── Product.tsx          # Programs listing
 │   ├── tutors.tsx           # Tutor cards
 │   ├── blog-preview.tsx     # Blog preview section
 │   ├── testimonials.tsx     # Testimonials carousel
 │   ├── faq.tsx              # FAQ accordion
 │   ├── cakrapoints.tsx      # CakraPoints system
 │   └── ...                  # Other components
+├── data/                    # Static data
+│   ├── programs-data.json   # Programs data (extracted from ts)
+│   ├── passing-grades-data.json # Passing grades data
 ├── db/                      # Database layer
 │   ├── schema.ts            # Drizzle schema definitions
 │   ├── index.ts             # Database connection
@@ -165,7 +194,28 @@ src/
 │   ├── seed.ts              # Database seed script
 │   └── types.ts             # TypeScript types
 ├── lib/                     # Utilities & helpers
-└── middleware.ts            # Next.js middleware
+│   ├── load-google-font.ts  # Font loader for OG images
+│   └── price-utils.ts       # Price calculation helpers
+├── test/                    # Test files
+│   ├── setup.ts             # Vitest setup
+│   ├── components.test.tsx  # Component smoke tests
+│   ├── data.test.ts         # Data layer tests
+│   ├── json-data.test.ts    # JSON data integrity tests
+│   ├── terbilang.test.ts    # Number-to-words tests
+│   └── a11y-setup.ts        # Accessibility audit helpers
+├── middleware.ts            # Next.js middleware
+├── e2e/                     # Playwright E2E tests
+│   ├── a11y.spec.ts         # Accessibility audits
+│   ├── homepage.spec.ts     # Homepage tests
+│   ├── blog.spec.ts         # Blog tests
+│   ├── program.spec.ts      # Program page tests
+│   ├── register.spec.ts     # Registration flow tests
+│   └── navigation.spec.ts   # Navigation tests
+├── public/                  # Static assets
+│   ├── manifest.json        # PWA manifest
+│   └── icon.svg             # PWA icon
+├── .github/workflows/       # CI/CD
+│   └── ci.yml               # GitHub Actions (lint → test → build)
 ```
 
 ---
@@ -245,8 +295,10 @@ npm start
 | `npm run build` | Build for production |
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
-| `npm run test` | Run Vitest tests |
+| `npm run test` | Run Vitest unit tests |
 | `npm run test:watch` | Run tests in watch mode |
+| `npm run test:e2e` | Run Playwright E2E tests |
+| `npm run test:e2e:ui` | Run Playwright tests with UI mode |
 | `npm run db:push` | Push schema to database |
 | `npm run db:seed` | Seed database with initial data |
 | `npm run db:studio` | Open Drizzle Studio |

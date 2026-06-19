@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import ScreeningRaport from "@/components/screening-raport";
-import { getPassingGrades } from "@/db/actions";
+import { getPassingGrades } from "@/data/passing-grade";
 
 export const metadata: Metadata = {
   title: "Cek Peluang Masuk PTN | Cakrawala EduCentre",

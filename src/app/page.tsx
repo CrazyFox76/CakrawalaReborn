@@ -2,7 +2,7 @@ import Header from "@/components/header";
 import Hero from "@/components/hero";
 import PopularPackages from "@/components/popular-packages";
 import About from "@/components/about";
-import Programs from "@/components/Product";
+import Programs from "@/components/programs";
 import WhyUs from "@/components/why-us";
 import CakraPointsPromo from "@/components/cakrapoints-promo";
 import CakraPoints from "@/components/cakrapoints";
@@ -15,7 +15,9 @@ import Footer from "@/components/footer";
 import WaFloating from "@/components/wa-floating";
 import BackToTop from "@/components/back-to-top";
 import Reveal from "@/components/reveal";
-import { getTestimonials, getBrandsWithPrograms, getCakraPointStats, getCakraPointRewards } from "@/db/actions";
+import { getTestimonials } from "@/data/testimonials";
+import { getBrandsWithPrograms } from "@/data/brands";
+import { getCakraPointStats, getCakraPointRewards } from "@/data/cakra-points";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

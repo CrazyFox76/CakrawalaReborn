@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import { getTutors } from "@/db/actions";
+import { getTutors } from "@/data/tutors";
 
 export default async function Tutors() {
   const tutors = await getTutors();

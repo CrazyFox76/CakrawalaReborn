@@ -6,40 +6,6 @@ import { eq, and, sql } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import type { NewRegistration } from "./types";
 
-// ─── Static Data (imported from data files) ───────────────────────
-import {
-  getBrandsWithPrograms as dataGetBrandsWithPrograms,
-  getBrandWithProgramsBySlug as dataGetBrandWithProgramsBySlug,
-} from "@/data/brands";
-import { getPrograms as dataGetPrograms, getPopularPrograms as dataGetPopularPrograms } from "@/data/programs";
-import { getBlogPosts as dataGetBlogPosts, getBlogPostBySlug as dataGetBlogPostBySlug } from "@/data/blog-posts";
-import { getTutors as dataGetTutors } from "@/data/tutors";
-import { getTestimonials as dataGetTestimonials } from "@/data/testimonials";
-import { getFaqs as dataGetFaqs } from "@/data/faqs";
-import { getPassingGrades as dataGetPassingGrades } from "@/data/passing-grade";
-import { getAboutFeatures as dataGetAboutFeatures } from "@/data/about-features";
-import { getWhyUs as dataGetWhyUs } from "@/data/why-us";
-import { getActiveBankAccounts as dataGetActiveBankAccounts } from "@/data/bank-accounts";
-import { getPrices as dataGetPrices } from "@/data/prices";
-import { getCakraPointStats as dataGetCakraPointStats, getCakraPointRewards as dataGetCakraPointRewards } from "@/data/cakra-points";
-
-export async function getBrandsWithPrograms() { return dataGetBrandsWithPrograms(); }
-export async function getBrandWithProgramsBySlug(slug: string) { return dataGetBrandWithProgramsBySlug(slug); }
-export async function getPrograms() { return dataGetPrograms(); }
-export async function getPopularPrograms() { return dataGetPopularPrograms(); }
-export async function getBlogPosts() { return dataGetBlogPosts(); }
-export async function getBlogPostBySlug(slug: string) { return dataGetBlogPostBySlug(slug); }
-export async function getTutors() { return dataGetTutors(); }
-export async function getTestimonials() { return dataGetTestimonials(); }
-export async function getFaqs() { return dataGetFaqs(); }
-export async function getPassingGrades() { return dataGetPassingGrades(); }
-export async function getAboutFeatures() { return dataGetAboutFeatures(); }
-export async function getWhyUs() { return dataGetWhyUs(); }
-export async function getActiveBankAccounts() { return dataGetActiveBankAccounts(); }
-export async function getPrices() { return dataGetPrices(); }
-export async function getCakraPointStats() { return dataGetCakraPointStats(); }
-export async function getCakraPointRewards() { return dataGetCakraPointRewards(); }
-
 // ─── Auth ──────────────────────────────────────────────────────────
 export async function createUser(data: {
   name: string;

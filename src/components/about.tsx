@@ -1,28 +1,16 @@
 import { GraduationCap, Users, Target, Award } from "lucide-react";
+import { aboutFeatures } from "@/data/about-features";
+
+const iconMap: Record<string, typeof GraduationCap> = {
+  GraduationCap, Target, Users, Award,
+};
 
 export default function About() {
-  const features = [
-    {
-      icon: GraduationCap,
-      title: "Tutor Profesional",
-      desc: "Berpengalaman dan tersertifikasi di bidangnya",
-    },
-    {
-      icon: Target,
-      title: "Kurikulum Terarah",
-      desc: "Materi disesuaikan dengan kebutuhan siswa",
-    },
-    {
-      icon: Users,
-      title: "Pendekatan Personal",
-      desc: "Pendampingan 1-on-1 yang intensif dan fokus",
-    },
-    {
-      icon: Award,
-      title: "Terpercaya",
-      desc: "Sudah berpengalaman 10+ tahun mencetak generasi unggul",
-    },
-  ];
+  const features = aboutFeatures.map((f) => ({
+    icon: iconMap[f.iconName] ?? GraduationCap,
+    title: f.title,
+    desc: f.desc,
+  }));
 
   return (
     <section id="about" className="relative bg-surface py-12 sm:py-24 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">

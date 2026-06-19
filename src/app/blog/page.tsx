@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
-import { getBlogPosts } from "@/db/actions";
+import { getBlogPosts } from "@/data/blog-posts";
 
 export const metadata: Metadata = {
   title: "Blog Edukasi | Cakrawala EduCentre",

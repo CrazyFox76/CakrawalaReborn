@@ -3,8 +3,6 @@ export interface Faq {
   answer: string;
 }
 
-export async function getFaqs() { return faqs; }
-
 export const faqs: Faq[] = [
   {
     question: "Apakah lesnya offline atau online?",
