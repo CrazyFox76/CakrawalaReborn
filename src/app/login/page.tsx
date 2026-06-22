@@ -198,8 +198,9 @@ export default function LoginPage() {
             <form onSubmit={activeTab === "login" ? handleLogin : handleRegister} className="flex flex-col gap-4">
               {activeTab === "register" && (
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/60">Nama Lengkap</label>
+                  <label htmlFor="name" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/60">Nama Lengkap</label>
                   <input
+                    id="name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -211,8 +212,9 @@ export default function LoginPage() {
               )}
 
               <div>
-                <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/60">Alamat Email</label>
+                <label htmlFor="email" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/60">Alamat Email</label>
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -223,9 +225,10 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/60">Password</label>
+                <label htmlFor="password" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/60">Password</label>
                 <div className="relative">
                   <input
+                    id="password"
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -246,8 +249,9 @@ export default function LoginPage() {
 
               {activeTab === "register" && (
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/60">Konfirmasi Password</label>
+                  <label htmlFor="confirmPassword" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/60">Konfirmasi Password</label>
                   <input
+                    id="confirmPassword"
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}

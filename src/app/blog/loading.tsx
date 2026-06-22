@@ -1,5 +1,5 @@
-import Loading from "@/components/loading";
+import BlogIndexSkeleton from "@/components/skeletons/blog-index-skeleton";
 
 export default function BlogLoading() {
-  return <Loading className="min-h-dvh" />;
+  return <BlogIndexSkeleton />;
 }

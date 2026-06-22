@@ -18,16 +18,66 @@ const config: Config = {
           "0%, 100%": { transform: "scale(1)" },
           "50%": { transform: "scale(1.12)" },
         },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height, var(--accordion-panel-height, auto))" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height, var(--accordion-panel-height, auto))" },
+          to: { height: "0" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        "scale-in": {
+          "0%": { transform: "scale(0.95)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.4s ease-out",
         waPulse: "waPulse 2s ease-in-out infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        shimmer: "shimmer 3s ease-in-out infinite",
+        float: "float 3s ease-in-out infinite",
+        "scale-in": "scale-in 0.3s ease-out",
       },
       colors: {
         primary: "#263559",
         "primary-light": "#3b5282",
         accent: "#D9A955",
-        surface: "#f8fafc",
+        surface: "var(--surface)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        border: "var(--border)",
+        ring: "var(--ring)",
+        input: "var(--input)",
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+        },
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
+        },
         blue: {
           50: "#f0f4ff",
           100: "#dbe4ff",

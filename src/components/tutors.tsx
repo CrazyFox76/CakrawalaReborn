@@ -1,45 +1,58 @@
-import { Star } from "lucide-react";
+import { Star, GraduationCap } from "lucide-react";
 import { getTutors } from "@/data/tutors";
 
 export default async function Tutors() {
   const tutors = await getTutors();
   return (
-    <section className="py-12 sm:py-24">
+    <section className="py-16 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-4xl">
-            Tutor Profesional Kami
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+            <GraduationCap className="h-3.5 w-3.5" />
+            Pengajar
+          </div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+            Tutor{" "}
+            <span className="gradient-text bg-gradient-to-r from-blue-600 to-indigo-600">
+              Profesional
+            </span>{" "}
+            Kami
           </h2>
-          <p className="mt-3 text-sm text-zinc-600 sm:mt-4 sm:text-lg dark:text-slate-400">
+          <p className="mt-4 text-base leading-relaxed text-slate-500 dark:text-slate-400">
             Lulusan terbaik dari universitas ternama, berpengalaman, dan
             berdedikasi tinggi.
           </p>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:mt-12 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {tutors.map((tutor) => (
             <div
               key={tutor.id}
-              className="group rounded-2xl border border-zinc-200 bg-white p-4 text-center transition-all sm:p-6 hover:border-primary/20 hover:shadow-lg dark:border-slate-700/50 dark:bg-slate-800/50"
+              className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/70 p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:p-6 dark:border-slate-700/50 dark:bg-slate-900/70"
             >
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-light text-sm font-bold text-white shadow-md sm:h-16 sm:w-16 sm:text-lg">
-                {tutor.initials}
+              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-blue-500 to-indigo-600 opacity-60" />
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-slate-100 to-slate-200 shadow-inner sm:h-20 sm:w-20 dark:from-slate-800 dark:to-slate-700">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-lg font-bold text-white shadow-md transition-all duration-300 group-hover:scale-110 sm:h-16 sm:w-16 sm:text-xl">
+                  {tutor.initials}
+                </div>
               </div>
-              <h3 className="mt-3 text-sm font-bold text-zinc-900 sm:mt-4 sm:text-base dark:text-slate-100">
+              <h3 className="mt-4 text-center text-base font-bold text-slate-900 sm:text-lg dark:text-white">
                 {tutor.name}
               </h3>
-              <p className="mt-0.5 text-xs font-medium text-accent sm:text-sm">
+              <p className="text-center text-sm font-semibold text-amber-600 dark:text-amber-400">
                 {tutor.subject}
               </p>
-              <p className="mt-1 text-[10px] text-zinc-400 sm:text-xs">{tutor.education}</p>
-              <p className="mt-2 text-xs leading-relaxed text-zinc-500 sm:mt-3 sm:text-sm">
+              <p className="mt-1 text-center text-xs text-slate-400">
+                {tutor.education}
+              </p>
+              <p className="mt-3 text-center text-sm leading-relaxed text-slate-500 dark:text-slate-400">
                 {tutor.desc}
               </p>
-              <div className="mt-3 flex items-center justify-center gap-1 sm:mt-4">
+              <div className="mt-4 flex items-center justify-center gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className="h-3 w-3 fill-gold-400 text-gold-400 sm:h-3.5 sm:w-3.5"
+                    className="h-3.5 w-3.5 fill-amber-400 text-amber-400"
                   />
                 ))}
               </div>

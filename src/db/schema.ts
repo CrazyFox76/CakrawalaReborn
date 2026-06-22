@@ -17,6 +17,8 @@ export const registrations = pgTable("registrations", {
   pesan: text("pesan"),
   invoiceNo: varchar("invoice_no", { length: 100 }),
   status: varchar("status", { length: 50 }).default("baru"),
+  voucherCode: varchar("voucher_code", { length: 50 }),
+  voucherDiscount: integer("voucher_discount"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

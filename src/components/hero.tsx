@@ -1,277 +1,177 @@
-"use client";
+import { ArrowRight, Sparkles, TrendingUp, BookOpen, Target, Award, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
-import { useState, useEffect, useRef } from "react";
-import { Zap, ArrowRight, CheckCircle, GraduationCap } from "lucide-react";
-import { createLead } from "@/db/actions";
-
-const COLORS = [
-  "from-blue-500 to-blue-600",
-  "from-emerald-500 to-emerald-600",
-  "from-amber-500 to-amber-600",
-  "from-purple-500 to-purple-600",
-];
-
-const students = [
-  { name: "Rizky A.", major: "Teknik ITB", branch: "Cakrawala Jakarta" },
-  { name: "Bunga P.", major: "Hukum UI", branch: "Cakrawala Manado" },
-  { name: "Calista A.", major: "Kedokteran UGM", branch: "Cakrawala Bandung" },
-  { name: "Angel J.", major: "Psikologi UGM", branch: "Cakrawala Pontianak" },
-  { name: "Nadia A.", major: "Psikologi UI", branch: "Cakrawala Mataram" },
-  { name: "Aryagani M.", major: "Kedokteran UGM", branch: "Cakrawala Padang" },
-  { name: "Indah L.", major: "Kedokteran UI", branch: "Cakrawala Bengkulu" },
-  { name: "Davina A.", major: "Sastra Inggris UI", branch: "Cakrawala Bukittinggi" },
-  { name: "Fathur Q.", major: "Mesin UI", branch: "Cakrawala Jakarta" },
-  { name: "Jesslyn E.", major: "Farmasi ITB", branch: "Cakrawala Tasikmalaya" },
-  { name: "Gusti A.", major: "Kedokteran Gigi Udayana", branch: "Cakrawala Denpasar" },
-  { name: "Annisa R.", major: "Elektro UI", branch: "Cakrawala Karawang" },
-];
-
-// ─── Countdown target: 6 hari dari sekarang ────────────────────────────────
-function getTarget() {
-  const d = new Date();
-  d.setDate(d.getDate() + 6);
-  return d;
-}
-
-function useCountdown(target: Date) {
-  const [time, setTime] = useState(() => {
-    const diff = Math.max(0, target.getTime() - Date.now());
-    return {
-      h: String(Math.floor(diff / 3_600_000)).padStart(2, "0"),
-      m: String(Math.floor((diff % 3_600_000) / 60_000)).padStart(2, "0"),
-      s: String(Math.floor((diff % 60_000) / 1000)).padStart(2, "0"),
-    };
-  });
-  useEffect(() => {
-    function tick() {
-      const diff = Math.max(0, target.getTime() - Date.now());
-      setTime({
-        h: String(Math.floor(diff / 3_600_000)).padStart(2, "0"),
-        m: String(Math.floor((diff % 3_600_000) / 60_000)).padStart(2, "0"),
-        s: String(Math.floor((diff % 60_000) / 1000)).padStart(2, "0"),
-      });
-    }
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, [target]);
-  return time;
-}
-
-// ─── Kartu siswa (tile) ───────────────────────────────────────────────────────
-function StudentCard({ student, index }: { student: (typeof students)[0]; index: number }) {
-  return (
-    <div className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:shadow-lg">
-      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${COLORS[index % COLORS.length]} text-xs font-bold text-white`}>
-        {student.name.charAt(0)}
-      </div>
-      <div className="min-w-0">
-        <p className="truncate text-xs font-bold text-white">{student.name}</p>
-        <p className="truncate text-[10px] font-semibold text-blue-200">{student.major}</p>
-        <p className="truncate text-[9px] text-white/50">{student.branch}</p>
-      </div>
-    </div>
-  );
-}
-
-// ─── Main Hero ────────────────────────────────────────────────────────────────
 export default function Hero() {
-  const [phone, setPhone] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
-  const target = useRef(getTarget()).current;
-  const { h, m, s } = useCountdown(target);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleaned = phone.replace(/[^0-9]/g, "");
-    if (cleaned.length < 10) {
-      setError("Masukkan nomor WhatsApp yang valid (min. 10 angka)");
-      return;
-    }
-    setError("");
-    createLead(cleaned).catch(console.error);
-    setSubmitted(true);
-  };
-
   return (
-    <section className="relative min-h-[92vh] overflow-hidden bg-gradient-to-br from-[#0d1b4b] via-[#1a3a8f] to-[#1565c0]">
-      {/* ── Dekoratif geometrik ── */}
+    <section className="relative min-h-[90vh] overflow-hidden bg-[#0f1a2e] dark:bg-[#0a111f]">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Lingkaran besar kanan bawah */}
-        <div className="absolute -bottom-32 -right-32 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-3xl" />
-        {/* Lingkaran kecil kiri atas */}
-        <div className="absolute -left-20 -top-20 h-[300px] w-[300px] rounded-full bg-indigo-400/10 blur-2xl" />
-        {/* Segitiga dekoratif */}
-        <svg
-          className="absolute bottom-0 left-0 w-full opacity-10"
-          viewBox="0 0 1440 200"
-          preserveAspectRatio="none"
-        >
-          <polygon points="0,200 720,0 1440,200" fill="white" />
-        </svg>
-        {/* Titik-titik pola */}
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, white 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
-
-      {/* ── Konten utama ── */}
-      <div className="relative mx-auto max-w-7xl px-4 pt-14 pb-24 sm:px-6 lg:grid lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:pt-20 lg:pb-28">
-        {/* Kolom kiri */}
-        <div className="flex flex-col">
-          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
-            Bersama{" "}
-            <span className="text-yellow-300">Cakrawala EduCentre,</span>
-            <br />
-            peluang untuk lolos
-            <br />
-            <span className="bg-gradient-to-r from-yellow-200 to-orange-300 bg-clip-text text-transparent">
-              PTN impian naik 3x lipat
-            </span>
-          </h1>
-
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-blue-100 sm:text-lg">
-            Dibimbing langsung oleh Master Teacher lulusan PTN favorit di Indonesia
-          </p>
-
-          {/* Countdown + form klaim */}
-          <div className="mt-8 max-w-lg">
-            {/* Badge countdown */}
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-yellow-400/20 px-4 py-1.5 text-sm font-bold text-yellow-300 ring-1 ring-yellow-300/30">
-              <Zap className="h-4 w-4 fill-yellow-300" />
-              Sisa 6 hari lagi!&nbsp;
-              <span className="font-mono text-base tracking-widest text-white" suppressHydrationWarning>
-                {h} : {m} : {s}
-              </span>
-            </div>
-
-            {/* Card form */}
-            <div className="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-md sm:p-6">
-              {!submitted ? (
-                <>
-                  <p className="text-sm font-semibold text-white sm:text-base">
-                    Mau seperti mereka?
-                  </p>
-                  <p className="mt-0.5 text-sm text-blue-100">
-                    Yuk, isi nomor WhatsApp untuk klaim{" "}
-                    <span className="font-bold text-yellow-300 underline underline-offset-2">
-                      DISKON hingga Rp4.4jt!
-                    </span>
-                  </p>
-
-                  <form onSubmit={handleSubmit} className="mt-4">
-                    <div className="flex flex-col gap-3 sm:flex-row">
-                      <input
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => {
-                          setPhone(e.target.value);
-                          setError("");
-                        }}
-                        placeholder="6281234567890"
-                        className="flex-1 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder-white/40 backdrop-blur-sm outline-none transition-all focus:border-yellow-300 focus:ring-2 focus:ring-yellow-300/30"
-                      />
-                      <button
-                        type="submit"
-                        className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-400 to-orange-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:from-orange-500 hover:to-orange-600 hover:shadow-xl active:scale-[0.97]"
-                      >
-                        Klaim Diskon
-                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </button>
-                    </div>
-                    {error && (
-                      <p className="mt-2 text-xs text-red-300">{error}</p>
-                    )}
-                  </form>
-
-                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-white/50">
-                    <span className="flex items-center gap-1">
-                      <CheckCircle className="h-3 w-3 text-green-400" />
-                      Gratis konsultasi
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <CheckCircle className="h-3 w-3 text-green-400" />
-                      Privasi terjamin
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <CheckCircle className="h-3 w-3 text-green-400" />
-                      500+ siswa bergabung
-                    </span>
-                  </div>
-                </>
-              ) : (
-                <div className="flex flex-col items-center gap-3 py-2 text-center">
-                  <CheckCircle className="h-10 w-10 text-green-400" />
-                  <h3 className="text-base font-bold text-white">
-                    Promo Dikirim ke WhatsApp!
-                  </h3>
-                  <p className="text-sm text-blue-100">
-                    Tim kami akan menghubungi{" "}
-                    <span className="font-semibold text-white">{phone}</span>{" "}
-                    dalam 1×24 jam.
-                  </p>
-                  <button
-                    onClick={() => { setSubmitted(false); setPhone(""); }}
-                    className="text-xs text-white/50 underline underline-offset-2 hover:text-white/80"
-                  >
-                    Kirim nomor lain
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Sub-note */}
-          <p className="mt-6 text-center text-sm text-blue-200 lg:text-left">
-            Daftar langsung <span className="font-semibold text-white">Kelas Tatap Muka dan Online</span>,
-            tersedia untuk SD, SMP, SMA, Gap Year
-          </p>
-          <p className="text-center text-xs text-white/50 lg:text-left">
-            Persiapan TKA SMP dan persiapan SNBT juga tersedia disini!
-          </p>
-        </div>
-
-        {/* Kolom kanan — grid siswa berprestasi */}
-        <div className="mt-8 lg:mt-14">
-          {/* Label */}
-          <div className="mb-3 text-center text-[10px] font-semibold uppercase tracking-widest text-white/40 lg:text-right">
-            Alumni Cakrawala yang Diterima PTN Terbaik
-          </div>
-
-          {/* Mobile: horizontal scroll — Desktop: grid */}
-          <div className="overflow-x-auto pb-2 scrollbar-none lg:overflow-visible">
-            <div className="flex gap-2 lg:grid lg:grid-cols-3 lg:gap-3 min-w-max lg:min-w-0">
-              {students.map((s, i) => (
-                <div
-                  key={i}
-                  className="w-48 flex-shrink-0 animate-fadeIn lg:w-auto"
-                  style={{ animationDelay: `${i * 60}ms` }}
-                >
-                  <StudentCard student={s} index={i} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Gradien fade kanan (desktop only) */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1565c0]/80 to-transparent hidden lg:block" />
-        </div>
-      </div>
-
-      {/* Gelombang bawah */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 60" className="w-full" preserveAspectRatio="none">
-          <path
-            d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z"
-            fill="white"
-            className="dark:fill-slate-950"
+        <div className="absolute -right-60 -top-60 h-[600px] w-[600px] rounded-full bg-blue-500/5 blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-indigo-500/5 blur-3xl" />
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div
+            className="h-full w-full"
+            style={{
+              backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
+              backgroundSize: "40px 40px",
+            }}
           />
-        </svg>
+        </div>
+      </div>
+
+      <div className="relative mx-auto flex min-h-[90vh] w-full max-w-[1440px] items-center px-6 py-20 sm:px-10 lg:px-16">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+          <div className="flex flex-col">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium tracking-wide text-white/70 backdrop-blur-sm">
+              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+              Bimbingan Akademik & Seleksi PTN
+            </div>
+
+            <h1 className="text-[2.5rem] font-bold leading-[1.15] tracking-tight text-white sm:text-5xl lg:text-[3.25rem] lg:leading-[1.12]">
+              Temukan Arah,{" "}
+              <span className="text-amber-400">Raih Impian</span>
+              <br />
+              dengan Bimbingan Personal
+            </h1>
+
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-white/50 sm:text-lg">
+              Bukan sekadar bimbel. Kami bantu kamu mengenali potensi, memilih jurusan tepat, 
+              dan menyusun strategi belajar yang terarah — dari screening awal sampai lolos PTN favorit.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Link
+                href="/screening"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-xl bg-amber-400 px-7 py-4 text-base font-bold text-[#0f1a2e] shadow-lg shadow-amber-400/25 transition-all duration-300 hover:bg-amber-300 hover:shadow-amber-400/40 hover:-translate-y-0.5 active:scale-[0.97]"
+              >
+                <Sparkles className="h-5 w-5" />
+                Cek Potensi Gratis
+                <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/program"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-7 py-4 text-base font-semibold text-white/70 transition-all duration-300 hover:border-white/30 hover:text-white hover:bg-white/5"
+              >
+                Lihat Program
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+              {[
+                { icon: BookOpen, text: "Les Privat 1-on-1" },
+                { icon: Target, text: "Screening Akademik" },
+                { icon: Award, text: "Tutor Lulusan PTN" },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <span key={item.text} className="inline-flex items-center gap-2 text-sm text-white/40">
+                    <Icon className="h-4 w-4 text-amber-400/60" />
+                    {item.text}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="absolute -inset-4 rounded-2xl bg-gradient-to-br from-amber-400/10 via-blue-500/5 to-transparent blur-xl" />
+            <div className="relative w-full max-w-md animate-float rounded-xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-sm sm:p-8">
+              <div className="mb-5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-500 text-sm font-bold text-[#0f1a2e]">
+                    AN
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">Alya N.</p>
+                    <p className="text-xs text-white/40">Siswa Kelas 12 - IPA</p>
+                  </div>
+                </div>
+                <span className="rounded-full bg-emerald-400/10 px-3 py-1 text-[11px] font-medium text-emerald-400">
+                  Aktif
+                </span>
+              </div>
+
+              <div className="mb-5 grid grid-cols-3 gap-3">
+                {[
+                  { label: "Skor", value: "87.5", accent: "text-amber-400" },
+                  { label: "Peringkat", value: "#12", accent: "text-emerald-400" },
+                  { label: "Progress", value: "73%", accent: "text-blue-400" },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-lg bg-white/5 px-3 py-2.5 text-center">
+                    <p className={`text-lg font-bold ${item.accent}`}>{item.value}</p>
+                    <p className="text-[10px] font-medium uppercase tracking-wider text-white/30">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mb-5 space-y-3">
+                <div>
+                  <div className="mb-1 flex items-center justify-between text-xs">
+                    <span className="text-white/50">Matematika</span>
+                    <span className="font-semibold text-white/80">85</span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-white/10">
+                    <div className="h-1.5 w-[85%] rounded-full bg-gradient-to-r from-amber-400 to-amber-500" />
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-1 flex items-center justify-between text-xs">
+                    <span className="text-white/50">Fisika</span>
+                    <span className="font-semibold text-white/80">78</span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-white/10">
+                    <div className="h-1.5 w-[78%] rounded-full bg-gradient-to-r from-blue-400 to-blue-500" />
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-1 flex items-center justify-between text-xs">
+                    <span className="text-white/50">Kimia</span>
+                    <span className="font-semibold text-white/80">72</span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-white/10">
+                    <div className="h-1.5 w-[72%] rounded-full bg-gradient-to-r from-emerald-400 to-emerald-500" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+                <div className="mb-2 flex items-center gap-2">
+                  <Target className="h-4 w-4 text-amber-400" />
+                  <span className="text-xs font-semibold uppercase tracking-wider text-white/50">Rekomendasi PTN</span>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { rank: 1, uni: "Universitas Indonesia", prog: "Teknik Informatika", match: 92 },
+                    { rank: 2, uni: "Institut Teknologi Bandung", prog: "STEI", match: 85 },
+                    { rank: 3, uni: "Universitas Gadjah Mada", prog: "Ilmu Komputer", match: 78 },
+                  ].map((item) => (
+                    <div key={item.rank} className="flex items-center gap-3 rounded-md bg-white/5 px-3 py-2">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-amber-400/20 text-[11px] font-bold text-amber-400">
+                        {item.rank}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-white">{item.uni}</p>
+                        <p className="truncate text-xs text-white/40">{item.prog}</p>
+                      </div>
+                      <span className="shrink-0 text-xs font-semibold text-emerald-400">{item.match}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
+                <span className="text-xs text-white/30">Screening terakhir: 2 hari lalu</span>
+                <Link
+                  href="/screening"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-amber-400 transition-colors hover:text-amber-300"
+                >
+                  Lihat Detail
+                  <ChevronRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

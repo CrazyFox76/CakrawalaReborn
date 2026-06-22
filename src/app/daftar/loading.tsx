@@ -1,5 +1,5 @@
-import Loading from "@/components/loading";
+import DaftarSkeleton from "@/components/skeletons/daftar-skeleton";
 
 export default function DaftarLoading() {
-  return <Loading className="min-h-dvh" />;
+  return <DaftarSkeleton />;
 }

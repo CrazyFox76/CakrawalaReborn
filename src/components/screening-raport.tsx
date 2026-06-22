@@ -56,7 +56,7 @@ export default function ScreeningRaport({
         peluang: hitungPeluang(n, p.grade),
       }))
       .sort((a, b) => b.peluang - a.peluang);
-  }, [nilai, uniFilter, catFilter]);
+  }, [nilai, uniFilter, catFilter, passingGrades]);
 
   const topResults = results.slice(0, 20);
 
@@ -76,12 +76,13 @@ export default function ScreeningRaport({
         <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-8 dark:border-slate-700 dark:bg-slate-800/50">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
             <div className="flex-1">
-              <label className="mb-1.5 flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-slate-300">
+              <label htmlFor="nilai" className="mb-1.5 flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-slate-300">
                 <GraduationCap className="h-4 w-4 text-primary" />
                 Nilai Rata-rata Raport
               </label>
               <div className="relative">
                 <input
+                  id="nilai"
                   type="number"
                   min="0"
                   max="100"
@@ -95,11 +96,12 @@ export default function ScreeningRaport({
               </div>
             </div>
             <div className="w-full sm:w-48">
-              <label className="mb-1.5 flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-slate-300">
+              <label htmlFor="uniFilter" className="mb-1.5 flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-slate-300">
                 <Filter className="h-4 w-4 text-primary" />
                 Universitas
               </label>
               <select
+                id="uniFilter"
                 value={uniFilter}
                 onChange={(e) => setUniFilter(e.target.value)}
                 className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
@@ -111,11 +113,12 @@ export default function ScreeningRaport({
               </select>
             </div>
             <div className="w-full sm:w-40">
-              <label className="mb-1.5 flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-slate-300">
+              <label htmlFor="catFilter" className="mb-1.5 flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-slate-300">
                 <Filter className="h-4 w-4 text-primary" />
                 Jurusan
               </label>
               <select
+                id="catFilter"
                 value={catFilter}
                 onChange={(e) => setCatFilter(e.target.value)}
                 className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"

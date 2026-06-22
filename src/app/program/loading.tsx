@@ -1,5 +1,5 @@
-import Loading from "@/components/loading";
+import ProgramSkeleton from "@/components/skeletons/program-skeleton";
 
 export default function ProgramLoading() {
-  return <Loading className="min-h-dvh" />;
+  return <ProgramSkeleton />;
 }

@@ -1,35 +1,72 @@
-import { CheckCircle2 } from "lucide-react";
-import { whyUs as reasons } from "@/data/why-us";
+import { Compass, Map, Target, Users, TrendingUp, Shield } from "lucide-react";
+
+const items = [
+  {
+    icon: Compass,
+    title: "Bimbingan, Bukan Sekadar Les",
+    desc: "Kami adalah mitra pendidikan yang membantu siswa menemukan potensi dan jalur terbaik menuju masa depannya.",
+  },
+  {
+    icon: Map,
+    title: "Rencana Belajar Personal",
+    desc: "Setiap siswa punya peta belajar unik berdasarkan hasil screening, target, dan gaya belajar masing-masing.",
+  },
+  {
+    icon: Target,
+    title: "Fokus ke Tujuan Akhir",
+    desc: "Kami pastikan setiap langkah belajarmu mengarah ke tujuan: lolos PTN favorit atau capai target akademik.",
+  },
+  {
+    icon: Users,
+    title: "Tutor adalah Mentor",
+    desc: "Lulusan PTN terbaik yang bukan cuma ngajar, tapi juga jadi mentor dan motivator belajarmu.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Hasil yang Terukur",
+    desc: "Rata-rata siswa kami alami peningkatan nilai signifikan dan lolos ke PTN impian mereka.",
+  },
+  {
+    icon: Shield,
+    title: "Dampingan sampai Lolos",
+    desc: "Dari screening, belajar, tryout, hingga pendaftaran PTN — kami dampingi penuh sampai kamu berhasil.",
+  },
+];
 
 export default function WhyUs() {
   return (
-    <section className="bg-primary py-12 sm:py-24">
+    <section className="bg-slate-50 py-16 sm:py-24 dark:bg-slate-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-4xl">
-            Kenapa Memilih Cakrawala?
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/5 px-4 py-1.5 text-xs font-semibold text-primary dark:bg-primary/20 dark:text-blue-300">
+            <Compass className="h-3.5 w-3.5" />
+            Keunggulan
+          </div>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+            Kenapa{" "}
+            <span className="text-accent">Cakrawala?</span>
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-white/70 sm:mt-4 sm:text-lg">
-            Kami berkomitmen memberikan pengalaman belajar terbaik untuk
-            kesuksesan akademik putra-putri Anda.
+          <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
+            Kami bukan bimbel biasa. Kami adalah mitra pendidikan yang membimbing setiap langkahmu.
           </p>
         </div>
 
-        <div className="mt-8 grid gap-3 sm:mt-12 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r) => (
-            <div
-              key={r.title}
-              className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition-all sm:p-6 hover:bg-white/10"
-            >
-              <div className="mb-2 flex items-center gap-2 sm:mb-3 sm:gap-3">
-                <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-gold-400 sm:h-5 sm:w-5" />
-                <h3 className="text-sm font-semibold text-white sm:text-base">
-                  {r.title}
-                </h3>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+          {items.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.title}
+                className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200/50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 dark:bg-slate-900 dark:ring-slate-700/50"
+              >
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10">
+                  <Icon className="h-5 w-5 text-accent" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{item.desc}</p>
               </div>
-              <p className="text-xs leading-relaxed text-white/60 sm:text-sm">{r.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

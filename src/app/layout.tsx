@@ -1,9 +1,12 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Geist } from "next/font/google";
 import Script from "next/script";
 import ThemeProvider from "@/components/theme-provider";
 import SessionProvider from "@/components/session-provider";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,7 +17,6 @@ export const metadata: Metadata = {
   description:
     "Lembaga Pendidikan dan Pelatihan yang berkomitmen mencetak generasi unggul dan kompeten. Les privat SD, SMP, SMA, UTBK, dan Bahasa Asing dengan tutor profesional.",
   manifest: "/manifest.json",
-  themeColor: "#2563eb",
   metadataBase: new URL("https://cakrawala-educentre.vercel.app"),
   openGraph: {
     title: "Cakrawala EduCentre | Les Privat Terbaik",
@@ -32,6 +34,14 @@ export const metadata: Metadata = {
       "Bimbingan intensif oleh tutor profesional. Jadwal fleksibel, kurikulum terarah. SD, SMP, SMA, UTBK & Bahasa Asing.",
   },
   robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#2563eb" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e1e2a" },
+  ],
+  colorScheme: "light dark",
 };
 
 const jsonLd = {
@@ -87,8 +97,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${inter.className} scroll-smooth`} suppressHydrationWarning>
+    <html lang="id" className={cn(inter.className, "font-sans", geist.variable)} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){if('scrollRestoration'in history)history.scrollRestoration='manual';window.scrollTo(0,0)})()`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -111,7 +126,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-dvh flex flex-col bg-white text-zinc-800 antialiased dark:bg-slate-950 dark:text-slate-200">
+      <body className="min-h-dvh flex flex-col bg-background text-foreground antialiased">
         <SessionProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </SessionProvider>

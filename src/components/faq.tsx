@@ -1,55 +1,63 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, MessageCircle } from "lucide-react";
+import { ChevronDown, HelpCircle, MessageCircle } from "lucide-react";
 import { faqs } from "@/data/faqs";
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [showAll, setShowAll] = useState(false);
+  const displayed = showAll ? faqs : faqs.slice(0, 5);
 
   return (
-    <section className="bg-surface py-12 sm:py-24 dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950">
+    <section id="faq" className="scroll-mt-20 bg-white py-16 sm:py-24 dark:bg-slate-950">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-4xl">
-            Pertanyaan yang Sering Diajukan
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/5 px-4 py-1.5 text-xs font-semibold text-primary dark:bg-primary/20 dark:text-blue-300">
+            <HelpCircle className="h-3.5 w-3.5" />
+            FAQ
+          </div>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+            Ada yang{" "}
+            <span className="text-accent">Ditanyakan?</span>
           </h2>
-          <p className="mt-3 text-sm text-zinc-600 sm:mt-4 sm:text-lg dark:text-slate-400">
-            Masih ragu? Temukan jawaban dari pertanyaan berikut atau hubungi
-            kami langsung.
+          <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
+            Temukan jawaban cepat di bawah, atau hubungi kami langsung.
           </p>
         </div>
 
-        <div className="mt-8 space-y-2 sm:mt-12 sm:space-y-3">
-          {faqs.map((faq, i) => {
+        <div className="mt-10 space-y-3">
+          {displayed.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
               <div
                 key={i}
-                className="overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all dark:border-slate-700 dark:bg-slate-800/50"
+                className={`rounded-xl border bg-white transition-all dark:bg-slate-900 ${
+                  isOpen
+                    ? "border-primary/20 shadow-sm"
+                    : "border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600"
+                }`}
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between px-4 py-3 text-left transition-colors sm:px-6 sm:py-4 hover:bg-zinc-50 dark:hover:bg-slate-800"
+                  className="flex w-full items-center justify-between px-5 py-4 text-left sm:px-6"
                 >
-                  <span className="pr-3 text-xs font-semibold text-zinc-900 sm:pr-4 sm:text-base dark:text-slate-100">
+                  <span className="pr-4 text-sm font-medium text-slate-900 sm:text-base dark:text-slate-100">
                     {faq.question}
                   </span>
                   <ChevronDown
-                    className={`h-5 w-5 flex-shrink-0 text-zinc-400 transition-transform ${
-                      isOpen ? "rotate-180" : ""
+                    className={`h-4 w-4 shrink-0 text-slate-400 transition-all duration-300 ${
+                      isOpen ? "rotate-180 text-accent" : ""
                     }`}
                   />
                 </button>
                 <div
-                  className={`grid transition-all ${
-                    isOpen
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
+                  className={`grid transition-all duration-300 ${
+                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="border-t border-zinc-100 px-4 py-3 text-xs leading-relaxed text-zinc-500 sm:px-6 sm:py-4 sm:text-sm dark:border-zinc-700 dark:text-slate-400">
+                    <p className="border-t border-slate-100 px-5 py-4 text-sm text-slate-500 sm:px-6 dark:border-slate-800 dark:text-slate-400">
                       {faq.answer}
                     </p>
                   </div>
@@ -59,18 +67,30 @@ export default function Faq() {
           })}
         </div>
 
-        <div className="mt-6 rounded-xl border border-zinc-200 bg-white p-4 text-center sm:mt-8 sm:p-6 dark:border-slate-700 dark:bg-slate-800/50">
-          <p className="text-xs text-zinc-600 sm:text-sm">
-            Tidak menemukan jawaban yang Anda cari?
+        {faqs.length > 5 && (
+          <div className="mt-5 text-center">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-gold-600"
+            >
+              {showAll ? "Tampilkan lebih sedikit" : `Lihat ${faqs.length - 5} pertanyaan lainnya`}
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${showAll ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+        )}
+
+        <div className="mt-8 rounded-xl border border-primary/10 bg-primary/5 p-6 text-center sm:p-8 dark:border-primary/20 dark:bg-primary/10">
+          <p className="text-sm text-slate-600 sm:text-base dark:text-slate-300">
+            Tidak menemukan jawaban?
           </p>
           <a
             href="https://wa.me/6281324868790"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-light"
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-primary-light hover:shadow-md"
           >
             <MessageCircle className="h-4 w-4" />
-            Hubungi Kami via WhatsApp
+            Hubungi via WhatsApp
           </a>
         </div>
       </div>

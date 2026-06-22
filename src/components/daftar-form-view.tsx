@@ -6,7 +6,7 @@ import {
   ArrowLeft, User, Phone, Mail, BookText, Calendar,
   Clock, MapPin, FileText, Tag,
 } from "lucide-react";
-import { createRegistration, validateVoucher, redeemVoucher } from "@/db/actions";
+import { validateVoucher, redeemVoucher } from "@/db/actions";
 import type { BankAccount } from "@/data/bank-accounts";
 import type { Price } from "@/data/prices";
 
@@ -64,6 +64,7 @@ export type DaftarFormSubmission = {
   invoiceNo: { full: string; short: string };
   form: DaftarFormFields;
   voucherDiscount: number;
+  voucherCode: string;
   totalHarga: number;
   finalHarga: number;
   selectedPaket: Paket | undefined;
@@ -72,10 +73,10 @@ export type DaftarFormSubmission = {
 type Props = {
   bankAccounts: BankAccount[];
   prices: Price[];
-  onSuccess: (data: DaftarFormSubmission) => void;
+  onReview: (data: DaftarFormSubmission) => void;
 };
 
-export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Props) {
+export default function DaftarFormView({ bankAccounts, prices, onReview }: Props) {
   const [form, setForm] = useState<DaftarFormFields>({
     nama: "",
     wa: "",
@@ -95,6 +96,7 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
   const [voucherDiscount, setVoucherDiscount] = useState(0);
   const [voucherError, setVoucherError] = useState("");
   const [voucherApplied, setVoucherApplied] = useState("");
+  const [validationErrors, setValidationErrors] = useState<Partial<Record<keyof DaftarFormFields, string>>>({});
 
   const [invoiceNo] = useState(generateInvoiceNumber);
 
@@ -108,7 +110,9 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+    clearError(name as keyof DaftarFormFields);
   };
 
   const handleApplyVoucher = async () => {
@@ -126,32 +130,62 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
     await redeemVoucher(result.code);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await createRegistration({
-        nama: form.nama,
-        wa: form.wa,
-        email: form.email || null,
-        program: form.program,
-        jenjang: form.jenjang,
-        paket: selectedPaket?.label ?? null,
-        harga: selectedPaket?.harga ?? null,
-        jenisLes: form.jenisLes,
-        alamat: form.alamat,
-        waktuLes: form.waktuLes,
-        durasi: form.durasi,
-        orangTua: form.orangTua || null,
-        pesan: form.pesan || null,
-        invoiceNo: invoiceNo.full,
-      });
-    } catch (err) {
-      console.error("Gagal menyimpan pendaftaran:", err);
+  const validateForm = (): boolean => {
+    const errors: Partial<Record<keyof DaftarFormFields, string>> = {};
+
+    if (form.nama.trim().length < 3) {
+      errors.nama = "Nama minimal 3 karakter";
     }
-    onSuccess({
+
+    const waDigits = form.wa.replace(/\D/g, "");
+    if (waDigits.length < 10 || waDigits.length > 15) {
+      errors.wa = "Nomor WA tidak valid (10-15 digit)";
+    } else if (!waDigits.startsWith("08")) {
+      errors.wa = "Nomor WA harus diawali 08";
+    }
+
+    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      errors.email = "Format email tidak valid";
+    }
+
+    if (!form.program) {
+      errors.program = "Pilih program";
+    }
+
+    if (!form.jenjang) {
+      errors.jenjang = "Pilih jenjang";
+    }
+
+    if (!form.alamat.trim()) {
+      errors.alamat = "Alamat wajib diisi";
+    }
+
+    if (!form.waktuLes.trim()) {
+      errors.waktuLes = "Waktu les wajib diisi";
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const clearError = (field: keyof DaftarFormFields) => {
+    setValidationErrors((prev) => {
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    onReview({
       invoiceNo,
       form,
       voucherDiscount,
+      voucherCode: voucherApplied,
       totalHarga,
       finalHarga,
       selectedPaket,
@@ -177,45 +211,54 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
 
           <form onSubmit={handleSubmit} className="mt-5 space-y-4 sm:mt-8 sm:space-y-5">
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+              <label htmlFor="nama" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                 <User className="h-4 w-4" /> Nama Lengkap Siswa
               </label>
               <input
-                type="text" name="nama" required value={form.nama} onChange={handleChange}
+                id="nama" type="text" name="nama" required value={form.nama} onChange={handleChange}
                 placeholder="Masukkan nama lengkap"
                 className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
               />
+              {validationErrors.nama && (
+                <p className="mt-1 text-xs text-red-500">{validationErrors.nama}</p>
+              )}
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
               <div>
-                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                <label htmlFor="wa" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                   <Phone className="h-4 w-4" /> Nomor WhatsApp
                 </label>
                 <input
-                  type="tel" name="wa" required value={form.wa} onChange={handleChange}
+                  id="wa" type="tel" name="wa" required value={form.wa} onChange={handleChange}
                   placeholder="08xxxxxxxxxx"
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
                 />
+                {validationErrors.wa && (
+                  <p className="mt-1 text-xs text-red-500">{validationErrors.wa}</p>
+                )}
               </div>
               <div>
-                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                <label htmlFor="email" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                   <Mail className="h-4 w-4" /> Email (opsional)
                 </label>
                 <input
-                  type="email" name="email" value={form.email} onChange={handleChange}
+                  id="email" type="email" name="email" value={form.email} onChange={handleChange}
                   placeholder="contoh@email.com"
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
                 />
+                {validationErrors.email && (
+                  <p className="mt-1 text-xs text-red-500">{validationErrors.email}</p>
+                )}
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
               <div>
-                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                <label htmlFor="program" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                   <BookText className="h-4 w-4" /> Program
                 </label>
-                <select name="program" required value={form.program} onChange={handleChange}
+                <select id="program" name="program" required value={form.program} onChange={handleChange}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm text-zinc-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                   <option value="">Pilih program</option>
                   <option>Les Privat (Semua Mapel)</option>
@@ -227,12 +270,15 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
                   <option>Persiapan SNBT/UTBK</option>
                   <option>Lainnya</option>
                 </select>
+                {validationErrors.program && (
+                  <p className="mt-1 text-xs text-red-500">{validationErrors.program}</p>
+                )}
               </div>
               <div>
-                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                <label htmlFor="jenjang" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                   <Calendar className="h-4 w-4" /> Jenjang
                 </label>
-                <select name="jenjang" required value={form.jenjang} onChange={handleChange}
+                <select id="jenjang" name="jenjang" required value={form.jenjang} onChange={handleChange}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm text-zinc-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                   <option value="">Pilih jenjang</option>
                   <option>PAUD/TK</option>
@@ -241,12 +287,15 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
                   <option>SMA</option>
                   <option>Umum/Mahasiswa</option>
                 </select>
+                {validationErrors.jenjang && (
+                  <p className="mt-1 text-xs text-red-500">{validationErrors.jenjang}</p>
+                )}
               </div>
             </div>
 
             {paketList.length > 0 && (
               <div>
-                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                <label htmlFor="paketIndex" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                   <Clock className="h-4 w-4" /> Paket Pertemuan
                 </label>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
@@ -277,7 +326,7 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
             )}
 
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+              <label htmlFor="jenisLes" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                 Jenis Les
               </label>
               <div className="flex gap-3">
@@ -303,32 +352,38 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
             </div>
 
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+              <label htmlFor="alamat" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                 <MapPin className="h-4 w-4" /> Alamat
               </label>
               <input
-                type="text" name="alamat" required value={form.alamat} onChange={handleChange}
+                id="alamat" type="text" name="alamat" required value={form.alamat} onChange={handleChange}
                 placeholder="Alamat lengkap"
                 className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
               />
+              {validationErrors.alamat && (
+                <p className="mt-1 text-xs text-red-500">{validationErrors.alamat}</p>
+              )}
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
               <div>
-                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                <label htmlFor="waktuLes" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                   <Clock className="h-4 w-4" /> Waktu Les
                 </label>
                 <input
-                  type="text" name="waktuLes" required value={form.waktuLes} onChange={handleChange}
+                  id="waktuLes" type="text" name="waktuLes" required value={form.waktuLes} onChange={handleChange}
                   placeholder="Senin Rabu Jumat, 18.30 WIB"
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
                 />
+                {validationErrors.waktuLes && (
+                  <p className="mt-1 text-xs text-red-500">{validationErrors.waktuLes}</p>
+                )}
               </div>
               <div>
-                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                <label htmlFor="durasi" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                   <Clock className="h-4 w-4" /> Durasi (menit)
                 </label>
-                <select name="durasi" value={form.durasi} onChange={handleChange}
+                <select id="durasi" name="durasi" value={form.durasi} onChange={handleChange}
                   className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm text-zinc-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                   <option value="30">30 Menit</option>
                   <option value="60">60 Menit</option>
@@ -339,22 +394,22 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
             </div>
 
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+              <label htmlFor="orangTua" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                 <User className="h-4 w-4" /> Nama Orang Tua / Wali
               </label>
               <input
-                type="text" name="orangTua" value={form.orangTua} onChange={handleChange}
+                id="orangTua" type="text" name="orangTua" value={form.orangTua} onChange={handleChange}
                 placeholder="Nama orang tua atau wali"
                 className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
               />
             </div>
 
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+              <label htmlFor="pesan" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                 Pesan / Catatan (opsional)
               </label>
               <textarea
-                name="pesan" value={form.pesan} onChange={handleChange} rows={3}
+                id="pesan" name="pesan" value={form.pesan} onChange={handleChange} rows={3}
                 placeholder="Tulis kebutuhan atau pertanyaan Anda..."
                 className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
               />
@@ -362,12 +417,12 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
 
             {!voucherApplied && (
               <div>
-                <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
+                <label htmlFor="voucherCode" className="mb-1 flex items-center gap-1.5 text-xs font-medium text-zinc-700 sm:mb-1.5 sm:gap-2 sm:text-sm dark:text-slate-300">
                   <Tag className="h-4 w-4" /> Kode Voucher (opsional)
                 </label>
                 <div className="flex gap-2">
                   <input
-                    type="text" value={voucherCode}
+                    id="voucherCode" type="text" value={voucherCode}
                     onChange={(e) => setVoucherCode(e.target.value)}
                     placeholder="Masukkan kode voucher"
                     className="flex-1 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500"
@@ -403,7 +458,7 @@ export default function DaftarFormView({ bankAccounts, prices, onSuccess }: Prop
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-xs font-semibold text-white shadow-lg shadow-primary/15 transition-all hover:bg-primary-light hover:shadow-xl sm:rounded-xl sm:px-6 sm:py-3 sm:text-sm"
             >
               <FileText className="h-4 w-4" />
-              Buat Faktur Pembayaran
+              Review & Konfirmasi
             </button>
           </form>
         </div>

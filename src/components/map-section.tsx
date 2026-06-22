@@ -1,27 +1,64 @@
+"use client";
+
+import {
+  Map,
+  MapMarker,
+  MarkerContent,
+  MapControls,
+} from "@/components/ui/map";
+import { MapPin, Locate } from "lucide-react";
+
+const LONGITUDE = 107.0307589;
+const LATITUDE = -6.3023472;
+
 export default function MapSection() {
   return (
-    <section className="bg-white py-12 sm:py-24 dark:bg-slate-950">
+    <section className="py-16 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-4xl">
-            Lokasi Kami
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+            <Locate className="h-3.5 w-3.5" />
+            Lokasi
+          </div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+            Lokasi{" "}
+            <span className="gradient-text bg-gradient-to-r from-blue-600 to-indigo-600">
+              Kami
+            </span>
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:mt-4 sm:text-lg dark:text-slate-400">
-            Cakrawala EduCentre, Jl. Bayan II No.7, RT.002/RW.008, Mustikajaya, Kec. Mustika Jaya, Kota Bekasi, Jawa Barat 17158
+          <p className="mt-4 text-base leading-relaxed text-slate-500 dark:text-slate-400">
+            Cakrawala EduCentre, Jl. Bayan II No.7, RT.002/RW.008, Mustikajaya,
+            Kec. Mustika Jaya, Kota Bekasi, Jawa Barat 17158
           </p>
         </div>
 
-        <div className="mt-6 overflow-hidden rounded-2xl sm:mt-10">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.9!2d107.0307589!3d-6.3023472!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698f6fd27912db%3A0x5f0b5b2cf0be5252!2sCakrawala+Educentre!5e0!3m2!1sid!2sid!4v1"
-            width="100%"
-            height="400"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Lokasi Cakrawala EduCentre"
-          />
+        <div className="relative mt-8 overflow-hidden rounded-2xl shadow-lg ring-1 ring-slate-200 sm:mt-10 dark:ring-slate-700">
+          <Map
+            initialViewState={{
+              longitude: LONGITUDE,
+              latitude: LATITUDE,
+              zoom: 16,
+            }}
+            className="h-[300px] w-full sm:h-[450px]"
+          >
+            <MapControls
+              showZoom
+              showCompass
+              showFullscreen
+              position="top-right"
+            />
+            <MapMarker longitude={LONGITUDE} latitude={LATITUDE}>
+              <MarkerContent>
+                <div className="relative flex h-12 w-12 items-center justify-center">
+                  <span className="absolute h-full w-full animate-ping rounded-full bg-blue-500/30" />
+                  <span className="absolute h-10 w-10 animate-pulse rounded-full bg-blue-500/20" />
+                  <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg ring-2 ring-white dark:ring-slate-900">
+                    <MapPin className="h-6 w-6" />
+                  </div>
+                </div>
+              </MarkerContent>
+            </MapMarker>
+          </Map>
         </div>
       </div>
     </section>

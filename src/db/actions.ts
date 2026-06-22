@@ -32,6 +32,32 @@ export async function createRegistration(data: NewRegistration) {
   return rows[0];
 }
 
+// ─── Admin: Registrations ──────────────────────────────────────────
+export async function getRegistrations() {
+  const rows = await db
+    .select()
+    .from(registrations)
+    .orderBy(registrations.createdAt);
+  return rows;
+}
+
+export async function getRegistrationById(id: number) {
+  const rows = await db
+    .select()
+    .from(registrations)
+    .where(eq(registrations.id, id));
+  return rows[0] ?? null;
+}
+
+export async function updateRegistrationStatus(id: number, status: string) {
+  const rows = await db
+    .update(registrations)
+    .set({ status })
+    .where(eq(registrations.id, id))
+    .returning();
+  return rows[0] ?? null;
+}
+
 // ─── Leads ─────────────────────────────────────────────────────────
 export async function createLead(phone: string, source = "hero") {
   const rows = await db.insert(leads).values({ phone, source }).returning();

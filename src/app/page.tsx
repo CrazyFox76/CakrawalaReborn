@@ -1,14 +1,15 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
+import AudienceSelector from "@/components/audience-selector";
 import PopularPackages from "@/components/popular-packages";
 import About from "@/components/about";
-import Programs from "@/components/programs";
+import ProgramsOverview from "@/components/programs-overview";
+
 import WhyUs from "@/components/why-us";
+import SocialProof from "@/components/social-proof";
 import CakraPointsPromo from "@/components/cakrapoints-promo";
 import CakraPoints from "@/components/cakrapoints";
-import Tutors from "@/components/tutors";
-import Testimonials from "@/components/testimonials";
-import BlogPreview from "@/components/blog-preview";
+import ProcessSection from "@/components/process-section";
 import Faq from "@/components/faq";
 import CtaConsult from "@/components/cta-consult";
 import Footer from "@/components/footer";
@@ -21,13 +22,13 @@ import { getCakraPointStats, getCakraPointRewards } from "@/data/cakra-points";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cakrawala EduCentre | Les Privat Terbaik untuk SD, SMP, SMA, UTBK & Bahasa Asing",
+  title: "Cakrawala EduCentre | Temukan Potensi, Raih PTN Impian",
   description:
-    "Bimbingan belajar les privat SD, SMP, SMA, persiapan UTBK SNBT, dan Bahasa Asing. Tutor profesional datang ke rumah, jadwal fleksibel.",
+    "Bimbingan belajar personal dengan tutor profesional lulusan PTN favorit. Screening potensi gratis, les privat SD/SMP/SMA, persiapan UTBK, dan program bahasa asing.",
   openGraph: {
-    title: "Cakrawala EduCentre | Les Privat Terbaik",
+    title: "Cakrawala EduCentre | Temukan Potensi, Raih PTN Impian",
     description:
-      "Bimbingan intensif oleh tutor profesional. Jadwal fleksibel, kurikulum terarah. SD, SMP, SMA, UTBK & Bahasa Asing.",
+      "Bimbingan intensif oleh tutor profesional. Screening potensi gratis, jadwal fleksibel, kurikulum terarah.",
   },
 };
 
@@ -39,35 +40,46 @@ export default async function Home() {
     getCakraPointRewards(),
   ]);
 
-  const sections = [
-    { Component: () => <Programs brands={brands} />, id: "programs" },
-    { Component: WhyUs, id: "why-us" },
-    { Component: CakraPointsPromo, id: "cakrapoints-promo" },
-    { Component: () => <CakraPoints stats={cakraStats.map(s => ({ ...s, suffix: s.suffix ?? "" }))} rewards={cakraRewards} />, id: "cakrapoints" },
-    { Component: Tutors, id: "tutors" },
-    { Component: BlogPreview, id: "blog" },
-    { Component: Faq, id: "faq" },
-    { Component: CtaConsult, id: "cta" },
-  ];
-
   return (
     <>
       <Header />
       <main>
         <Hero />
         <Reveal>
+          <AudienceSelector />
+        </Reveal>
+        <Reveal>
           <PopularPackages />
         </Reveal>
         <Reveal>
           <About />
         </Reveal>
-        {sections.map(({ Component, id }) => (
-          <Reveal key={id}>
-            <Component />
-          </Reveal>
-        ))}
         <Reveal>
-          <Testimonials testimonials={testimonials} />
+          <ProgramsOverview brands={brands} />
+        </Reveal>
+        <Reveal>
+          <WhyUs />
+        </Reveal>
+        <Reveal>
+          <SocialProof testimonials={testimonials} />
+        </Reveal>
+        <Reveal>
+          <CakraPointsPromo />
+        </Reveal>
+        <Reveal>
+          <CakraPoints
+            stats={cakraStats.map((s) => ({ ...s, suffix: s.suffix ?? "" }))}
+            rewards={cakraRewards}
+          />
+        </Reveal>
+        <Reveal>
+          <ProcessSection />
+        </Reveal>
+        <Reveal>
+          <Faq />
+        </Reveal>
+        <Reveal>
+          <CtaConsult />
         </Reveal>
       </main>
       <Footer />

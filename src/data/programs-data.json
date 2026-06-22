@@ -109,7 +109,7 @@
     ],
     "category": "akademik",
     "iconName": "BookOpen",
-    "isPopular": false
+    "isPopular": true
   },
   {
     "id": 8,
@@ -189,7 +189,7 @@
     ],
     "category": "anak",
     "iconName": "Baby",
-    "isPopular": false
+    "isPopular": true
   },
   {
     "id": 13,
@@ -237,7 +237,7 @@
     ],
     "category": "akademik",
     "iconName": "Home",
-    "isPopular": false
+    "isPopular": true
   },
   {
     "id": 16,
